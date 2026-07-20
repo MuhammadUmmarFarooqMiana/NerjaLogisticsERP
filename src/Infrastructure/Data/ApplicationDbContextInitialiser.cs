@@ -1,11 +1,12 @@
-﻿using NerjaLogisticsERP.Domain.Constants;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NerjaLogisticsERP.Domain.Constants;
 using NerjaLogisticsERP.Domain.Entities;
 using NerjaLogisticsERP.Domain.ValueObjects;
 using NerjaLogisticsERP.Infrastructure.Identity;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace NerjaLogisticsERP.Infrastructure.Data;
 
@@ -27,9 +28,18 @@ public class ApplicationDbContextInitialiser
     private readonly ILogger<ApplicationDbContextInitialiser> _logger;
     private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly RoleManager<IdentityRole<Guid>> _roleManager;
 
-    public ApplicationDbContextInitialiser(ILogger<ApplicationDbContextInitialiser> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+    private static readonly string[] AllRoles =
+    {
+        Roles.Administrator,
+        Roles.SoftwareEngineer,
+        Roles.Supervisor,
+        Roles.Accountant,
+        Roles.Rider
+    };
+
+    public ApplicationDbContextInitialiser(ILogger<ApplicationDbContextInitialiser> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole<Guid>> roleManager)
     {
         _logger = logger;
         _context = context;
@@ -42,8 +52,9 @@ public class ApplicationDbContextInitialiser
         try
         {
             // See https://jasontaylor.dev/ef-core-database-initialisation-strategies
-            await _context.Database.EnsureDeletedAsync();
-            await _context.Database.EnsureCreatedAsync();
+            //await _context.Database.EnsureDeletedAsync();
+            //await _context.Database.EnsureCreatedAsync();
+            await _context.Database.MigrateAsync();
         }
         catch (Exception ex)
         {
@@ -68,15 +79,28 @@ public class ApplicationDbContextInitialiser
     public async Task TrySeedAsync()
     {
         // Default roles
-        var administratorRole = new IdentityRole(Roles.Administrator);
-
-        if (_roleManager.Roles.All(r => r.Name != administratorRole.Name))
+        foreach (var roleName in AllRoles)
         {
-            await _roleManager.CreateAsync(administratorRole);
+            if (_roleManager.Roles.All(r => r.Name != roleName))
+            {
+                await _roleManager.CreateAsync(new IdentityRole<Guid>
+                {
+                    Id = Guid.NewGuid(),
+                    Name = roleName
+                });
+            }
         }
 
+        // Default roles
+        var administratorRole = new IdentityRole(Roles.Administrator);
+
+        //if (_roleManager.Roles.All(r => r.Name != administratorRole.Name))
+        //{
+        //    await _roleManager.CreateAsync(administratorRole);
+        //}
+
         // Default users
-        var administrator = new ApplicationUser { UserName = "administrator@nerja", Email = "administrator@nerja.com" };
+        var administrator = new ApplicationUser { UserName = "administrator@nerja", Email = "administrator@nerja.com", PhoneNumber = "+966000000000" };
 
         if (_userManager.Users.All(u => u.UserName != administrator.UserName))
         {

@@ -2,7 +2,7 @@
 
 namespace NerjaLogisticsERP.Application.TodoLists.Commands.DeleteTodoList;
 
-public record DeleteTodoListCommand(int Id) : IRequest;
+public record DeleteTodoListCommand(Guid Id) : IRequest;
 
 public class DeleteTodoListCommandHandler : IRequestHandler<DeleteTodoListCommand>
 {
@@ -16,7 +16,7 @@ public class DeleteTodoListCommandHandler : IRequestHandler<DeleteTodoListComman
     public async Task Handle(DeleteTodoListCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.TodoLists
-            .Where(l => l.Id == request.Id)
+            .Where(l => l.Id.Equals(request.Id))
             .SingleOrDefaultAsync(cancellationToken);
 
         Guard.Against.NotFound(request.Id, entity);

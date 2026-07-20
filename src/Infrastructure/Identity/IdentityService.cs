@@ -1,8 +1,7 @@
-using NerjaLogisticsERP.Application.Common.Interfaces;
-using NerjaLogisticsERP.Application.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using NerjaLogisticsERP.Application.Common.Interfaces;
+using NerjaLogisticsERP.Application.Common.Models;
 
 namespace NerjaLogisticsERP.Infrastructure.Identity;
 
@@ -29,7 +28,7 @@ public class IdentityService : IIdentityService
         return user?.UserName;
     }
 
-    public async Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password)
+    public async Task<(Result Result, Guid UserId)> CreateUserAsync(string userName, string password)
     {
         var user = new ApplicationUser
         {

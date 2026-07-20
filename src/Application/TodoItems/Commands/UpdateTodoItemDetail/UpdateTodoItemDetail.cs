@@ -5,7 +5,7 @@ namespace NerjaLogisticsERP.Application.TodoItems.Commands.UpdateTodoItemDetail;
 
 public record UpdateTodoItemDetailCommand : IRequest
 {
-    public int Id { get; init; }
+    public Guid Id { get; init; }
 
     public int ListId { get; init; }
 
