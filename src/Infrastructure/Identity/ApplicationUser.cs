@@ -32,7 +32,6 @@ public class ApplicationUser : IdentityUser<Guid>
             hasWhatsApp);
     }
 
-
     public void UpdatePhoneNumber(string phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(phoneNumber))
@@ -48,7 +47,6 @@ public class ApplicationUser : IdentityUser<Guid>
     {
         HasWhatsApp = true;
     }
-
 
     public void DisableWhatsApp()
     {

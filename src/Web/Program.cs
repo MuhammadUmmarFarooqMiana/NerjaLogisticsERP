@@ -30,6 +30,9 @@ app.UseCors(static builder =>
         .AllowAnyHeader()
         .AllowAnyOrigin());
 
+app.UseAuthentication();
+app.UseAuthorization(); 
+
 app.UseFileServer();
 
 app.MapOpenApi();
@@ -40,6 +43,8 @@ app.UseExceptionHandler(options => { });
 
 app.MapDefaultEndpoints();
 app.MapEndpoints(typeof(Program).Assembly);
+
+app.MapControllers();
 
 app.MapFallbackToFile("index.html");
 

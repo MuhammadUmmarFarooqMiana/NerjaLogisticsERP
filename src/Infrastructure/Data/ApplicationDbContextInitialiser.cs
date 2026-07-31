@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NerjaLogisticsERP.Domain.Constants;
 using NerjaLogisticsERP.Domain.Entities;
+using NerjaLogisticsERP.Domain.Enums;
 using NerjaLogisticsERP.Domain.ValueObjects;
 using NerjaLogisticsERP.Infrastructure.Identity;
 
@@ -94,13 +95,8 @@ public class ApplicationDbContextInitialiser
         // Default roles
         var administratorRole = new IdentityRole(Roles.Administrator);
 
-        //if (_roleManager.Roles.All(r => r.Name != administratorRole.Name))
-        //{
-        //    await _roleManager.CreateAsync(administratorRole);
-        //}
-
         // Default users
-        var administrator = new ApplicationUser { UserName = "administrator@nerja", Email = "administrator@nerja.com", PhoneNumber = "+966000000000" };
+        var administrator = new ApplicationUser { UserName = "administrator@nerja", Email = "administrator@nerja.com", PhoneNumber = "+966000000000", EmailConfirmed = true };
 
         if (_userManager.Users.All(u => u.UserName != administrator.UserName))
         {
@@ -109,6 +105,22 @@ public class ApplicationDbContextInitialiser
             {
                 await _userManager.AddToRolesAsync(administrator, new [] { administratorRole.Name });
             }
+
+            // Seeded accounts should be immediately usable — create the Employee
+            // profile and approve it in the same step, rather than leaving the
+            // built-in Administrator stuck in PendingApproval like a normal
+            // self-registered user.
+            var employee = Employee.Create(administrator.Id, "System Administrator");
+            employee.SubmitProfileForReview(
+                iqamaNumber: "ADMIN-0000000001",
+                idExpiryDate: null,
+                iqamaExpiryDate: null,
+                drivingLicenseExpiryDate: null,
+                insuranceExpiryDate: null);
+
+            employee.Approve();
+            _context.Employees.Add(employee);
+            await _context.SaveChangesAsync();
         }
 
         // Default data

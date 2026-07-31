@@ -2,13 +2,15 @@
 
 public enum AccountStatus
 {
-    PendingApproval,
+    Incomplete,        // registered, profile not yet submitted
+
+    PendingReview,   // profile submitted, awaiting Admin/Supervisor decision
 
     Active,
 
     Suspended,
 
-    Rejected,
+    Rejected,          // needs correction — can be edited and resubmitted
 
     Terminated,
 }

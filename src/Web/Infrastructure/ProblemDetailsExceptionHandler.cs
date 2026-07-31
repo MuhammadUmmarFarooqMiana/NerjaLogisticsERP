@@ -28,17 +28,32 @@ public class ProblemDetailsExceptionHandler : IExceptionHandler
                 Title = "The specified resource was not found.",
                 Detail = ne.Message
             }),
-            UnauthorizedAccessException => (StatusCodes.Status401Unauthorized, new ProblemDetails
+            UnauthorizedAccessException uae => (StatusCodes.Status401Unauthorized, new ProblemDetails
             {
                 Status = StatusCodes.Status401Unauthorized,
                 Title = "Unauthorized",
-                Type = "https://tools.ietf.org/html/rfc9110#section-15.5.2"
+                Type = "https://tools.ietf.org/html/rfc9110#section-15.5.2",
+                Detail = uae.Message
             }),
             ForbiddenAccessException => (StatusCodes.Status403Forbidden, new ProblemDetails
             {
                 Status = StatusCodes.Status403Forbidden,
                 Title = "Forbidden",
                 Type = "https://tools.ietf.org/html/rfc9110#section-15.5.4"
+            }),
+            ConflictException ce => (StatusCodes.Status409Conflict, new ProblemDetails
+            {
+                Status = StatusCodes.Status409Conflict,
+                Title = "Conflict",
+                Type = "https://tools.ietf.org/html/rfc9110#section-15.5.10",
+                Detail = ce.Message
+            }),
+            IdentityException ie => (StatusCodes.Status400BadRequest, new ProblemDetails
+            {
+                Status = StatusCodes.Status400BadRequest,
+                Title = "Identity operation failed.",
+                Type = "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+                Detail = ie.Message
             }),
             _ => (-1, null)
         };

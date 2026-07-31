@@ -13,19 +13,19 @@ public abstract class BaseAuditableEntity : BaseEntity
 {
     public DateTimeOffset Created { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public Guid? CreatedBy { get; set; }
 
     public DateTimeOffset? LastModified { get; set; }
 
-    public string? LastModifiedBy { get; set; }
+    public Guid? LastModifiedBy { get; set; }
 
     public bool IsDeleted { get; private set; }
 
     public DateTimeOffset? DeletedAt { get; private set; }
 
-    public string? DeletedBy { get; private set; }
+    public Guid? DeletedBy { get; private set; }
 
-    public void Delete(string? deletedBy = null)
+    public void Delete(Guid? deletedBy = null)
     {
         IsDeleted = true;
         DeletedAt = DateTimeOffset.UtcNow;
