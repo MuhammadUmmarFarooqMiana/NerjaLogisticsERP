@@ -22,12 +22,12 @@ public class VehicleAccidentHistory : BaseAuditableEntity
 
     public decimal RepairCost { get; private set; }
 
-    public static VehicleAccidentHistory Create(Guid vehicleId, DateOnly AccidentDate, string description, decimal repairCost)
+    public static VehicleAccidentHistory Create(Guid vehicleId, DateOnly accidentDate, string description, decimal repairCost)
     {
         if (vehicleId == Guid.Empty) throw new ArgumentException("VehicleId is required.", nameof(vehicleId));
         if (repairCost < 0) throw new ArgumentException("Cost cannot be negative.", nameof(repairCost));
 
-        return new VehicleAccidentHistory(vehicleId, AccidentDate, description, repairCost);
+        return new VehicleAccidentHistory(vehicleId, accidentDate, description, repairCost);
     }
 
 }

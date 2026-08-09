@@ -8,6 +8,7 @@ public class Employee : BaseAuditableEntity
     {
         UserId = userId;
         FullName = fullName;
+        RejectionReason = string.Empty;
     }
 
     public Guid UserId { get; private set; }
@@ -29,7 +30,7 @@ public class Employee : BaseAuditableEntity
     public DateOnly? InsuranceExpiryDate { get; private set; }
     public DateTimeOffset? ProfileSubmittedAt { get; private set; }
 
-    public string RejectionReason { get; private set; } = default!;
+    public string RejectionReason { get; private set; } = string.Empty;
 
     public Guid? PlatformId { get; private set; }
     public Platform? Platform { get; private set; }

@@ -12,11 +12,11 @@ public class SubmitProfileForReviewCommandHandler : IRequestHandler<SubmitProfil
 
     public async Task Handle(SubmitProfileForReviewCommand request, CancellationToken cancellationToken)
     {
-        var employee = await _context.Employees.FindAsync(new object[] { request.EmployeeId }, cancellationToken)
-            ?? throw new NotFoundException(nameof(Employee), request.EmployeeId.ToString());
+        var employee = await _context.Employees.FindAsync(new object[] { request.UserId }, cancellationToken)
+            ?? throw new NotFoundException(nameof(Employee), request.UserId.ToString());
 
         var iqamaTaken = await _context.Employees
-            .AnyAsync(e => e.IqamaNumber == request.IqamaNumber && e.Id != request.EmployeeId, cancellationToken);
+            .AnyAsync(e => e.IqamaNumber == request.IqamaNumber && e.Id != request.UserId, cancellationToken);
         if (iqamaTaken)
             throw new ConflictException("An employee with this Iqama number already exists.");
 

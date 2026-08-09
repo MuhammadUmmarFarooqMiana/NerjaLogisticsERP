@@ -10,16 +10,16 @@ namespace NerjaLogisticsERP.Web.Controllers;
 [ApiController]
 public class EmployeesController : ApiControllerBase
 {
-    [HttpPost("{id}/submitProfile")]
+    [HttpPost("{id:guid}/submitProfile")]
     public async Task<IActionResult> SubmitProfile(Guid id, SubmitProfileForReviewCommand command)
     {
-        if (id != command.EmployeeId) return BadRequest();
+        if (id != command.UserId) return BadRequest();
 
-        await Mediator.Send(new SubmitEmployeeProfileForReviewCommand());
+        await Mediator.Send(command);
         return Ok(new { message = "Profile submitted for review.", employeeId = id });
     }
 
-    [HttpPost("{id}/approve")]
+    [HttpPost("{id:guid}/approve")]
     public async Task<IActionResult> Approve(Guid id, [FromBody] DateOnly? joiningDate)
     {
         await Mediator.Send(new ApproveEmployeeCommand { EmployeeId = id, JoiningDate = joiningDate });

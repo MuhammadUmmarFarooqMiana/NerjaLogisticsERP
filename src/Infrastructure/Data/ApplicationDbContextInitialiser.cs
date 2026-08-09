@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NerjaLogisticsERP.Domain.Constants;
 using NerjaLogisticsERP.Domain.Entities;
-using NerjaLogisticsERP.Domain.Enums;
 using NerjaLogisticsERP.Domain.ValueObjects;
 using NerjaLogisticsERP.Infrastructure.Identity;
 

@@ -2,7 +2,7 @@
 
 public record SubmitProfileForReviewCommand : IRequest
 {
-    public Guid EmployeeId { get; init; }
+    public Guid UserId { get; init; }
     public string IqamaNumber { get; init; } = string.Empty;
     public DateOnly? IdExpiryDate { get; init; }
     public DateOnly? IqamaExpiryDate { get; init; }

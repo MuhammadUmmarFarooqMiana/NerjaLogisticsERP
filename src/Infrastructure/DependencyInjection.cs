@@ -7,8 +7,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using NerjaLogisticsERP.Application.Common.Interfaces;
+using NerjaLogisticsERP.Domain.Services;
+using NerjaLogisticsERP.Infrastructure.BackgroundJobs;
 using NerjaLogisticsERP.Infrastructure.Data;
 using NerjaLogisticsERP.Infrastructure.Data.Interceptors;
+using NerjaLogisticsERP.Infrastructure.FileStorage;
 using NerjaLogisticsERP.Infrastructure.Identity;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -78,10 +81,14 @@ public static class DependencyInjection
             .AddDefaultTokenProviders()
             .AddApiEndpoints();
 
+        builder.Services.AddHostedService<DailyOrderAutoCloseService>();
+
         builder.Services.AddSingleton(TimeProvider.System);
         builder.Services.AddTransient<IIdentityService, IdentityService>();
         builder.Services.AddScoped<IJwtService, JwtService>();
         builder.Services.AddScoped<IJwtService, JwtService>();
         builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+        builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
+        builder.Services.AddSingleton<ISalaryCalculator, SalaryCalculator>();
     }
 }

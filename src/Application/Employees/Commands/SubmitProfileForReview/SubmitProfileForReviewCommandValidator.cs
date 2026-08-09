@@ -4,7 +4,7 @@ public class SubmitProfileForReviewCommandValidator : AbstractValidator<SubmitPr
 {
     public SubmitProfileForReviewCommandValidator()
     {
-        RuleFor(x => x.EmployeeId).NotEmpty();
+        RuleFor(x => x.UserId).NotEmpty();
         RuleFor(x => x.IqamaNumber).NotEmpty().MaximumLength(30);
     }
 }

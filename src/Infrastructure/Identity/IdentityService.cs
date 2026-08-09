@@ -123,4 +123,10 @@ public class IdentityService : IIdentityService
         var user = await _userManager.FindByIdAsync(userId.ToString());
         return user is null ? Array.Empty<string>() : await _userManager.GetRolesAsync(user);
     }
+
+    public async Task<List<Guid>> GetUserIdsInRoleAsync(string role)
+    {
+        var users = await _userManager.GetUsersInRoleAsync(role);
+        return users.Select(u => u.Id).ToList();
+    }
 }

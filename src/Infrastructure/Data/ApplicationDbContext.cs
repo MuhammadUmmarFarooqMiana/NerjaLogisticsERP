@@ -34,6 +34,21 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
     public DbSet<VehicleTyreReplacementHistory> VehicleTyreReplacementHistories => Set<VehicleTyreReplacementHistory>();
     
     public DbSet<VehicleAccidentHistory> VehicleAccidentHistories => Set<VehicleAccidentHistory>();
+    public DbSet<DailyOrder> DailyOrders => Set<DailyOrder>();
+    public DbSet<Fine> Fines => Set<Fine>();
+    public DbSet<Advance> Advances => Set<Advance>();
+    public DbSet<Expense> Expenses => Set<Expense>();
+    public DbSet<LeaveRequest> LeaveRequests => Set<LeaveRequest>();
+    public DbSet<EmployeeDocument> EmployeeDocuments => Set<EmployeeDocument>();
+    public DbSet<CompanyDocument> CompanyDocuments => Set<CompanyDocument>();
+    public DbSet<SalaryFormula> SalaryFormulas => Set<SalaryFormula>();
+    public DbSet<SalaryFormulaTier> SalaryFormulaTiers => Set<SalaryFormulaTier>();
+    public DbSet<MonthlySummary> MonthlySummaries => Set<MonthlySummary>();
+    public DbSet<InventoryItem> InventoryItems => Set<InventoryItem>();
+    public DbSet<StockIn> StockIns => Set<StockIn>();
+    public DbSet<StockOut> StockOuts => Set<StockOut>();
+    public DbSet<Supplier> Suppliers => Set<Supplier>();
+    public DbSet<Notification> Notifications => Set<Notification>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

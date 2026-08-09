@@ -32,7 +32,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResult>
         var employee = await _context.Employees
             .FirstOrDefaultAsync(e => e.UserId == userId, cancellationToken);
 
-        if (employee is null || employee.AccountStatus != AccountStatus.Active)
+        if (employee is null || employee.AccountStatus == AccountStatus.Terminated)
             throw new ForbiddenAccessException(); //May be Your account is pending approval
 
         var roles = await _identityService.GetRolesAsync(userId.Value);

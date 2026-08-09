@@ -21,12 +21,12 @@ public class VehicleOilChangeHistory : BaseAuditableEntity
 
     public decimal Cost { get; private set; }
 
-    public static VehicleOilChangeHistory Create(Guid vehicleId, DateOnly ChangeDate, int odometer, decimal cost)
+    public static VehicleOilChangeHistory Create(Guid vehicleId, DateOnly changeDate, int odometer, decimal cost)
     {
         if (vehicleId == Guid.Empty) throw new ArgumentException("VehicleId is required.", nameof(vehicleId));
         if (odometer < 0) throw new ArgumentException("Odometer cannot be negative.", nameof(odometer));
         if (cost < 0) throw new ArgumentException("Cost cannot be negative.", nameof(cost));
 
-        return new VehicleOilChangeHistory(vehicleId, ChangeDate, odometer, cost);
+        return new VehicleOilChangeHistory(vehicleId, changeDate, odometer, cost);
     }
 }

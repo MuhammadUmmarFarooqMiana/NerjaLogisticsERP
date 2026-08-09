@@ -26,4 +26,6 @@ public interface IIdentityService
     Task<Guid?> ValidateCredentialsAsync(string email, string password);
 
     Task<IList<string>> GetRolesAsync(Guid userId);
+
+    Task<List<Guid>> GetUserIdsInRoleAsync(string role);
 }
