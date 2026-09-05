@@ -1,10 +1,10 @@
-using NerjaLogisticsERP.Domain.Constants;
-using NerjaLogisticsERP.Infrastructure.Data;
-using NerjaLogisticsERP.Infrastructure.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using NerjaLogisticsERP.Domain.Constants;
+using NerjaLogisticsERP.Infrastructure.Data;
+using NerjaLogisticsERP.Infrastructure.Identity;
 
 namespace NerjaLogisticsERP.Application.FunctionalTests.Infrastructure;
 
@@ -69,8 +69,8 @@ public static class TestApp
 
         if (result.Succeeded)
         {
-            _userId = user.Id;
-            _roles = [..roles];
+            _userId = user.Id.ToString();
+            _roles = [.. roles];
             return _userId;
         }
 

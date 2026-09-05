@@ -15,6 +15,10 @@ public class GetVehicleHistoryQueryHandler : IRequestHandler<GetVehicleHistoryQu
 
         return new VehicleHistoryDto
         {
+            Allocations = await _context.VehicleAllocationHistories.Where(a => a.VehicleId == request.VehicleId)
+                .OrderByDescending(a => a.AssignedDate)
+                .Select(a => new AllocationRecordDto(a.Id, a.EmployeeId, a.Employee.FullName, a.AssignedDate, a.ReturnedDate))
+                .ToListAsync(cancellationToken),
             ServiceHistory = await _context.VehicleServiceHistories.Where(s => s.VehicleId == request.VehicleId)
                 .Select(s => new ServiceRecordDto(s.Id, s.ServiceDate, s.Odometer, s.Description, s.Cost)).ToListAsync(cancellationToken),
             OilChanges = await _context.VehicleOilChangeHistories.Where(o => o.VehicleId == request.VehicleId)

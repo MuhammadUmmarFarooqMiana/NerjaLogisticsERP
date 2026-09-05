@@ -1,0 +1,68 @@
+{
+  "title": "Daily Orders",
+  "subtitle": "Log how many orders you've completed today, Submit close order for today before the Date Change/Day End.",
+  "completedOrders": "Completed Orders",
+  "save": "Save",
+  "closeDay": "Close for today",
+  "closeConfirmTitle": "Close today's order?",
+  "closeConfirmDescription": "Once closed, you won't be able to update today's count anymore.",
+  "closedNotice": "Today's order is closed and awaiting your supervisor's approval.",
+  "rejectedNotice": "Your daily order was rejected: {{reason}}. Please contact your supervisor for a correction.",
+  "noEntryYet": "You haven't logged any orders today yet.",
+  "saveSuccess": "Order count saved.",
+  "closeSuccess": "Today's order closed.",
+  "genericError": "Something went wrong. Please try again.",
+  "team": {
+    "title": "Team — Daily Orders",
+    "subtitle": "Review and approve your team's order status for the selected day.",
+    "dateLabel": "Date",
+    "columns": {
+      "name": "Name",
+      "completedOrders": "Completed Orders",
+      "status": "Status",
+      "closedAt": "Closed At",
+      "reviewNote": "Review Note"
+    },
+    "empty": "No riders found.",
+    "approve": "Approve",
+    "reject": "Reject",
+    "correct": "Edit & Approve",
+    "approveSuccess": "Daily order approved.",
+    "rejectSuccess": "Daily order rejected.",
+    "correctSuccess": "Daily order corrected and approved.",
+    "rejectDialog": {
+      "title": "Reject Daily Order",
+      "reason": "Rejection Reason",
+      "submit": "Reject"
+    },
+    "correctDialog": {
+      "title": "Edit & Approve Daily Order",
+      "previousReason": "Previously rejected: {{reason}}",
+      "completedOrders": "Corrected Completed Orders",
+      "reason": "Reason for Correction",
+      "submit": "Save & Approve"
+    }
+  },
+  "history": {
+    "title": "Order History",
+    "tabLabel": "Completed Order History",
+    "filters": {
+      "last3Days": "Last 3 Days",
+      "lastWeek": "Last Week",
+      "last30Days": "Last 30 Days",
+      "custom": "Custom",
+      "startDate": "Start Date",
+      "endDate": "End Date"
+    },
+    "columns": {
+      "name": "Name",
+      "date": "Date",
+      "completedOrders": "Completed Orders",
+      "status": "Status",
+      "closedAt": "Closed At",
+      "reviewNote": "Review Note"
+    },
+    "empty": "No completed orders found for this range.",
+    "genericError": "Couldn't load order history. Please try again."
+  }
+}

@@ -1,12 +1,9 @@
 ﻿using NerjaLogisticsERP.Application.Common.Exceptions;
 using NerjaLogisticsERP.Application.Common.Interfaces;
-using NerjaLogisticsERP.Application.Common.Security;
-using NerjaLogisticsERP.Domain.Constants;
 using NerjaLogisticsERP.Domain.Entities;
 
 namespace NerjaLogisticsERP.Application.Platforms.Commands.DeletePlatform;
 
-[Authorize(Roles = Roles.Administrator)]
 public class DeletePlatformCommandHandler : IRequestHandler<DeletePlatformCommand>
 {
     private readonly IApplicationDbContext _context;

@@ -5,7 +5,7 @@ public class VehicleAccidentHistory : BaseAuditableEntity
     private VehicleAccidentHistory(Guid vehicleId, DateOnly accidentDate, string description, decimal repairCost)
     {
         VehicleId = vehicleId;
-        AccidentDate =  accidentDate;
+        AccidentDate = accidentDate;
         Description = description;
         RepairCost = repairCost;
     }
@@ -30,4 +30,12 @@ public class VehicleAccidentHistory : BaseAuditableEntity
         return new VehicleAccidentHistory(vehicleId, accidentDate, description, repairCost);
     }
 
+    public void Update(DateOnly accidentDate, string description, decimal repairCost)
+    {
+        if (repairCost < 0) throw new ArgumentException("Cost cannot be negative.", nameof(repairCost));
+
+        AccidentDate = accidentDate;
+        Description = description;
+        RepairCost = repairCost;
+    }
 }

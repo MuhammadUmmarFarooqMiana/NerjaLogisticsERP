@@ -1,7 +1,11 @@
-﻿namespace NerjaLogisticsERP.Application.Vehicles.Commands.ReturnVehicle;
+﻿using NerjaLogisticsERP.Application.Common.Security;
+using NerjaLogisticsERP.Domain.Constants;
 
-public record ReturnVehicleCommand : IRequest 
-{ 
-    public Guid AllocationId { get; init; } 
-    public DateOnly ReturnedDate { get; init; } 
+namespace NerjaLogisticsERP.Application.Vehicles.Commands.ReturnVehicle;
+
+[Authorize(Roles = $"{Roles.Administrator},{Roles.Supervisor}")]
+public record ReturnVehicleCommand : IRequest
+{
+    public Guid AllocationId { get; init; }
+    public DateOnly ReturnedDate { get; init; }
 }

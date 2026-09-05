@@ -1,13 +1,15 @@
 ﻿using NerjaLogisticsERP.Application.Common.Interfaces;
+using NerjaLogisticsERP.Application.Common.Mappings;
+using NerjaLogisticsERP.Application.Common.Models;
 
 namespace NerjaLogisticsERP.Application.MonthlySummaries.Queries.GetMonthlySummaries;
 
-public class GetMonthlySummariesQueryHandler : IRequestHandler<GetMonthlySummariesQuery, List<MonthlySummaryDto>>
+public class GetMonthlySummariesQueryHandler : IRequestHandler<GetMonthlySummariesQuery, PaginatedList<MonthlySummaryDto>>
 {
     private readonly IApplicationDbContext _context;
     public GetMonthlySummariesQueryHandler(IApplicationDbContext context) => _context = context;
 
-    public async Task<List<MonthlySummaryDto>> Handle(GetMonthlySummariesQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedList<MonthlySummaryDto>> Handle(GetMonthlySummariesQuery request, CancellationToken cancellationToken)
     {
         var query = _context.MonthlySummaries.Include(s => s.Employee).AsQueryable();
 
@@ -32,6 +34,6 @@ public class GetMonthlySummariesQueryHandler : IRequestHandler<GetMonthlySummari
                 NetSalaryPayable = s.NetSalaryPayable,
                 Status = s.Status.ToString()
             })
-            .ToListAsync(cancellationToken);
+            .ToPaginatedListAsync(request.PageNumber, request.PageSize, cancellationToken);
     }
 }

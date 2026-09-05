@@ -1,8 +1,10 @@
-﻿namespace NerjaLogisticsERP.Application.Vehicles.Queries.GetVehiclesById;
+﻿using NerjaLogisticsERP.Application.Common.Security;
+using NerjaLogisticsERP.Domain.Constants;
 
+namespace NerjaLogisticsERP.Application.Vehicles.Queries.GetVehiclesById;
 
-public record GetVehiclesByIdQuery : IRequest<List<VehicleDto>> 
+[Authorize(Roles = $"{Roles.Administrator},{Roles.Accountant},{Roles.Supervisor}")]
+public record GetVehiclesByIdQuery : IRequest<VehicleDto>
 {
     public Guid Id { get; init; }
-    public bool? ActiveOnly { get; init; } 
 }

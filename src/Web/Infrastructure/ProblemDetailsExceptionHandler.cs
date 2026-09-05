@@ -1,6 +1,6 @@
-using NerjaLogisticsERP.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using NerjaLogisticsERP.Application.Common.Exceptions;
 
 namespace NerjaLogisticsERP.Web.Infrastructure;
 
@@ -8,10 +8,19 @@ namespace NerjaLogisticsERP.Web.Infrastructure;
 /// Converts well-known application exceptions into RFC 9110-compliant <see cref="ProblemDetails"/> responses,
 /// mapping <see cref="ValidationException"/> → 400, <see cref="NotFoundException"/> → 404,
 /// <see cref="UnauthorizedAccessException"/> → 401, and <see cref="ForbiddenAccessException"/> → 403.
-/// Unrecognised exceptions are not handled and fall through to the default middleware.
+/// Unrecognised exceptions are not handled and fall through to the default middleware, which — via
+/// AddProblemDetails() in DependencyInjection.cs — emits a generic, detail-free ProblemDetails instead
+/// of leaking exception internals.
 /// </summary>
 public class ProblemDetailsExceptionHandler : IExceptionHandler
 {
+    private readonly IProblemDetailsService _problemDetailsService;
+
+    public ProblemDetailsExceptionHandler(IProblemDetailsService problemDetailsService)
+    {
+        _problemDetailsService = problemDetailsService;
+    }
+
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
         var (statusCode, problemDetails) = exception switch
@@ -61,7 +70,15 @@ public class ProblemDetailsExceptionHandler : IExceptionHandler
         if (problemDetails is null) return false;
 
         httpContext.Response.StatusCode = statusCode;
-        await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
-        return true;
+
+        // Routed through IProblemDetailsService (rather than a direct WriteAsJsonAsync) so the
+        // CustomizeProblemDetails callback registered in AddProblemDetails() — which stamps traceId —
+        // runs here too, keeping every ProblemDetails response in the app on the same shape.
+        return await _problemDetailsService.TryWriteAsync(new ProblemDetailsContext
+        {
+            HttpContext = httpContext,
+            ProblemDetails = problemDetails,
+            Exception = exception
+        });
     }
 }

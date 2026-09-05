@@ -1,0 +1,46 @@
+{
+  "title": "المصروفات",
+  "subtitle": "تسجيل ومراجعة مصروفات الشركة.",
+  "addExpense": "إضافة مصروف",
+  "columns": {
+    "category": "الفئة",
+    "amount": "المبلغ",
+    "expenseDate": "التاريخ",
+    "platform": "المنصة",
+    "description": "الوصف"
+  },
+  "filters": {
+    "category": "الفئة",
+    "allCategories": "كل الفئات",
+    "platform": "المنصة",
+    "allPlatforms": "كل المنصات",
+    "startDate": "تاريخ البدء",
+    "endDate": "تاريخ الانتهاء"
+  },
+  "categories": {
+    "Fuel": "وقود",
+    "BikeRepairs": "إصلاح الدراجات",
+    "OfficeExpenses": "مصروفات المكتب",
+    "SimCards": "بطاقات SIM",
+    "Uniforms": "الزي الموحد",
+    "Helmets": "الخوذات",
+    "GeneralMaintenance": "صيانة عامة",
+    "Other": "أخرى"
+  },
+  "empty": "لا توجد مصروفات.",
+  "createDialog": {
+    "title": "إضافة مصروف",
+    "category": "الفئة",
+    "amount": "المبلغ",
+    "expenseDate": "تاريخ المصروف",
+    "platform": "المنصة",
+    "noPlatform": "لا شيء",
+    "description": "الوصف",
+    "submit": "حفظ"
+  },
+  "createSuccess": "تم تسجيل المصروف.",
+  "genericError": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+  "validation": {
+    "amountPositive": "يجب أن يكون المبلغ أكبر من 0."
+  }
+}

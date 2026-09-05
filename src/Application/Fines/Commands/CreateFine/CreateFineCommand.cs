@@ -1,5 +1,9 @@
-﻿namespace NerjaLogisticsERP.Application.Fines.Commands.CreateFine;
+﻿using NerjaLogisticsERP.Application.Common.Security;
+using NerjaLogisticsERP.Domain.Constants;
 
+namespace NerjaLogisticsERP.Application.Fines.Commands.CreateFine;
+
+[Authorize(Roles = $"{Roles.Administrator},{Roles.Accountant}")]
 public record CreateFineCommand : IRequest<Guid>
 {
     public Guid EmployeeId { get; init; }

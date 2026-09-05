@@ -9,6 +9,7 @@ public class DailyOrderConfiguration : IEntityTypeConfiguration<DailyOrder>
     public void Configure(EntityTypeBuilder<DailyOrder> builder)
     {
         builder.Property(o => o.Status).HasConversion<string>().HasMaxLength(10);
+        builder.Property(o => o.ReviewNote).HasMaxLength(5000);
 
         builder.HasIndex(o => new { o.EmployeeId, o.OrderDate }).IsUnique();
 

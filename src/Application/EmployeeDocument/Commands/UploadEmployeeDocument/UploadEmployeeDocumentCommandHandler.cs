@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using NerjaLogisticsERP.Application.Common.Exceptions;
 using NerjaLogisticsERP.Application.Common.Interfaces;
+using NerjaLogisticsERP.Domain.Constants;
 using NerjaLogisticsERP.Domain.Entities;
 
 namespace NerjaLogisticsERP.Application.EmployeeDocument.Commands.UploadEmployeeDocument;
@@ -16,16 +18,40 @@ public class UploadEmployeeDocumentCommandHandler : IRequestHandler<UploadEmploy
 
     public async Task<Guid> Handle(UploadEmployeeDocumentCommand request, CancellationToken cancellationToken)
     {
-        var exists = await _context.Employees.AnyAsync(e => e.Id == request.EmployeeId, cancellationToken);
-        if (!exists) throw new NotFoundException(nameof(Employee), request.EmployeeId.ToString());
+        var userId = _currentUser.Id!.Value;
+        var isAdministrator = _currentUser.Roles?.Contains(Roles.Administrator) ?? false;
+        var isSupervisor = _currentUser.Roles?.Contains(Roles.Supervisor) ?? false;
 
-        var storageKey = await _storage.SaveAsync(request.Content, request.FileName, $"employees/{request.EmployeeId}", cancellationToken);
+        Guid employeeId;
+        if ((isAdministrator || isSupervisor) && request.EmployeeId.HasValue)
+        {
+            employeeId = request.EmployeeId.Value;
+            if (!isAdministrator)
+            {
+                var isOwnReport = await _context.Employees.AnyAsync(
+                    e => e.Id == employeeId && e.Supervisor != null && e.Supervisor.UserId == userId,
+                    cancellationToken);
+                if (!isOwnReport) throw new ForbiddenAccessException();
+            }
+        }
+        else
+        {
+            employeeId = await _context.Employees
+                .Where(e => e.UserId == userId)
+                .Select(e => e.Id)
+                .FirstOrDefaultAsync(cancellationToken);
+        }
 
-        var doc = Domain.Entities.EmployeeDocument.Create(request.EmployeeId, request.Type, storageKey, request.FileName, request.ContentType, _currentUser.Id!.Value);
+        var exists = await _context.Employees.AnyAsync(e => e.Id == employeeId, cancellationToken);
+        if (!exists) throw new NotFoundException(nameof(Employee), employeeId.ToString());
+
+        var storageKey = await _storage.SaveAsync(request.Content, request.FileName, $"employees/{employeeId}", cancellationToken);
+
+        var doc = Domain.Entities.EmployeeDocument.Create(employeeId, request.Type, storageKey, request.FileName, request.ContentType, userId);
         _context.EmployeeDocuments.Add(doc);
         await _context.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("Document {Type} uploaded for Employee {EmployeeId}", request.Type, request.EmployeeId);
+        _logger.LogInformation("Document {Type} uploaded for Employee {EmployeeId}", request.Type, employeeId);
         return doc.Id;
     }
 }

@@ -1,0 +1,64 @@
+{
+  "title": "Inventory",
+  "subtitle": "Track spare parts stock levels and movements.",
+  "addItem": "Add Item",
+  "stockIn": "Stock In",
+  "stockOut": "Stock Out",
+  "viewLedger": "View Ledger",
+  "lowStock": "Low Stock",
+  "inStock": "In Stock",
+  "empty": "No inventory items found.",
+  "filters": {
+    "lowStockOnly": "Low stock only"
+  },
+  "columns": {
+    "itemName": "Item",
+    "unit": "Unit",
+    "currentStock": "Current Stock",
+    "reorderLevel": "Reorder Level",
+    "status": "Status"
+  },
+  "createDialog": {
+    "title": "Add Inventory Item",
+    "itemName": "Item Name",
+    "unit": "Unit",
+    "reorderLevel": "Reorder Level",
+    "submit": "Save"
+  },
+  "stockInDialog": {
+    "title": "Stock In — {{itemName}}",
+    "supplier": "Supplier",
+    "quantity": "Quantity",
+    "stockDate": "Stock Date"
+  },
+  "stockOutDialog": {
+    "title": "Stock Out — {{itemName}}",
+    "mechanic": "Mechanic",
+    "selectMechanicFirst": "Select a mechanic first to continue.",
+    "employee": "Employee",
+    "quantity": "Quantity",
+    "stockDate": "Stock Date"
+  },
+  "ledgerDialog": {
+    "title": "Stock Ledger — {{itemName}}",
+    "empty": "No stock movements found.",
+    "columns": {
+      "date": "Date",
+      "type": "Type",
+      "quantity": "Quantity",
+      "detail": "Detail"
+    },
+    "type": {
+      "In": "Stock In",
+      "Out": "Stock Out"
+    }
+  },
+  "createSuccess": "Inventory item created.",
+  "stockInSuccess": "Stock in recorded.",
+  "stockOutSuccess": "Stock out recorded.",
+  "genericError": "Something went wrong. Please try again.",
+  "validation": {
+    "reorderLevelNonNegative": "Must be 0 or greater.",
+    "quantityPositive": "Quantity must be greater than 0."
+  }
+}

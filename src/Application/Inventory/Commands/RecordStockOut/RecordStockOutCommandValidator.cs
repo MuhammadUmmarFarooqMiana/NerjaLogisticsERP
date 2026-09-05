@@ -6,6 +6,7 @@ public class RecordStockOutCommandValidator : AbstractValidator<RecordStockOutCo
     {
         RuleFor(x => x.ItemId).NotEmpty();
         RuleFor(x => x.EmployeeId).NotEmpty();
+        RuleFor(x => x.MechanicId).NotEmpty();
         RuleFor(x => x.Quantity).GreaterThan(0);
     }
 }

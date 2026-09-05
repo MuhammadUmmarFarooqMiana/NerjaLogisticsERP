@@ -7,8 +7,19 @@ using NerjaLogisticsERP.Application.Vehicles.Commands.AddVehicleTyreReplacementR
 using NerjaLogisticsERP.Application.Vehicles.Commands.AllocateVehicle;
 using NerjaLogisticsERP.Application.Vehicles.Commands.CreateVehicle;
 using NerjaLogisticsERP.Application.Vehicles.Commands.DeactivateVehicle;
+using NerjaLogisticsERP.Application.Vehicles.Commands.DeleteVehicleAccidentRecord;
+using NerjaLogisticsERP.Application.Vehicles.Commands.DeleteVehicleAllocation;
+using NerjaLogisticsERP.Application.Vehicles.Commands.DeleteVehicleOilChangeRecord;
+using NerjaLogisticsERP.Application.Vehicles.Commands.DeleteVehicleServiceRecord;
+using NerjaLogisticsERP.Application.Vehicles.Commands.DeleteVehicleTyreReplacementRecord;
 using NerjaLogisticsERP.Application.Vehicles.Commands.ReturnVehicle;
+using NerjaLogisticsERP.Application.Vehicles.Commands.UpdateVehicleAccidentRecord;
+using NerjaLogisticsERP.Application.Vehicles.Commands.UpdateVehicleAllocation;
+using NerjaLogisticsERP.Application.Vehicles.Commands.UpdateVehicleOilChangeRecord;
+using NerjaLogisticsERP.Application.Vehicles.Commands.UpdateVehicleServiceRecord;
+using NerjaLogisticsERP.Application.Vehicles.Commands.UpdateVehicleTyreReplacementRecord;
 using NerjaLogisticsERP.Application.Vehicles.Queries;
+using NerjaLogisticsERP.Application.Vehicles.Queries.GetMyVehicle;
 using NerjaLogisticsERP.Application.Vehicles.Queries.GetVehicles;
 using NerjaLogisticsERP.Application.Vehicles.Queries.GetVehiclesById;
 
@@ -20,12 +31,21 @@ namespace NerjaLogisticsERP.Web.Controllers;
 public class VehiclesController : ApiControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<List<VehicleDto>>> GetAll([FromQuery] bool? activeOnly)
-        => Ok(await Mediator.Send(new GetVehiclesQuery { ActiveOnly = activeOnly }));
+    public async Task<ActionResult<List<VehicleDto>>> GetAll(
+        [FromQuery] bool? activeOnly, [FromQuery] int? pageNumber, [FromQuery] int? pageSize)
+    {
+        var result = await Mediator.Send(new GetVehiclesQuery { ActiveOnly = activeOnly, PageNumber = pageNumber, PageSize = pageSize });
+        AddPaginationHeader(result);
+        return Ok(result.Items);
+    }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<VehicleDto>> GetById(Guid id)
         => Ok(await Mediator.Send(new GetVehiclesByIdQuery { Id = id }));
+
+    [HttpGet("me")]
+    public async Task<ActionResult<VehicleDto?>> GetMine()
+        => Ok(await Mediator.Send(new GetMyVehicleQuery()));
 
     [HttpGet("{id}/history")]
     public async Task<ActionResult<VehicleHistoryDto>> GetHistory(Guid id)
@@ -96,5 +116,80 @@ public class VehiclesController : ApiControllerBase
     {
         await Mediator.Send(command);
         return Ok(new { message = "Vehicle returned." });
+    }
+
+    [HttpPut("allocations/{id}")]
+    public async Task<IActionResult> UpdateAllocation(Guid id, UpdateVehicleAllocationCommand command)
+    {
+        if (id != command.Id) return BadRequest();
+        await Mediator.Send(command);
+        return Ok(new { message = "Allocation updated.", id });
+    }
+
+    [HttpDelete("allocations/{id}")]
+    public async Task<IActionResult> DeleteAllocation(Guid id)
+    {
+        await Mediator.Send(new DeleteVehicleAllocationCommand { Id = id });
+        return Ok(new { message = "Allocation deleted.", id });
+    }
+
+    [HttpPut("service/{id}")]
+    public async Task<IActionResult> UpdateService(Guid id, UpdateVehicleServiceRecordCommand command)
+    {
+        if (id != command.Id) return BadRequest();
+        await Mediator.Send(command);
+        return Ok(new { message = "Service record updated.", id });
+    }
+
+    [HttpDelete("service/{id}")]
+    public async Task<IActionResult> DeleteService(Guid id)
+    {
+        await Mediator.Send(new DeleteVehicleServiceRecordCommand { Id = id });
+        return Ok(new { message = "Service record deleted.", id });
+    }
+
+    [HttpPut("oil-change/{id}")]
+    public async Task<IActionResult> UpdateOilChange(Guid id, UpdateVehicleOilChangeRecordCommand command)
+    {
+        if (id != command.Id) return BadRequest();
+        await Mediator.Send(command);
+        return Ok(new { message = "Oil change record updated.", id });
+    }
+
+    [HttpDelete("oil-change/{id}")]
+    public async Task<IActionResult> DeleteOilChange(Guid id)
+    {
+        await Mediator.Send(new DeleteVehicleOilChangeRecordCommand { Id = id });
+        return Ok(new { message = "Oil change record deleted.", id });
+    }
+
+    [HttpPut("tyre-replacement/{id}")]
+    public async Task<IActionResult> UpdateTyreReplacement(Guid id, UpdateVehicleTyreReplacementRecordCommand command)
+    {
+        if (id != command.Id) return BadRequest();
+        await Mediator.Send(command);
+        return Ok(new { message = "Tyre replacement record updated.", id });
+    }
+
+    [HttpDelete("tyre-replacement/{id}")]
+    public async Task<IActionResult> DeleteTyreReplacement(Guid id)
+    {
+        await Mediator.Send(new DeleteVehicleTyreReplacementRecordCommand { Id = id });
+        return Ok(new { message = "Tyre replacement record deleted.", id });
+    }
+
+    [HttpPut("accident/{id}")]
+    public async Task<IActionResult> UpdateAccident(Guid id, UpdateVehicleAccidentRecordCommand command)
+    {
+        if (id != command.Id) return BadRequest();
+        await Mediator.Send(command);
+        return Ok(new { message = "Accident record updated.", id });
+    }
+
+    [HttpDelete("accident/{id}")]
+    public async Task<IActionResult> DeleteAccident(Guid id)
+    {
+        await Mediator.Send(new DeleteVehicleAccidentRecordCommand { Id = id });
+        return Ok(new { message = "Accident record deleted.", id });
     }
 }

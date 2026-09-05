@@ -1,0 +1,53 @@
+{
+  "title": "مستندات الشركة",
+  "subtitle": "المستندات القانونية والمالية والسياسات المشتركة عبر الشركة.",
+  "uploadDocument": "رفع مستند",
+  "createFolder": "مجلد جديد",
+  "root": "المستندات",
+  "createdBy": "أنشأه {{name}}",
+  "download": "تنزيل",
+  "preview": "معاينة",
+  "delete": "حذف",
+  "deleteFolder": "حذف المجلد",
+  "empty": "لم يتم رفع أي مستندات بعد.",
+  "uploadSuccess": "تم رفع المستند.",
+  "createFolderSuccess": "تم إنشاء المجلد.",
+  "deleteFolderSuccess": "تم حذف المجلد.",
+  "deleteSuccess": "تم حذف المستند.",
+  "deleteFolderConfirmTitle": "حذف هذا المجلد؟",
+  "deleteFolderConfirmDescription": "سيؤدي هذا إلى حذف \"{{name}}\" نهائياً. لا يمكن حذف مجلد لا يزال يحتوي على مجلدات فرعية أو مستندات.",
+  "deleteConfirmTitle": "حذف هذا المستند؟",
+  "deleteConfirmDescription": "سيؤدي هذا إلى حذف \"{{name}}\" نهائياً. لا يمكن التراجع عن هذا.",
+  "downloadError": "تعذر تنزيل المستند. يرجى المحاولة مرة أخرى.",
+  "previewError": "تعذر فتح المعاينة. يرجى المحاولة مرة أخرى.",
+  "genericError": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+  "columns": {
+    "title": "العنوان",
+    "category": "الفئة",
+    "fileName": "الملف",
+    "uploadedBy": "تم الرفع بواسطة",
+    "uploaded": "تاريخ الرفع"
+  },
+  "categories": {
+    "legal": "قانوني",
+    "financial": "مالي",
+    "contracts": "عقود",
+    "policies": "سياسات",
+    "other": "أخرى"
+  },
+  "createFolderDialog": {
+    "title": "مجلد جديد",
+    "folderName": "اسم المجلد",
+    "nameRequired": "اسم المجلد مطلوب.",
+    "submit": "إنشاء"
+  },
+  "uploadDialog": {
+    "title": "رفع مستند شركة",
+    "documentTitle": "العنوان",
+    "titleRequired": "العنوان مطلوب.",
+    "category": "الفئة",
+    "chooseFile": "اختر ملفًا",
+    "fileRequired": "الملف مطلوب.",
+    "submit": "رفع"
+  }
+}

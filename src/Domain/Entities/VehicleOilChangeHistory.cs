@@ -29,4 +29,14 @@ public class VehicleOilChangeHistory : BaseAuditableEntity
 
         return new VehicleOilChangeHistory(vehicleId, changeDate, odometer, cost);
     }
+
+    public void Update(DateOnly changeDate, int odometer, decimal cost)
+    {
+        if (odometer < 0) throw new ArgumentException("Odometer cannot be negative.", nameof(odometer));
+        if (cost < 0) throw new ArgumentException("Cost cannot be negative.", nameof(cost));
+
+        ChangeDate = changeDate;
+        Odometer = odometer;
+        Cost = cost;
+    }
 }

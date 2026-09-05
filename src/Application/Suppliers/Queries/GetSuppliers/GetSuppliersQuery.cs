@@ -1,3 +1,13 @@
-﻿namespace NerjaLogisticsERP.Application.Suppliers.Queries.GetSuppliers;
+﻿using NerjaLogisticsERP.Application.Common.Models;
+using NerjaLogisticsERP.Application.Common.Security;
+using NerjaLogisticsERP.Domain.Constants;
 
-public record GetSuppliersQuery : IRequest<List<SupplierDto>>;
+namespace NerjaLogisticsERP.Application.Suppliers.Queries.GetSuppliers;
+
+[Authorize(Roles = $"{Roles.Administrator},{Roles.Accountant}")]
+public record GetSuppliersQuery : IRequest<PaginatedList<SupplierDto>>
+{
+    /// <summary>Both null (the default) returns every row, matching pre-pagination behavior.</summary>
+    public int? PageNumber { get; init; }
+    public int? PageSize { get; init; }
+}

@@ -1,0 +1,141 @@
+{
+  "appName": "Nerja Logistics ERP",
+  "language": {
+    "english": "English",
+    "arabic": "Arabic"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "toggle": "Theme"
+  },
+  "dashboard": {
+    "viewAll": "View all",
+    "comingSoon": "Coming soon",
+    "allPlatforms": "All Platforms",
+    "unassignedPlatform": "Unassigned",
+    "stats": {
+      "totalRiders": "Total Active Employees",
+      "activeRiders": "Active Riders",
+      "todaysCompletedOrders": "Today's Completed Orders",
+      "monthlyOrders": "Monthly Orders",
+      "monthlyCompletedOrders": "Orders Completed This Month",
+      "totalAdvances": "Total Advances This Month",
+      "totalFines": "Total Fines This Month",
+      "totalExpenses": "Total Expenses This Month",
+      "stockOut": "Stock Out This Month",
+      "totalPaidSalary": "Total Paid Salary This Month",
+      "totalSalaryToPay": "Total Salary To Pay This Month"
+    },
+    "myStats": {
+      "salary": "My Salary",
+      "advances": "My Advances",
+      "fines": "My Fines",
+      "leaves": "Leave Balance",
+      "ordersThisMonth": "Orders This Month"
+    },
+    "charts": {
+      "noData": "No data for this period yet.",
+      "units": "units",
+      "amount": "Amount",
+      "completedOrders": "Completed Orders",
+      "fleetOrdersTrend": "Completed Orders in Last 7 Days",
+      "myOrdersTrend": "My Completed Orders in Last 7 Days",
+      "employeeStatus": "Employee Status Breakdown",
+      "ridersByPlatform": "Roles by Platform",
+      "platform": "Platform",
+      "financialOverview": "Financial Overview — This Month",
+      "expensesTrend": "Expenses — Last 6 Months",
+      "salaryPaidTrend": "Salary Paid — Last 6 Months",
+      "fines": "Fines",
+      "advances": "Advances",
+      "expenses": "Expenses"
+    }
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "leaveRequests": "Leave Requests",
+    "dailyOrders": "Daily Orders",
+    "employees": "Employees",
+    "pendingApprovals": "Pending Approvals",
+    "reports": "Reports",
+    "myProfile": "My Profile",
+    "fines": "Fines",
+    "advances": "Advances",
+    "expenses": "Expenses",
+    "salaryFormulas": "Salary Formulas",
+    "companyDocuments": "Company Documents",
+    "monthlySummaries": "Monthly Summaries",
+    "vehicles": "Vehicles",
+    "inventory": "Inventory",
+    "suppliers": "Suppliers",
+    "mechanics": "Mechanics",
+    "platformReconciliation": "Platform Reconciliation"
+  },
+  "actions": {
+    "login": "Login",
+    "logout": "Logout",
+    "logoutSuccess": "Logged out successfully.",
+    "sessionExpiredDueToInactivity": "You were logged out due to inactivity.",
+    "loading": "Loading...",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "openMenu": "Open menu",
+    "collapseSidebar": "Collapse sidebar",
+    "expandSidebar": "Expand sidebar",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "changePassword": "Change Password",
+    "userMenu": "Account menu"
+  },
+  "breadcrumbs": {
+    "home": "Home",
+    "employeeDetails": "Employee Details",
+    "vehicleDetails": "Vehicle Details"
+  },
+  "table": {
+    "search": "Search",
+    "empty": "No records found",
+    "loadError": "Failed to load data. Please try again.",
+    "rowsPerPage": "Rows per page:",
+    "displayedRows": "{{from}}–{{to}} of {{count}}"
+  },
+  "validation": {
+    "required": "This field is required",
+    "maxLength": "Must be at most {{max}} characters"
+  },
+  "errors": {
+    "reference": "Reference: {{traceId}}",
+    "unexpectedTitle": "Something went wrong",
+    "unexpectedMessage": "An unexpected error occurred. Reloading the page usually fixes it — if it keeps happening, let an admin know.",
+    "reload": "Reload page"
+  },
+  "status": {
+    "accountStatus": {
+      "Incomplete": "Incomplete",
+      "PendingReview": "Pending Review",
+      "Active": "Active",
+      "Suspended": "Suspended",
+      "Rejected": "Rejected",
+      "Terminated": "Terminated"
+    },
+    "leaveStatus": {
+      "Pending": "Pending",
+      "Approved": "Approved",
+      "Rejected": "Rejected"
+    },
+    "monthlySummaryStatus": {
+      "Draft": "Draft",
+      "Verified": "Verified",
+      "Paid": "Paid"
+    },
+    "dailyOrderStatus": {
+      "Open": "Open",
+      "Closed": "Awaiting Approval",
+      "Approved": "Approved",
+      "Rejected": "Rejected",
+      "OnLeave": "On Leave"
+    }
+  }
+}

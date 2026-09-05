@@ -5,6 +5,7 @@ using NerjaLogisticsERP.Application.MonthlySummaries.Commands.MarkMonthlySummary
 using NerjaLogisticsERP.Application.MonthlySummaries.Commands.VerifyMonthlySummary;
 using NerjaLogisticsERP.Application.MonthlySummaries.Queries.GetMonthlySummaries;
 using NerjaLogisticsERP.Application.MonthlySummaries.Queries.GetMonthlySummaryById;
+using NerjaLogisticsERP.Application.MonthlySummaries.Queries.GetMyMonthlySummaries;
 using NerjaLogisticsERP.Domain.Enums;
 
 namespace NerjaLogisticsERP.Web.Controllers;
@@ -15,12 +16,41 @@ public class MonthlySummariesController : ApiControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<List<MonthlySummaryDto>>> GetAll(
-        [FromQuery] Guid? employeeId, [FromQuery] int? year, [FromQuery] int? month, [FromQuery] MonthlySummaryStatus? status)
-        => Ok(await Mediator.Send(new GetMonthlySummariesQuery { EmployeeId = employeeId, Year = year, Month = month, Status = status }));
+        [FromQuery] Guid? employeeId, [FromQuery] int? year, [FromQuery] int? month, [FromQuery] MonthlySummaryStatus? status,
+        [FromQuery] int? pageNumber, [FromQuery] int? pageSize)
+    {
+        var result = await Mediator.Send(new GetMonthlySummariesQuery
+        {
+            EmployeeId = employeeId,
+            Year = year,
+            Month = month,
+            Status = status,
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        });
+        AddPaginationHeader(result);
+        return Ok(result.Items);
+    }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<MonthlySummaryDto>> GetById(Guid id)
         => Ok(await Mediator.Send(new GetMonthlySummaryByIdQuery { Id = id }));
+
+    [HttpGet("me")]
+    public async Task<ActionResult<List<MonthlySummaryDto>>> GetMine(
+        [FromQuery] int? year, [FromQuery] int? month,
+        [FromQuery] int? pageNumber, [FromQuery] int? pageSize)
+    {
+        var result = await Mediator.Send(new GetMyMonthlySummariesQuery
+        {
+            Year = year,
+            Month = month,
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        });
+        AddPaginationHeader(result);
+        return Ok(result.Items);
+    }
 
     [HttpPost("generate")]
     public async Task<IActionResult> Generate(GenerateMonthlySummaryCommand command)

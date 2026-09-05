@@ -1,0 +1,46 @@
+{
+  "title": "Expenses",
+  "subtitle": "Record and review company expenses.",
+  "addExpense": "Add Expense",
+  "columns": {
+    "category": "Category",
+    "amount": "Amount",
+    "expenseDate": "Date",
+    "platform": "Platform",
+    "description": "Description"
+  },
+  "filters": {
+    "category": "Category",
+    "allCategories": "All Categories",
+    "platform": "Platform",
+    "allPlatforms": "All Platforms",
+    "startDate": "Start Date",
+    "endDate": "End Date"
+  },
+  "categories": {
+    "Fuel": "Fuel",
+    "BikeRepairs": "Bike Repairs",
+    "OfficeExpenses": "Office Expenses",
+    "SimCards": "SIM Cards",
+    "Uniforms": "Uniforms",
+    "Helmets": "Helmets",
+    "GeneralMaintenance": "General Maintenance",
+    "Other": "Other"
+  },
+  "empty": "No expenses found.",
+  "createDialog": {
+    "title": "Add Expense",
+    "category": "Category",
+    "amount": "Amount",
+    "expenseDate": "Expense Date",
+    "platform": "Platform",
+    "noPlatform": "None",
+    "description": "Description",
+    "submit": "Save"
+  },
+  "createSuccess": "Expense recorded.",
+  "genericError": "Something went wrong. Please try again.",
+  "validation": {
+    "amountPositive": "Amount must be greater than 0."
+  }
+}

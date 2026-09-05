@@ -3,17 +3,15 @@ using NerjaLogisticsERP.Domain.Entities;
 
 namespace NerjaLogisticsERP.Application.Vehicles.Queries.GetVehiclesById;
 
-public class GetVehiclesByIdQueryHandler : IRequestHandler<GetVehiclesByIdQuery, List<VehicleDto>>
+public class GetVehiclesByIdQueryHandler : IRequestHandler<GetVehiclesByIdQuery, VehicleDto>
 {
     private readonly IApplicationDbContext _context;
     public GetVehiclesByIdQueryHandler(IApplicationDbContext context) => _context = context;
 
-    public async Task<List<VehicleDto>> Handle(GetVehiclesByIdQuery request, CancellationToken cancellationToken)
+    public async Task<VehicleDto> Handle(GetVehiclesByIdQuery request, CancellationToken cancellationToken)
     {
-        var query = _context.Vehicles.AsQueryable();
-        if (request.ActiveOnly == true) query = query.Where(v => v.IsActive);
-
-        return await query
+        var vehicle = await _context.Vehicles
+            .Where(v => v.Id == request.Id)
             .Select(v => new VehicleDto
             {
                 Id = v.Id,
@@ -25,6 +23,8 @@ public class GetVehiclesByIdQueryHandler : IRequestHandler<GetVehiclesByIdQuery,
                     .Select(e => e.FullName)
                     .FirstOrDefault()
             })
-            .ToListAsync(cancellationToken) ?? throw new NotFoundException(nameof(Vehicle), request.Id.ToString());
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return vehicle ?? throw new NotFoundException(nameof(Vehicle), request.Id.ToString());
     }
 }

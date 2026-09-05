@@ -6,7 +6,6 @@ public class UploadEmployeeDocumentCommandValidator : AbstractValidator<UploadEm
 {
     public UploadEmployeeDocumentCommandValidator()
     {
-        RuleFor(x => x.EmployeeId).NotEmpty();
         RuleFor(x => x.FileName).NotEmpty();
         RuleFor(x => x).Must(x => AllowedFileTypes.IsAllowed(x.ContentType, x.FileName, x.Content.Length))
             .WithMessage("File type not allowed or exceeds the size limit. Please make sure file size is less then 10 MB.");

@@ -28,9 +28,21 @@ public class VehicleTyreReplacementHistory : BaseAuditableEntity
     {
         if (vehicleId == Guid.Empty) throw new ArgumentException("VehicleId is required.", nameof(vehicleId));
         if (odometer < 0) throw new ArgumentException("Odometer cannot be negative.", nameof(odometer));
-        if(numberOfTyres <= 0) throw new ArgumentException("NumberOfTyres should be valid.",nameof(numberOfTyres));
+        if (numberOfTyres <= 0) throw new ArgumentException("NumberOfTyres should be valid.", nameof(numberOfTyres));
         if (cost < 0) throw new ArgumentException("Cost cannot be negative.", nameof(cost));
 
         return new VehicleTyreReplacementHistory(vehicleId, replacementDate, odometer, numberOfTyres, cost);
+    }
+
+    public void Update(DateOnly replacementDate, int odometer, int numberOfTyres, decimal cost)
+    {
+        if (odometer < 0) throw new ArgumentException("Odometer cannot be negative.", nameof(odometer));
+        if (numberOfTyres <= 0) throw new ArgumentException("NumberOfTyres should be valid.", nameof(numberOfTyres));
+        if (cost < 0) throw new ArgumentException("Cost cannot be negative.", nameof(cost));
+
+        ReplacementDate = replacementDate;
+        Odometer = odometer;
+        NumberOfTyres = numberOfTyres;
+        Cost = cost;
     }
 }

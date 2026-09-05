@@ -1,14 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
 using NerjaLogisticsERP.Application.Common.Exceptions;
 using NerjaLogisticsERP.Application.Common.Interfaces;
-using NerjaLogisticsERP.Application.Common.Security;
-using NerjaLogisticsERP.Domain.Constants;
 using NerjaLogisticsERP.Domain.Entities;
 using NerjaLogisticsERP.Domain.Enums;
 
 namespace NerjaLogisticsERP.Application.Salaries.Commands.CreateSalaryFormula;
 
-[Authorize(Roles = Roles.Administrator)]
 public class CreateSalaryFormulaCommandHandler : IRequestHandler<CreateSalaryFormulaCommand, Guid>
 {
     private readonly IApplicationDbContext _context;

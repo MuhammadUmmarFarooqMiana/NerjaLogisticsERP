@@ -13,6 +13,7 @@ using NerjaLogisticsERP.Infrastructure.Data;
 using NerjaLogisticsERP.Infrastructure.Data.Interceptors;
 using NerjaLogisticsERP.Infrastructure.FileStorage;
 using NerjaLogisticsERP.Infrastructure.Identity;
+using NerjaLogisticsERP.Infrastructure.Reports;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -90,5 +91,25 @@ public static class DependencyInjection
         builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
         builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
         builder.Services.AddSingleton<ISalaryCalculator, SalaryCalculator>();
+        builder.Services.AddScoped<IPlatformReconciliationFileParser, PlatformReconciliationFileParser>();
+
+        // PDFsharp targets net10.0 (not net10.0-windows), so it has no automatic access to
+        // system fonts and needs a resolver set once, globally, before any PDF is generated.
+        PdfSharp.Fonts.GlobalFontSettings.FontResolver ??= new PdfWindowsFontResolver();
+
+        // Fallback for every report type that doesn't have a real exporter yet — a specific
+        // registration below (e.g. IReportExporter<OrdersReportDto>) always wins over this
+        // open-generic one, so each report only needs to add its own line here as it ships.
+        builder.Services.AddScoped(typeof(IReportExporter<>), typeof(NotImplementedReportExporter<>));
+        builder.Services.AddScoped<IReportExporter<NerjaLogisticsERP.Application.Reports.Orders.OrdersReportDto>, OrdersReportExporter>();
+        builder.Services.AddScoped<IReportExporter<NerjaLogisticsERP.Application.Reports.Fines.FinesReportDto>, FinesReportExporter>();
+        builder.Services.AddScoped<IReportExporter<NerjaLogisticsERP.Application.Reports.Advances.AdvancesReportDto>, AdvancesReportExporter>();
+        builder.Services.AddScoped<IReportExporter<NerjaLogisticsERP.Application.Reports.Expenses.ExpensesReportDto>, ExpensesReportExporter>();
+        builder.Services.AddScoped<IReportExporter<NerjaLogisticsERP.Application.Reports.Leaves.LeavesReportDto>, LeavesReportExporter>();
+        builder.Services.AddScoped<IReportExporter<NerjaLogisticsERP.Application.Reports.Salaries.SalariesReportDto>, SalariesReportExporter>();
+        builder.Services.AddScoped<IReportExporter<NerjaLogisticsERP.Application.Reports.Vehicles.VehiclesReportDto>, VehiclesReportExporter>();
+        builder.Services.AddScoped<IReportExporter<NerjaLogisticsERP.Application.Reports.Suppliers.SuppliersReportDto>, SuppliersReportExporter>();
+        builder.Services.AddScoped<IReportExporter<NerjaLogisticsERP.Application.Reports.Inventory.InventoryLedgerReportDto>, InventoryLedgerReportExporter>();
+        builder.Services.AddScoped<IReportExporter<NerjaLogisticsERP.Application.Reports.PlatformReconciliation.PlatformReconciliationReportDto>, PlatformReconciliationReportExporter>();
     }
 }

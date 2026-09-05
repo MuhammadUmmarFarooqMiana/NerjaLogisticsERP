@@ -1,0 +1,48 @@
+{
+  "title": "Monthly Summaries",
+  "subtitle": "Generate, verify, and mark employee payroll as paid.",
+  "myTitle": "My Monthly Summary",
+  "mySubtitle": "Your salary, advances, and fines by month.",
+  "generate": "Generate Summary",
+  "verify": "Verify",
+  "markAsPaid": "Mark as Paid",
+  "empty": "No monthly summaries found.",
+  "filters": {
+    "employee": "Employee",
+    "allEmployees": "All Employees",
+    "year": "Year",
+    "month": "Month",
+    "status": "Status",
+    "allStatuses": "All Statuses"
+  },
+  "columns": {
+    "employee": "Employee",
+    "period": "Period",
+    "orders": "Orders",
+    "totalSalary": "Total Salary",
+    "totalAdvances": "Advances",
+    "totalFines": "Fines",
+    "netPayable": "Net Payable",
+    "status": "Status"
+  },
+  "generateDialog": {
+    "title": "Generate Monthly Summary",
+    "employee": "Employee",
+    "year": "Year",
+    "month": "Month",
+    "submit": "Generate"
+  },
+  "markAsPaidDialog": {
+    "title": "Mark as Paid",
+    "paymentReference": "Payment Reference",
+    "submit": "Confirm"
+  },
+  "generateSuccess": "Monthly summary generated.",
+  "verifySuccess": "Summary verified.",
+  "markAsPaidSuccess": "Summary marked as paid.",
+  "genericError": "Something went wrong. Please try again.",
+  "validation": {
+    "yearInvalid": "Enter a valid year.",
+    "monthInvalid": "Month must be between 1 and 12."
+  }
+}

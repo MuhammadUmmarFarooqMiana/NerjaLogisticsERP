@@ -1,0 +1,189 @@
+{
+  "home": {
+    "title": "Reports",
+    "subtitle": "Generate and export reports across the fleet.",
+    "available": "View report",
+    "comingSoon": "Coming soon"
+  },
+  "types": {
+    "orders": "Orders",
+    "expenses": "Expenses",
+    "fines": "Fines",
+    "advances": "Advances",
+    "leaves": "Leaves",
+    "vehicles": "Vehicles",
+    "suppliers": "Suppliers",
+    "inventory": "Inventory Ledgers",
+    "salaries": "Salaries"
+  },
+  "orders": {
+    "title": "Orders Report",
+    "subtitle": "Completed orders across the fleet for the selected period."
+  },
+  "fines": {
+    "title": "Fines Report",
+    "subtitle": "Fines recorded across the fleet for the selected period."
+  },
+  "advances": {
+    "title": "Advances Report",
+    "subtitle": "Salary advances recorded across the fleet for the selected period."
+  },
+  "expenses": {
+    "title": "Expenses Report",
+    "subtitle": "Operating expenses across the fleet for the selected period."
+  },
+  "leaves": {
+    "title": "Leaves Report",
+    "subtitle": "Leave requests across the fleet for the selected period.",
+    "allStatuses": "All Statuses",
+    "columns": {
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "days": "Days",
+      "reviewedBy": "Reviewed By"
+    },
+    "summary": {
+      "totalRequests": "Total Requests",
+      "totalDays": "Total Days",
+      "approvedRejectedPending": "Approved / Rejected / Pending"
+    }
+  },
+  "vehicles": {
+    "title": "Vehicles Report",
+    "subtitle": "Fleet allocation and maintenance history for the selected period.",
+    "columns": {
+      "vehicle": "Vehicle",
+      "recordType": "Record Type",
+      "cost": "Cost"
+    },
+    "filters": {
+      "vehicle": "Vehicle",
+      "allVehicles": "All Vehicles"
+    },
+    "summary": {
+      "totalVehicles": "Total Vehicles",
+      "activeVehicles": "Active Vehicles",
+      "totalMaintenanceCost": "Total Maintenance Cost"
+    }
+  },
+  "suppliers": {
+    "title": "Suppliers Report",
+    "subtitle": "Stock received from suppliers for the selected period.",
+    "columns": {
+      "supplier": "Supplier",
+      "item": "Item",
+      "quantity": "Quantity"
+    },
+    "filters": {
+      "supplier": "Supplier",
+      "allSuppliers": "All Suppliers"
+    },
+    "summary": {
+      "totalSuppliers": "Suppliers",
+      "totalTransactions": "Transactions",
+      "totalQuantityReceived": "Total Quantity Received"
+    }
+  },
+  "inventory": {
+    "title": "Inventory Ledger Report",
+    "subtitle": "Stock movements and running balance for the selected period.",
+    "columns": {
+      "item": "Item",
+      "movementType": "Type",
+      "reference": "Reference",
+      "runningBalance": "Balance"
+    },
+    "filters": {
+      "item": "Item",
+      "allItems": "All Items"
+    },
+    "summary": {
+      "totalIn": "Total In",
+      "totalOut": "Total Out",
+      "netChange": "Net Change"
+    }
+  },
+  "salaries": {
+    "title": "Salaries Report",
+    "subtitle": "Payroll summary across the fleet for the selected period.",
+    "allStatuses": "All Statuses",
+    "columns": {
+      "platformIdNumber": "Platform ID Number",
+      "period": "Period",
+      "orders": "Orders",
+      "totalSalary": "Salary",
+      "totalAdvances": "Advances",
+      "totalFines": "Fines",
+      "netPayable": "Net Payable"
+    },
+    "summary": {
+      "totalSalary": "Total Salary",
+      "totalAdvances": "Total Advances",
+      "totalFines": "Total Fines",
+      "totalNetPayable": "Total Net Payable"
+    }
+  },
+  "periodTypes": {
+    "Daily": "Daily",
+    "Weekly": "Weekly",
+    "Monthly": "Monthly",
+    "Custom": "Custom"
+  },
+  "filters": {
+    "periodType": "Period",
+    "date": "Date",
+    "weekOf": "Week of",
+    "year": "Year",
+    "month": "Month",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "platform": "Platform",
+    "allPlatforms": "All Platforms",
+    "employee": "Employee",
+    "allEmployees": "All Employees"
+  },
+  "months": {
+    "1": "January",
+    "2": "February",
+    "3": "March",
+    "4": "April",
+    "5": "May",
+    "6": "June",
+    "7": "July",
+    "8": "August",
+    "9": "September",
+    "10": "October",
+    "11": "November",
+    "12": "December"
+  },
+  "summary": {
+    "totalCompletedOrders": "Total Completed Orders",
+    "totalSessions": "Rider-Days",
+    "uniqueRiders": "Unique Riders",
+    "totalAmount": "Total Amount",
+    "totalCount": "Count"
+  },
+  "columns": {
+    "employee": "Employee",
+    "platform": "Platform",
+    "orderDate": "Date",
+    "completedOrders": "Completed Orders",
+    "amount": "Amount",
+    "reason": "Reason",
+    "fineDate": "Date",
+    "advanceDate": "Date",
+    "remarks": "Remarks",
+    "category": "Category",
+    "description": "Description",
+    "status": "Status"
+  },
+  "customDateHint": "Choose a start and end date to run this report.",
+  "empty": "No records found for this period.",
+  "preview": "Preview",
+  "print": "Print",
+  "exportPdf": "Export PDF",
+  "exportExcel": "Export Excel",
+  "previewError": "Couldn't open the preview. Please try again.",
+  "printError": "Couldn't open the print dialog. Please try again.",
+  "exportError": "Couldn't export the report. Please try again."
+}

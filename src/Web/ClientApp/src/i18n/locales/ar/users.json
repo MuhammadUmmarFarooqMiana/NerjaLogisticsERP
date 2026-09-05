@@ -1,0 +1,25 @@
+{
+  "list": {
+    "columns": {
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "roles": "الأدوار"
+    },
+    "editRoles": "تعديل الأدوار",
+    "empty": "لا يوجد مستخدمون."
+  },
+  "roleDialog": {
+    "title": "تعديل الأدوار — {{name}}",
+    "description": "اختر كل الأدوار التي يجب أن يمتلكها هذا المستخدم.",
+    "success": "تم تحديث الأدوار.",
+    "submit": "حفظ"
+  },
+  "roles": {
+    "Administrator": "مسؤول",
+    "SoftwareEngineer": "مهندس برمجيات",
+    "Supervisor": "مشرف",
+    "Accountant": "محاسب",
+    "Rider": "سائق"
+  },
+  "genericError": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+}

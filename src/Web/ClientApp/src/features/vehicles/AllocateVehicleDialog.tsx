@@ -1,0 +1,116 @@
+import { Controller, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  MenuItem,
+  Stack,
+  TextField,
+} from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { usePostApiVehiclesAllocateMutation } from '../../api/vehiclesApi';
+import { useGetApiEmployeesQuery } from '../../api/employeesApi';
+import type { VehicleDto } from '../../api/generated/apiSlice';
+import { FormDatePicker } from '../../components/shared/FormDatePicker';
+import { useToast } from '../../components/feedback/ToastContext';
+import { getApiErrorMessages } from '../../lib/apiError';
+import { employeeOptionLabel } from '../../lib/employeeDisplay';
+import { buildAllocateVehicleSchema, type AllocateVehicleFormValues } from './schemas';
+
+interface AllocateVehicleDialogProps {
+  open: boolean;
+  vehicle: VehicleDto | null;
+  onClose: () => void;
+}
+
+const defaultValues: AllocateVehicleFormValues = { employeeId: '', assignedDate: '' };
+
+export function AllocateVehicleDialog({ open, vehicle, onClose }: AllocateVehicleDialogProps) {
+  const { t } = useTranslation('vehicles');
+  const toast = useToast();
+  const { data: employees } = useGetApiEmployeesQuery({ status: 'Active' }, { skip: !open });
+  const [allocate, { isLoading: saving }] = usePostApiVehiclesAllocateMutation();
+
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<AllocateVehicleFormValues>({
+    resolver: zodResolver(buildAllocateVehicleSchema(t)),
+    defaultValues,
+  });
+
+  const handleClose = () => {
+    reset(defaultValues);
+    onClose();
+  };
+
+  const onSubmit = async (values: AllocateVehicleFormValues) => {
+    if (!vehicle?.id) return;
+    try {
+      await allocate({
+        allocateVehicleCommand: { vehicleId: vehicle.id, ...values },
+      }).unwrap();
+      toast.success(t('allocateSuccess'));
+      handleClose();
+    } catch (err) {
+      toast.error(getApiErrorMessages(err, t('genericError')).join('\n'));
+    }
+  };
+
+  return (
+    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+      <DialogTitle>{t('allocateDialog.title', { registrationNumber: vehicle?.registrationNumber })}</DialogTitle>
+      <Box component="form" onSubmit={(event) => void handleSubmit(onSubmit)(event)} noValidate>
+        <DialogContent>
+          <Stack spacing={2} sx={{ mt: 1 }}>
+            <Controller
+              name="employeeId"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  select
+                  label={t('allocateDialog.employee')}
+                  required
+                  fullWidth
+                  error={!!errors.employeeId}
+                  helperText={errors.employeeId?.message}
+                >
+                  {(employees ?? []).map((employee) => (
+                    <MenuItem key={employee.id} value={employee.id}>
+                      {employeeOptionLabel(employee)}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
+            <FormDatePicker
+              name="assignedDate"
+              control={control}
+              label={t('allocateDialog.assignedDate')}
+              required
+            />
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>{t('common:actions.cancel')}</Button>
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={saving}
+            startIcon={saving ? <CircularProgress size={18} color="inherit" /> : undefined}
+          >
+            {t('common:actions.confirm')}
+          </Button>
+        </DialogActions>
+      </Box>
+    </Dialog>
+  );
+}

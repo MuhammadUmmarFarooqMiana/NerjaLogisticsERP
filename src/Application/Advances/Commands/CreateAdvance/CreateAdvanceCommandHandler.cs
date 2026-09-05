@@ -1,12 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using NerjaLogisticsERP.Application.Common.Interfaces;
-using NerjaLogisticsERP.Application.Common.Security;
-using NerjaLogisticsERP.Domain.Constants;
 using NerjaLogisticsERP.Domain.Entities;
 
 namespace NerjaLogisticsERP.Application.Advances.Commands.CreateAdvance;
 
-[Authorize(Roles = Roles.Accountant)]
 public class CreateAdvanceCommandHandler : IRequestHandler<CreateAdvanceCommand, Guid>
 {
     private readonly IApplicationDbContext _context;

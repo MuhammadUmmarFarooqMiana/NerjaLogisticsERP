@@ -3,7 +3,7 @@
 public class CompanyDocument : BaseAuditableEntity
 {
     private CompanyDocument() { }
-    private CompanyDocument(string title, CompanyDocumentCategory category, string storageKey, string originalFileName, string contentType, Guid uploadedBy)
+    private CompanyDocument(string title, CompanyDocumentCategory category, string storageKey, string originalFileName, string contentType, Guid uploadedBy, Guid? folderId)
     {
         Title = title;
         Category = category;
@@ -11,6 +11,7 @@ public class CompanyDocument : BaseAuditableEntity
         OriginalFileName = originalFileName;
         ContentType = contentType;
         UploadedBy = uploadedBy;
+        FolderId = folderId;
     }
 
     public string Title { get; private set; } = default!;
@@ -19,7 +20,10 @@ public class CompanyDocument : BaseAuditableEntity
     public string OriginalFileName { get; private set; } = default!;
     public string ContentType { get; private set; } = default!;
     public Guid UploadedBy { get; private set; }
+    // Null means the document sits at the root, outside any folder.
+    public Guid? FolderId { get; private set; }
+    public CompanyDocumentFolder? Folder { get; private set; }
 
-    public static CompanyDocument Create(string title, CompanyDocumentCategory category, string storageKey, string originalFileName, string contentType, Guid uploadedBy)
-        => new(title, category, storageKey, originalFileName, contentType, uploadedBy);
+    public static CompanyDocument Create(string title, CompanyDocumentCategory category, string storageKey, string originalFileName, string contentType, Guid uploadedBy, Guid? folderId)
+        => new(title, category, storageKey, originalFileName, contentType, uploadedBy, folderId);
 }

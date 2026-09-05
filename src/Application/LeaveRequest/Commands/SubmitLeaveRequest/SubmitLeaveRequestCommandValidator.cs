@@ -4,7 +4,6 @@ public class SubmitLeaveRequestCommandValidator : AbstractValidator<SubmitLeaveR
 {
     public SubmitLeaveRequestCommandValidator()
     {
-        RuleFor(x => x.EmployeeId).NotEmpty();
         RuleFor(x => x.EndDate).GreaterThanOrEqualTo(x => x.StartDate);
     }
 }

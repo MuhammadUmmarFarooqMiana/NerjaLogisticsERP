@@ -13,8 +13,13 @@ namespace NerjaLogisticsERP.Web.Controllers;
 public class InventoryController : ApiControllerBase
 {
     [HttpGet("items")]
-    public async Task<ActionResult<List<InventoryItemDto>>> GetItems([FromQuery] bool? lowStockOnly)
-        => Ok(await Mediator.Send(new GetInventoryItemsQuery { LowStockOnly = lowStockOnly }));
+    public async Task<ActionResult<List<InventoryItemDto>>> GetItems(
+        [FromQuery] bool? lowStockOnly, [FromQuery] int? pageNumber, [FromQuery] int? pageSize)
+    {
+        var result = await Mediator.Send(new GetInventoryItemsQuery { LowStockOnly = lowStockOnly, PageNumber = pageNumber, PageSize = pageSize });
+        AddPaginationHeader(result);
+        return Ok(result.Items);
+    }
 
     [HttpPost("items")]
     public async Task<IActionResult> CreateItem(CreateInventoryItemCommand command)
@@ -24,8 +29,13 @@ public class InventoryController : ApiControllerBase
     }
 
     [HttpGet("items/{itemId}/history")]
-    public async Task<ActionResult<List<StockMovementDto>>> GetHistory(Guid itemId)
-        => Ok(await Mediator.Send(new GetStockHistoryQuery { ItemId = itemId }));
+    public async Task<ActionResult<List<StockMovementDto>>> GetHistory(
+        Guid itemId, [FromQuery] int? pageNumber, [FromQuery] int? pageSize)
+    {
+        var result = await Mediator.Send(new GetStockHistoryQuery { ItemId = itemId, PageNumber = pageNumber, PageSize = pageSize });
+        AddPaginationHeader(result);
+        return Ok(result.Items);
+    }
 
     [HttpPost("stock-in")]
     public async Task<IActionResult> StockIn(RecordStockInCommand command)
@@ -43,6 +53,18 @@ public class InventoryController : ApiControllerBase
 
     [HttpGet("ledger")]
     public async Task<ActionResult<List<StockLedgerEntryDto>>> GetLedger(
-    [FromQuery] Guid? itemId, [FromQuery] DateOnly? fromDate, [FromQuery] DateOnly? toDate)
-    => Ok(await Mediator.Send(new GetStockLedgerQuery { ItemId = itemId, FromDate = fromDate, ToDate = toDate }));
+        [FromQuery] Guid? itemId, [FromQuery] DateOnly? fromDate, [FromQuery] DateOnly? toDate,
+        [FromQuery] int? pageNumber, [FromQuery] int? pageSize)
+    {
+        var result = await Mediator.Send(new GetStockLedgerQuery
+        {
+            ItemId = itemId,
+            FromDate = fromDate,
+            ToDate = toDate,
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        });
+        AddPaginationHeader(result);
+        return Ok(result.Items);
+    }
 }

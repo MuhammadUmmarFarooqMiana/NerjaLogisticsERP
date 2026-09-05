@@ -1,8 +1,8 @@
 using Azure.Identity;
+using Microsoft.AspNetCore.Mvc;
 using NerjaLogisticsERP.Application.Common.Interfaces;
 using NerjaLogisticsERP.Infrastructure.Data;
 using NerjaLogisticsERP.Web.Services;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +17,16 @@ public static class DependencyInjection
         builder.Services.AddHttpContextAccessor();
 
         builder.Services.AddExceptionHandler<ProblemDetailsExceptionHandler>();
+
+        // Safety net for exceptions ProblemDetailsExceptionHandler doesn't recognise (a genuine bug,
+        // a DB outage, etc.): ExceptionHandlerMiddleware falls back to this service, which emits a
+        // generic ProblemDetails body instead of leaking exception details or returning an empty
+        // response. TraceId is attached here so it also covers every response ProblemDetailsExceptionHandler
+        // writes via IProblemDetailsService — a support ticket that quotes it is enough to find the
+        // matching UnhandledExceptionBehaviour log entry server-side, without exposing anything sensitive.
+        builder.Services.AddProblemDetails(options =>
+            options.CustomizeProblemDetails = context =>
+                context.ProblemDetails.Extensions["traceId"] = context.HttpContext.TraceIdentifier);
 
         builder.Services.AddControllers();
 

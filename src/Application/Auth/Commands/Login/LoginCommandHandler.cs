@@ -32,12 +32,12 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResult>
         var employee = await _context.Employees
             .FirstOrDefaultAsync(e => e.UserId == userId, cancellationToken);
 
-        if (employee is null || employee.AccountStatus == AccountStatus.Terminated)
-            throw new ForbiddenAccessException(); //May be Your account is pending approval
+        if (employee is null || employee.AccountStatus is AccountStatus.Terminated or AccountStatus.Suspended)
+            throw new ForbiddenAccessException(); //May be Your account is pending approval or Suspended/Terminated
 
         var roles = await _identityService.GetRolesAsync(userId.Value);
 
-        var accessToken = _jwtService.GenerateAccessToken(userId.Value, request.Email, roles);
+        var accessToken = _jwtService.GenerateAccessToken(userId.Value, request.Email, employee.FullName, roles);
         var refreshToken = await _refreshTokenService.IssueAsync(userId.Value, cancellationToken);
 
         return new LoginResult(accessToken.Token, accessToken.ExpiresAt, refreshToken);

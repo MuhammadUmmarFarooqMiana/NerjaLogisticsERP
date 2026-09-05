@@ -1,12 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using NerjaLogisticsERP.Application.Common.Interfaces;
-using NerjaLogisticsERP.Application.Common.Security;
-using NerjaLogisticsERP.Domain.Constants;
 using NerjaLogisticsERP.Domain.Entities;
 
 namespace NerjaLogisticsERP.Application.Inventory.Commands.RecordStockOut;
 
-[Authorize(Roles = $"{Roles.Administrator},{Roles.Supervisor}")]
 public class RecordStockOutCommandHandler : IRequestHandler<RecordStockOutCommand, Guid>
 {
     private readonly IApplicationDbContext _context;
@@ -24,9 +21,12 @@ public class RecordStockOutCommandHandler : IRequestHandler<RecordStockOutComman
         var employeeExists = await _context.Employees.AnyAsync(e => e.Id == request.EmployeeId, cancellationToken);
         if (!employeeExists) throw new NotFoundException(nameof(Employee), request.EmployeeId.ToString());
 
+        var mechanicExists = await _context.Mechanics.AnyAsync(m => m.Id == request.MechanicId, cancellationToken);
+        if (!mechanicExists) throw new NotFoundException(nameof(Mechanic), request.MechanicId.ToString());
+
         item.IssueStock(request.Quantity);   // throws InvalidOperationException if insufficient — mapped below
 
-        var stockOut = StockOut.Create(request.ItemId, request.EmployeeId, request.Quantity, request.StockDate, _currentUser.Id!.Value);
+        var stockOut = StockOut.Create(request.ItemId, request.EmployeeId, request.MechanicId, request.Quantity, request.StockDate, _currentUser.Id!.Value);
         _context.StockOuts.Add(stockOut);
         await _context.SaveChangesAsync(cancellationToken);
 

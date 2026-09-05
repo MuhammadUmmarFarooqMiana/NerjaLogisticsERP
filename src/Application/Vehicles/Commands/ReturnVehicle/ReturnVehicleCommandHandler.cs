@@ -1,11 +1,8 @@
 ﻿using NerjaLogisticsERP.Application.Common.Interfaces;
-using NerjaLogisticsERP.Application.Common.Security;
-using NerjaLogisticsERP.Domain.Constants;
 using NerjaLogisticsERP.Domain.Entities;
 
 namespace NerjaLogisticsERP.Application.Vehicles.Commands.ReturnVehicle;
 
-[Authorize(Roles = $"{Roles.Administrator},{Roles.Supervisor}")]
 public class ReturnVehicleCommandHandler : IRequestHandler<ReturnVehicleCommand>
 {
     private readonly IApplicationDbContext _context;
@@ -17,6 +14,11 @@ public class ReturnVehicleCommandHandler : IRequestHandler<ReturnVehicleCommand>
             ?? throw new NotFoundException(nameof(VehicleAllocationHistory), request.AllocationId.ToString());
 
         allocation.ReturnVehicle(request.ReturnedDate);
+
+        var employee = await _context.Employees.FindAsync(new object[] { allocation.EmployeeId }, cancellationToken);
+        if (employee?.VehicleId == allocation.VehicleId)
+            employee.UnassignVehicle();
+
         await _context.SaveChangesAsync(cancellationToken);
     }
 }

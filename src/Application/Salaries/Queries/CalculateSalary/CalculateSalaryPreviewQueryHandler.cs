@@ -18,10 +18,12 @@ public class CalculateSalaryPreviewQueryHandler : IRequestHandler<CalculateSalar
         var employee = await _context.Employees.FindAsync(new object[] { request.EmployeeId }, cancellationToken)
             ?? throw new NotFoundException(nameof(Employee), request.EmployeeId.ToString());
 
+        // Approved only — mirrors GenerateMonthlySummaryCommandHandler, since this
+        // preview should reflect the same settled numbers an actual summary would.
         var totalOrders = await _context.DailyOrders
             .Where(o => o.EmployeeId == request.EmployeeId
                 && o.OrderDate.Year == request.Year && o.OrderDate.Month == request.Month
-                && o.Status == DailyOrderStatus.Closed)
+                && o.Status == DailyOrderStatus.Approved)
             .SumAsync(o => o.CompletedOrders, cancellationToken);
 
         var asOf = new DateOnly(request.Year, request.Month, 1);

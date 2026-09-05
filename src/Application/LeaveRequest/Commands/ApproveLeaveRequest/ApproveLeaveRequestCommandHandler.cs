@@ -1,10 +1,9 @@
-﻿using NerjaLogisticsERP.Application.Common.Interfaces;
-using NerjaLogisticsERP.Application.Common.Security;
+﻿using NerjaLogisticsERP.Application.Common.Exceptions;
+using NerjaLogisticsERP.Application.Common.Interfaces;
 using NerjaLogisticsERP.Domain.Constants;
 
 namespace NerjaLogisticsERP.Application.LeaveRequest.Commands.ApproveLeaveRequest;
 
-[Authorize(Roles = $"{Roles.Administrator},{Roles.Supervisor}")]
 public class ApproveLeaveRequestCommandHandler : IRequestHandler<ApproveLeaveRequestCommand>
 {
     private readonly IApplicationDbContext _context;
@@ -17,6 +16,18 @@ public class ApproveLeaveRequestCommandHandler : IRequestHandler<ApproveLeaveReq
     {
         var leave = await _context.LeaveRequests.FindAsync(new object[] { request.LeaveRequestId }, cancellationToken)
             ?? throw new NotFoundException(nameof(LeaveRequest), request.LeaveRequestId.ToString());
+
+        // A plain Supervisor may only review their own reports' requests —
+        // Administrator is unrestricted.
+        var isAdministrator = _currentUser.Roles?.Contains(Roles.Administrator) ?? false;
+        if (!isAdministrator)
+        {
+            var userId = _currentUser.Id!.Value;
+            var isOwnReport = await _context.Employees.AnyAsync(
+                e => e.Id == leave.EmployeeId && e.Supervisor != null && e.Supervisor.UserId == userId,
+                cancellationToken);
+            if (!isOwnReport) throw new ForbiddenAccessException();
+        }
 
         leave.Approve(_currentUser.Id!.Value);
         await _context.SaveChangesAsync(cancellationToken);

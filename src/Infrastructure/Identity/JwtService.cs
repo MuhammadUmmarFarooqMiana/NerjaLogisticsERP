@@ -17,7 +17,7 @@ public class JwtService : IJwtService
         _configuration = configuration;
     }
 
-    public AccessTokenResult GenerateAccessToken(Guid userId, string email, IEnumerable<string> roles)
+    public AccessTokenResult GenerateAccessToken(Guid userId, string email, string fullName, IEnumerable<string> roles)
     {
         var jwtKey = _configuration["Jwt:Key"]
        ?? throw new InvalidOperationException("Jwt:Key is not configured.");
@@ -33,6 +33,7 @@ public class JwtService : IJwtService
         {
             new(ClaimTypes.NameIdentifier, userId.ToString()),
             new(ClaimTypes.Email, email),
+            new("fullName", fullName),
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
         claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));

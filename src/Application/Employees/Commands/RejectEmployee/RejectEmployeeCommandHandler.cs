@@ -1,11 +1,8 @@
 ﻿using NerjaLogisticsERP.Application.Common.Interfaces;
-using NerjaLogisticsERP.Application.Common.Security;
-using NerjaLogisticsERP.Domain.Constants;
 using NerjaLogisticsERP.Domain.Entities;
 
 namespace NerjaLogisticsERP.Application.Employees.Commands.RejectEmployee;
 
-[Authorize(Roles = $"{Roles.Administrator},{Roles.Supervisor}")]
 public class RejectEmployeeCommandHandler : IRequestHandler<RejectEmployeeCommand>
 {
     private readonly IApplicationDbContext _context;

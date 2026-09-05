@@ -95,6 +95,30 @@ public class IdentityService : IIdentityService
         return result.ToApplicationResult();
     }
 
+    public async Task<Result> RemoveFromRoleAsync(Guid userId, string role)
+    {
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+        if (user is null)
+            return Result.Failure(new[] { "User not found." });
+
+        var result = await _userManager.RemoveFromRoleAsync(user, role);
+        return result.ToApplicationResult();
+    }
+
+    public async Task<List<UserSummaryDto>> GetAllUsersAsync()
+    {
+        var users = _userManager.Users.ToList();
+        var summaries = new List<UserSummaryDto>(users.Count);
+
+        foreach (var user in users)
+        {
+            var roles = await _userManager.GetRolesAsync(user);
+            summaries.Add(new UserSummaryDto { Id = user.Id, Email = user.Email, Roles = roles });
+        }
+
+        return summaries;
+    }
+
     public async Task<Result> DeleteUserAsync(string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -128,5 +152,29 @@ public class IdentityService : IIdentityService
     {
         var users = await _userManager.GetUsersInRoleAsync(role);
         return users.Select(u => u.Id).ToList();
+    }
+
+    public async Task<Result> ChangePasswordAsync(Guid userId, string currentPassword, string newPassword)
+    {
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+        if (user is null)
+            return Result.Failure(new[] { "User not found." });
+
+        var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+        return result.ToApplicationResult();
+    }
+
+    public async Task<UserProfileDto?> GetUserProfileAsync(Guid userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+        if (user is null) return null;
+
+        return new UserProfileDto
+        {
+            Email = user.Email,
+            PhoneNumber = user.PhoneNumber,
+            HasWhatsApp = user.HasWhatsApp,
+            EmailConfirmed = user.EmailConfirmed
+        };
     }
 }

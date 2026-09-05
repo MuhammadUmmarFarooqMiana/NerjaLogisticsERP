@@ -13,7 +13,7 @@ namespace NerjaLogisticsERP.Web.Controllers;
 public class EmployeeDocumentsController : ApiControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> Upload([FromForm] Guid employeeId, [FromForm] EmployeeDocumentType type, IFormFile file)
+    public async Task<IActionResult> Upload([FromForm] Guid? employeeId, [FromForm] EmployeeDocumentType type, IFormFile file)
     {
         using var memoryStream = new MemoryStream();
         await file.CopyToAsync(memoryStream);

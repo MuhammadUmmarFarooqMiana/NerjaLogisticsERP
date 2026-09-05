@@ -1,14 +1,15 @@
 ﻿using NerjaLogisticsERP.Application.Common.Interfaces;
+using NerjaLogisticsERP.Application.Common.Models;
 
 namespace NerjaLogisticsERP.Application.Inventory.Queries.GetStockLedger;
 
-public class GetStockLedgerQueryHandler : IRequestHandler<GetStockLedgerQuery, List<StockLedgerEntryDto>>
+public class GetStockLedgerQueryHandler : IRequestHandler<GetStockLedgerQuery, PaginatedList<StockLedgerEntryDto>>
 {
     private readonly IApplicationDbContext _context;
 
     public GetStockLedgerQueryHandler(IApplicationDbContext context) => _context = context;
 
-    public async Task<List<StockLedgerEntryDto>> Handle(GetStockLedgerQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedList<StockLedgerEntryDto>> Handle(GetStockLedgerQuery request, CancellationToken cancellationToken)
     {
         var insQuery = _context.StockIns.AsQueryable();
         var outsQuery = _context.StockOuts.AsQueryable();
@@ -53,12 +54,13 @@ public class GetStockLedgerQueryHandler : IRequestHandler<GetStockLedgerQuery, L
                 Type = "Out",
                 Quantity = s.Quantity,
                 Date = s.StockDate,
-                Detail = s.Employee.FullName
+                Detail = s.Mechanic != null ? $"{s.Employee.FullName} (Mechanic: {s.Mechanic.Name})" : s.Employee.FullName
             })
             .ToListAsync(cancellationToken);
 
-        return ins.Concat(outs)
+        var items = ins.Concat(outs)
             .OrderByDescending(e => e.Date)
             .ToList();
+        return PaginatedList<StockLedgerEntryDto>.Create(items, request.PageNumber, request.PageSize);
     }
 }

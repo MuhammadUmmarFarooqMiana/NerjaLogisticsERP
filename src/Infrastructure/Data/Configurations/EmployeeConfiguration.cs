@@ -39,6 +39,12 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
         builder.Property(e => e.RejectionReason)
            .HasMaxLength(5000);
 
+        builder.Property(e => e.ProfilePictureStorageKey)
+            .HasMaxLength(500);
+
+        builder.Property(e => e.ProfilePictureContentType)
+            .HasMaxLength(100);
+
         // Store enums as readable strings, not raw ints — future-you (or a DBA
         // running ad-hoc queries) will thank you when AccountStatus reads
         // "Suspended" in a query result instead of "2".

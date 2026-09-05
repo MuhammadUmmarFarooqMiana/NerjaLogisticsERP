@@ -1,7 +1,10 @@
-﻿using NerjaLogisticsERP.Domain.Enums;
+﻿using NerjaLogisticsERP.Application.Common.Security;
+using NerjaLogisticsERP.Domain.Constants;
+using NerjaLogisticsERP.Domain.Enums;
 
 namespace NerjaLogisticsERP.Application.Expenses.Commands.CreateExpense;
 
+[Authorize(Roles = $"{Roles.Administrator},{Roles.Accountant}")]
 public record CreateExpenseCommand : IRequest<Guid>
 {
     public ExpenseCategory Category { get; init; }

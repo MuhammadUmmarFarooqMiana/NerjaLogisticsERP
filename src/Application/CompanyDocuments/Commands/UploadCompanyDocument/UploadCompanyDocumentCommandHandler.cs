@@ -1,11 +1,9 @@
-﻿using NerjaLogisticsERP.Application.Common.Interfaces;
-using NerjaLogisticsERP.Application.Common.Security;
-using NerjaLogisticsERP.Domain.Constants;
+﻿using NerjaLogisticsERP.Application.Common.Exceptions;
+using NerjaLogisticsERP.Application.Common.Interfaces;
 using NerjaLogisticsERP.Domain.Entities;
 
 namespace NerjaLogisticsERP.Application.CompanyDocuments.Commands.UploadCompanyDocument;
 
-[Authorize(Roles = Roles.Administrator)]
 public class UploadCompanyDocumentCommandHandler : IRequestHandler<UploadCompanyDocumentCommand, Guid>
 {
     private readonly IApplicationDbContext _context;
@@ -17,8 +15,14 @@ public class UploadCompanyDocumentCommandHandler : IRequestHandler<UploadCompany
 
     public async Task<Guid> Handle(UploadCompanyDocumentCommand request, CancellationToken cancellationToken)
     {
+        if (request.FolderId.HasValue)
+        {
+            var folderExists = await _context.CompanyDocumentFolders.AnyAsync(f => f.Id == request.FolderId, cancellationToken);
+            if (!folderExists) throw new NotFoundException(nameof(CompanyDocumentFolder), request.FolderId.Value.ToString());
+        }
+
         var storageKey = await _storage.SaveAsync(request.Content, request.FileName, "company", cancellationToken);
-        var doc = CompanyDocument.Create(request.Title, request.Category, storageKey, request.FileName, request.ContentType, _currentUser.Id!.Value);
+        var doc = CompanyDocument.Create(request.Title, request.Category, storageKey, request.FileName, request.ContentType, _currentUser.Id!.Value, request.FolderId);
         _context.CompanyDocuments.Add(doc);
         await _context.SaveChangesAsync(cancellationToken);
         return doc.Id;

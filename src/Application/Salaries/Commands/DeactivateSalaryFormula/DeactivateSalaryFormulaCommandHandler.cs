@@ -1,11 +1,8 @@
 ﻿using NerjaLogisticsERP.Application.Common.Interfaces;
-using NerjaLogisticsERP.Application.Common.Security;
-using NerjaLogisticsERP.Domain.Constants;
 using NerjaLogisticsERP.Domain.Entities;
 
 namespace NerjaLogisticsERP.Application.Salaries.Commands.DeactivateSalaryFormula;
 
-[Authorize(Roles = Roles.Administrator)]
 public class DeactivateSalaryFormulaCommandHandler : IRequestHandler<DeactivateSalaryFormulaCommand>
 {
     private readonly IApplicationDbContext _context;

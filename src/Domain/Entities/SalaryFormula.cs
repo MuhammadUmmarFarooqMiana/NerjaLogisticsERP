@@ -51,4 +51,24 @@ public class SalaryFormula : BaseAuditableEntity
 
         EffectiveTo = effectiveTo;
     }
+
+    public void UpdateFixedMonthlyAmount(decimal amount)
+    {
+        if (FormulaType != SalaryFormulaType.FixedMonthly)
+            throw new InvalidOperationException("Only FixedMonthly formulas have a fixed monthly amount.");
+        if (amount <= 0) throw new ArgumentException("Fixed monthly amount must be greater than zero.", nameof(amount));
+
+        FixedMonthlyAmount = amount;
+    }
+
+    /// <summary>Wholesale replace: clears the existing tiers and re-adds the given set, applying AddTier's invariants to each.</summary>
+    public void ReplaceTiers(IEnumerable<(int MinOrders, int? MaxOrders, SalaryTierRateType RateType, decimal Rate)> tiers)
+    {
+        if (FormulaType != SalaryFormulaType.TieredPerOrder)
+            throw new InvalidOperationException("Tiers can only be set on a TieredPerOrder formula.");
+
+        _tiers.Clear();
+        foreach (var tier in tiers)
+            AddTier(tier.MinOrders, tier.MaxOrders, tier.RateType, tier.Rate);
+    }
 }

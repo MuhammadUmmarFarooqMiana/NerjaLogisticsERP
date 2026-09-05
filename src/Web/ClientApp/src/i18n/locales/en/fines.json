@@ -1,0 +1,33 @@
+{
+  "title": "Fines",
+  "subtitle": "Record and review employee fines.",
+  "myTitle": "My Fines",
+  "mySubtitle": "Fines recorded against your account.",
+  "addFine": "Add Fine",
+  "columns": {
+    "employee": "Employee",
+    "amount": "Amount",
+    "reason": "Reason",
+    "fineDate": "Date"
+  },
+  "filters": {
+    "employee": "Employee",
+    "allEmployees": "All Employees",
+    "startDate": "Start Date",
+    "endDate": "End Date"
+  },
+  "empty": "No fines found.",
+  "createDialog": {
+    "title": "Add Fine",
+    "employee": "Employee",
+    "amount": "Amount",
+    "reason": "Reason",
+    "fineDate": "Fine Date",
+    "submit": "Save"
+  },
+  "createSuccess": "Fine recorded.",
+  "genericError": "Something went wrong. Please try again.",
+  "validation": {
+    "amountPositive": "Amount must be greater than 0."
+  }
+}

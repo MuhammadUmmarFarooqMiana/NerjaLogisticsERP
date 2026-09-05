@@ -1,0 +1,68 @@
+{
+  "title": "معادلات الرواتب",
+  "subtitle": "تكوين قواعد معدل الأجر لكل منصة (أو الافتراضي العام).",
+  "addFormula": "إضافة معادلة",
+  "genericDefault": "عام (افتراضي)",
+  "active": "نشط",
+  "deactivate": "إلغاء التفعيل",
+  "deactivateConfirmTitle": "إلغاء تفعيل هذه المعادلة؟",
+  "deactivateConfirmDescription": "بعد إلغاء التفعيل، لن تُطبّق هذه المعادلة على حسابات الرواتب الجديدة من اليوم.",
+  "deactivateSuccess": "تم إلغاء تفعيل المعادلة.",
+  "empty": "لا توجد معادلات رواتب.",
+  "filters": {
+    "platform": "المنصة",
+    "allPlatforms": "كل المنصات",
+    "activeOnly": "النشطة فقط"
+  },
+  "columns": {
+    "platform": "المنصة",
+    "formulaType": "النوع",
+    "fixedMonthlyAmount": "المبلغ الثابت",
+    "effectiveFrom": "ساري من",
+    "status": "الحالة"
+  },
+  "formulaTypes": {
+    "TieredPerOrder": "متدرج لكل طلب",
+    "FixedMonthly": "ثابت شهري"
+  },
+  "rateTypes": {
+    "PerOrder": "لكل طلب",
+    "FixedTotal": "إجمالي ثابت"
+  },
+  "createDialog": {
+    "title": "إضافة معادلة راتب",
+    "platform": "المنصة",
+    "genericDefault": "عام (افتراضي)",
+    "formulaType": "نوع المعادلة",
+    "effectiveFrom": "ساري من",
+    "fixedMonthlyAmount": "المبلغ الشهري الثابت",
+    "tiers": "الشرائح",
+    "minOrders": "الحد الأدنى للطلبات",
+    "maxOrders": "الحد الأقصى للطلبات",
+    "rateType": "نوع المعدل",
+    "rate": "المعدل",
+    "removeTier": "إزالة الشريحة",
+    "addTier": "إضافة شريحة",
+    "submit": "حفظ"
+  },
+  "detailDialog": {
+    "title": "تفاصيل معادلة الراتب",
+    "platform": "المنصة",
+    "formulaType": "نوع المعادلة",
+    "effectiveFrom": "ساري من",
+    "status": "الحالة",
+    "deactivatedNotice": "تم إلغاء تفعيل هذه المعادلة ولم يعد بالإمكان تعديلها.",
+    "viewOnlyNotice": "يمكن للمسؤولين فقط تعديل معادلات الرواتب.",
+    "save": "حفظ التغييرات"
+  },
+  "createSuccess": "تم إنشاء معادلة الراتب.",
+  "updateSuccess": "تم تحديث معادلة الراتب.",
+  "genericError": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+  "validation": {
+    "minOrdersNonNegative": "يجب أن يكون 0 أو أكبر.",
+    "ratePositive": "يجب أن يكون 0 أو أكبر.",
+    "fixedAmountPositive": "يجب أن يكون المبلغ الثابت أكبر من 0.",
+    "tiersRequired": "مطلوب شريحة واحدة على الأقل.",
+    "maxOrdersInvalid": "يجب أن يكون الحد الأقصى للطلبات أكبر من أو يساوي الحد الأدنى."
+  }
+}

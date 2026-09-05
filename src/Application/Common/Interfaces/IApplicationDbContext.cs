@@ -4,9 +4,6 @@ namespace NerjaLogisticsERP.Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {
-    DbSet<TodoList> TodoLists { get; }
-    DbSet<TodoItem> TodoItems { get; }
-
     DbSet<Platform> Platforms { get; }
     DbSet<Employee> Employees { get; }
     DbSet<Vehicle> Vehicles { get; }
@@ -29,6 +26,8 @@ public interface IApplicationDbContext
     DbSet<StockIn> StockIns { get; }
     DbSet<StockOut> StockOuts { get; }
     DbSet<Supplier> Suppliers { get; }
+    DbSet<Mechanic> Mechanics { get; }
+    DbSet<CompanyDocumentFolder> CompanyDocumentFolders { get; }
     DbSet<Notification> Notifications { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);

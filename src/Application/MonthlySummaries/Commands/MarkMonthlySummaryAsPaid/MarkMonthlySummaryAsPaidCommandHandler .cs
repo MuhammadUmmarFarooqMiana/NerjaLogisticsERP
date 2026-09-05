@@ -1,11 +1,8 @@
 ﻿using NerjaLogisticsERP.Application.Common.Interfaces;
-using NerjaLogisticsERP.Application.Common.Security;
-using NerjaLogisticsERP.Domain.Constants;
 using NerjaLogisticsERP.Domain.Entities;
 
 namespace NerjaLogisticsERP.Application.MonthlySummaries.Commands.MarkMonthlySummaryAsPaid;
 
-[Authorize(Roles = Roles.Accountant)]
 public class MarkMonthlySummaryAsPaidCommandHandler : IRequestHandler<MarkMonthlySummaryAsPaidCommand>
 {
     private readonly IApplicationDbContext _context;

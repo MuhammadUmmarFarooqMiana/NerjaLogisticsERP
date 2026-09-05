@@ -29,20 +29,22 @@ public class RefreshCommandHandler : IRequestHandler<RefreshTokenCommand, Refres
         if (userId is null)
             throw new UnauthorizedAccessException("Invalid or expired refresh token.");
 
-        // Re-check account status on every refresh, not just at login — if an
-        // Administrator suspends someone mid-session, their next refresh should
-        // fail rather than silently keep minting valid access tokens.
+        // Re-check account status on every refresh, not just at login — mirrors
+        // LoginCommandHandler's check (block only Terminated). Incomplete/
+        // PendingReview/Rejected/Suspended riders must stay logged in long
+        // enough to submit or resubmit their profile; requiring Active here
+        // would silently kill their session within one access-token lifetime.
         var employee = await _context.Employees
             .FirstOrDefaultAsync(e => e.UserId == userId, cancellationToken);
 
-        if (employee is null || employee.AccountStatus != AccountStatus.Active)
+        if (employee is null || employee.AccountStatus == AccountStatus.Terminated)
             throw new ForbiddenAccessException();
 
         var email = await _identityService.GetUserNameAsync(userId.Value)
             ?? throw new UnauthorizedAccessException("User not found.");
         var roles = await _identityService.GetRolesAsync(userId.Value);
 
-        var accessToken = _jwtService.GenerateAccessToken(userId.Value, email, roles);
+        var accessToken = _jwtService.GenerateAccessToken(userId.Value, email, employee.FullName, roles);
         var newRefreshToken = await _refreshTokenService.IssueAsync(userId.Value, cancellationToken);
 
         return new RefreshTokenResult(accessToken.Token, accessToken.ExpiresAt, newRefreshToken);

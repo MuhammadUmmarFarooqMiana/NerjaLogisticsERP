@@ -42,6 +42,10 @@ public class Employee : BaseAuditableEntity
     public Guid? SupervisorId { get; private set; }
     public Employee? Supervisor { get; private set; }
 
+    public string? ProfilePictureStorageKey { get; private set; }
+
+    public string? ProfilePictureContentType { get; private set; }
+
     public AccountStatus AccountStatus { get; private set; } = AccountStatus.Incomplete;
 
     // Meaningful for Riders; harmless default for Supervisor/Accountant.
@@ -65,6 +69,7 @@ public class Employee : BaseAuditableEntity
     /// </summary>
     public void SubmitProfileForReview(
         string iqamaNumber,
+        string? platformIdNumber,
         DateOnly? idExpiryDate,
         DateOnly? iqamaExpiryDate,
         DateOnly? drivingLicenseExpiryDate,
@@ -76,10 +81,14 @@ public class Employee : BaseAuditableEntity
         if (string.IsNullOrWhiteSpace(iqamaNumber))
             throw new ArgumentException("Iqama number is required.", nameof(iqamaNumber));
 
-        if (ProfileSubmittedAt is not null)
-            throw new InvalidOperationException("Profile has already been submitted.");
-
         IqamaNumber = iqamaNumber;
+        // Riders must supply this at submission time (enforced by
+        // SubmitProfileForReviewCommandValidator); AdminCreateEmployee only
+        // sends it when a platform applies to the role being created, so this
+        // stays a soft set here rather than another unconditional throw —
+        // don't blank out an already-set value on resubmission if omitted.
+        if (!string.IsNullOrWhiteSpace(platformIdNumber))
+            PlatformIdNumber = platformIdNumber;
         IdExpiryDate = idExpiryDate;
         IqamaExpiryDate = iqamaExpiryDate;
         DrivingLicenseExpiryDate = drivingLicenseExpiryDate;
@@ -92,15 +101,16 @@ public class Employee : BaseAuditableEntity
         AddDomainEvent(new EmployeeProfileSubmittedEvent(this));
     }
 
-    public void AssignPlatform(Guid platformId, string platformIdNumber)
+    // PlatformIdNumber is no longer set here — it's collected from the rider
+    // during SubmitProfileForReview. This just links the internal Platform
+    // record, decoupled from the ID number so it can be assigned/changed at
+    // approval time without touching what the rider already provided.
+    public void AssignPlatform(Guid platformId)
     {
         if (platformId == Guid.Empty)
             throw new ArgumentException("PlatformId is required.", nameof(platformId));
-        if (string.IsNullOrWhiteSpace(platformIdNumber))
-            throw new ArgumentException("Platform ID number is required.", nameof(platformIdNumber));
 
         PlatformId = platformId;
-        PlatformIdNumber = platformIdNumber;
     }
 
     public void AssignVehicle(Guid vehicleId)
@@ -112,6 +122,11 @@ public class Employee : BaseAuditableEntity
             throw new ArgumentException("VehicleId is required.", nameof(vehicleId));
 
         VehicleId = vehicleId;
+    }
+
+    public void UnassignVehicle()
+    {
+        VehicleId = null;
     }
 
     public void AssignSupervisor(Guid supervisorId)
@@ -138,6 +153,33 @@ public class Employee : BaseAuditableEntity
         if (platformId == Guid.Empty)
             throw new ArgumentException("Platform is required.", nameof(platformId));
 
+        IqamaNumber = iqamaNumber;
+        PlatformId = platformId;
+        IdExpiryDate = idExpiryDate;
+        IqamaExpiryDate = iqamaExpiryDate;
+        DrivingLicenseExpiryDate = drivingLicenseExpiryDate;
+        InsuranceExpiryDate = insuranceExpiryDate;
+    }
+
+    /// <summary>
+    /// Administrator-driven correction, usable at any point in the lifecycle — unlike
+    /// UpdateProfile (the rider's own pre-submission edit), this isn't blocked once the
+    /// profile has been submitted/approved, since an admin may need to fix a typo or update
+    /// details for an already-Active employee.
+    /// </summary>
+    public void AdminUpdateProfile(
+        string fullName,
+        string? iqamaNumber,
+        Guid? platformId,
+        DateOnly? idExpiryDate,
+        DateOnly? iqamaExpiryDate,
+        DateOnly? drivingLicenseExpiryDate,
+        DateOnly? insuranceExpiryDate)
+    {
+        if (string.IsNullOrWhiteSpace(fullName))
+            throw new ArgumentException("Employee name is required.", nameof(fullName));
+
+        FullName = fullName;
         IqamaNumber = iqamaNumber;
         PlatformId = platformId;
         IdExpiryDate = idExpiryDate;
@@ -177,6 +219,27 @@ public class Employee : BaseAuditableEntity
     public void UpdatePerformanceStatus(PerformanceStatus status)
     {
         PerformanceStatus = status;
+    }
+
+    /// <summary>
+    /// Points at the currently-stored file (if any) so the caller can delete it from storage
+    /// before it's overwritten below — the entity itself only tracks the key, not the bytes.
+    /// </summary>
+    public string? SetProfilePicture(string storageKey, string contentType)
+    {
+        var previousStorageKey = ProfilePictureStorageKey;
+        ProfilePictureStorageKey = storageKey;
+        ProfilePictureContentType = contentType;
+        return previousStorageKey;
+    }
+
+    /// <returns>The previously-stored key, so the caller can delete it from storage — null if there was none.</returns>
+    public string? RemoveProfilePicture()
+    {
+        var previousStorageKey = ProfilePictureStorageKey;
+        ProfilePictureStorageKey = null;
+        ProfilePictureContentType = null;
+        return previousStorageKey;
     }
 
     // --- AccountStatus states ---

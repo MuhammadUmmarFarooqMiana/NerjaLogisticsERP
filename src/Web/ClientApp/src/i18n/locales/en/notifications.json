@@ -1,0 +1,12 @@
+{
+  "title": "Notifications",
+  "empty": "You're all caught up — no notifications.",
+  "markAllAsRead": "Mark all as read",
+  "unreadCount": "{{count}} unread",
+  "time": {
+    "justNow": "just now",
+    "minutesAgo": "{{count}}m ago",
+    "hoursAgo": "{{count}}h ago",
+    "daysAgo": "{{count}}d ago"
+  }
+}

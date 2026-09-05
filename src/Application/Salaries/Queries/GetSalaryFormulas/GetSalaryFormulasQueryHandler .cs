@@ -1,13 +1,15 @@
 ﻿using NerjaLogisticsERP.Application.Common.Interfaces;
+using NerjaLogisticsERP.Application.Common.Mappings;
+using NerjaLogisticsERP.Application.Common.Models;
 
 namespace NerjaLogisticsERP.Application.Salaries.Queries.GetSalaryFormulas;
 
-public class GetSalaryFormulasQueryHandler : IRequestHandler<GetSalaryFormulasQuery, List<SalaryFormulaDto>>
+public class GetSalaryFormulasQueryHandler : IRequestHandler<GetSalaryFormulasQuery, PaginatedList<SalaryFormulaDto>>
 {
     private readonly IApplicationDbContext _context;
     public GetSalaryFormulasQueryHandler(IApplicationDbContext context) => _context = context;
 
-    public async Task<List<SalaryFormulaDto>> Handle(GetSalaryFormulasQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedList<SalaryFormulaDto>> Handle(GetSalaryFormulasQuery request, CancellationToken cancellationToken)
     {
         var query = _context.SalaryFormulas.Include(f => f.Tiers).Include(f => f.Platform).AsQueryable();
 
@@ -36,6 +38,6 @@ public class GetSalaryFormulasQueryHandler : IRequestHandler<GetSalaryFormulasQu
                     Rate = t.Rate
                 }).ToList()
             })
-            .ToListAsync(cancellationToken);
+            .ToPaginatedListAsync(request.PageNumber, request.PageSize, cancellationToken);
     }
 }

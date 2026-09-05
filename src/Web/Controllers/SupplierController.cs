@@ -10,7 +10,12 @@ namespace NerjaLogisticsERP.Web.Controllers;
 public class SuppliersController : ApiControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<List<SupplierDto>>> GetAll() => Ok(await Mediator.Send(new GetSuppliersQuery()));
+    public async Task<ActionResult<List<SupplierDto>>> GetAll([FromQuery] int? pageNumber, [FromQuery] int? pageSize)
+    {
+        var result = await Mediator.Send(new GetSuppliersQuery { PageNumber = pageNumber, PageSize = pageSize });
+        AddPaginationHeader(result);
+        return Ok(result.Items);
+    }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<SupplierDto>> GetById(Guid id) => Ok(await Mediator.Send(new GetSupplierByIdQuery { Id = id }));

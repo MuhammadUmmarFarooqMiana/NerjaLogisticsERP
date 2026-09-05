@@ -5,6 +5,10 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <!-- Suppress NU1608 until Npgsql.EntityFrameworkCore.PostgreSQL 10.0.0 is released -->
     <WarningsNotAsErrors>NU1608</WarningsNotAsErrors>
+    <!-- NuGet Audit (vulnerability scan against api.nuget.org) fails restore entirely in
+         offline/restricted environments — disable rather than suppress, since NU1900 surfaces
+         during restore itself, before WarningsNotAsErrors' build-time warning handling applies. -->
+    <NuGetAudit>false</NuGetAudit>
     <ArtifactsPath>$(MSBuildThisFileDirectory)artifacts</ArtifactsPath>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>

@@ -1,0 +1,12 @@
+{
+  "title": "الإشعارات",
+  "empty": "لا توجد إشعارات جديدة.",
+  "markAllAsRead": "تعليم الكل كمقروء",
+  "unreadCount": "{{count}} غير مقروءة",
+  "time": {
+    "justNow": "الآن",
+    "minutesAgo": "منذ {{count}} دقيقة",
+    "hoursAgo": "منذ {{count}} ساعة",
+    "daysAgo": "منذ {{count}} يوم"
+  }
+}

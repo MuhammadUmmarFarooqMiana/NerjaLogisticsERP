@@ -1,5 +1,9 @@
-﻿namespace NerjaLogisticsERP.Application.Vehicles.Commands.AddVehicleOilChangeRecord;
+﻿using NerjaLogisticsERP.Application.Common.Security;
+using NerjaLogisticsERP.Domain.Constants;
 
+namespace NerjaLogisticsERP.Application.Vehicles.Commands.AddVehicleOilChangeRecord;
+
+[Authorize(Roles = $"{Roles.Administrator},{Roles.Accountant}")]
 public record AddVehicleOilChangeRecordCommand : IRequest<Guid>
 {
     public Guid VehicleId { get; init; }

@@ -1,0 +1,33 @@
+{
+  "title": "الغرامات",
+  "subtitle": "تسجيل ومراجعة غرامات الموظفين.",
+  "myTitle": "غراماتي",
+  "mySubtitle": "الغرامات المسجلة على حسابك.",
+  "addFine": "إضافة غرامة",
+  "columns": {
+    "employee": "الموظف",
+    "amount": "المبلغ",
+    "reason": "السبب",
+    "fineDate": "التاريخ"
+  },
+  "filters": {
+    "employee": "الموظف",
+    "allEmployees": "كل الموظفين",
+    "startDate": "تاريخ البدء",
+    "endDate": "تاريخ الانتهاء"
+  },
+  "empty": "لا توجد غرامات.",
+  "createDialog": {
+    "title": "إضافة غرامة",
+    "employee": "الموظف",
+    "amount": "المبلغ",
+    "reason": "السبب",
+    "fineDate": "تاريخ الغرامة",
+    "submit": "حفظ"
+  },
+  "createSuccess": "تم تسجيل الغرامة.",
+  "genericError": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+  "validation": {
+    "amountPositive": "يجب أن يكون المبلغ أكبر من 0."
+  }
+}

@@ -1,9 +1,11 @@
-﻿using NerjaLogisticsERP.Application.EmployeeDocument.Dtos;
+﻿using NerjaLogisticsERP.Application.Common.Security;
+using NerjaLogisticsERP.Application.EmployeeDocument.Dtos;
 
 namespace NerjaLogisticsERP.Application.EmployeeDocument.Queries.GetEmployeeDocumentById;
 
-public record GetEmployeeDocumentByIdQuery : IRequest<EmployeeDocumentDto> 
-{ 
+[Authorize]
+public record GetEmployeeDocumentByIdQuery : IRequest<EmployeeDocumentDto>
+{
     public Guid Id { get; init; }
 }
 

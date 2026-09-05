@@ -1,5 +1,7 @@
-﻿using NerjaLogisticsERP.Application.Common.Interfaces;
+﻿using NerjaLogisticsERP.Application.Common.Exceptions;
+using NerjaLogisticsERP.Application.Common.Interfaces;
 using NerjaLogisticsERP.Application.Common.Models;
+using NerjaLogisticsERP.Domain.Constants;
 
 namespace NerjaLogisticsERP.Application.EmployeeDocument.Queries.GetEmployeeDocumentFile;
 
@@ -7,18 +9,32 @@ public class GetEmployeeDocumentFileQueryHandler : IRequestHandler<GetEmployeeDo
 {
     private readonly IApplicationDbContext _context;
     private readonly IFileStorageService _storage;
+    private readonly IUser _currentUser;
 
-    public GetEmployeeDocumentFileQueryHandler(IApplicationDbContext context, IFileStorageService storage)
-    { _context = context; _storage = storage; }
+    public GetEmployeeDocumentFileQueryHandler(IApplicationDbContext context, IFileStorageService storage, IUser currentUser)
+    { _context = context; _storage = storage; _currentUser = currentUser; }
 
     public async Task<DocumentFileResult> Handle(GetEmployeeDocumentFileQuery request, CancellationToken cancellationToken)
     {
-        var employeeDocuments = await _context.EmployeeDocuments.FindAsync(new object[] { request.Id }, cancellationToken)
+        var result = await _context.EmployeeDocuments
+            .Where(d => d.Id == request.Id)
+            .Select(d => new
+            {
+                Document = d,
+                OwnerUserId = d.Employee.UserId,
+                SupervisorUserId = d.Employee.Supervisor != null ? d.Employee.Supervisor.UserId : (Guid?)null
+            })
+            .FirstOrDefaultAsync(cancellationToken)
             ?? throw new NotFoundException(nameof(EmployeeDocument), request.Id.ToString());
 
-        var content = await _storage.GetAsync(employeeDocuments.StorageKey, cancellationToken)
-            ?? throw new NotFoundException("File", employeeDocuments.StorageKey);
+        var userId = _currentUser.Id!.Value;
+        var isAdministrator = _currentUser.Roles?.Contains(Roles.Administrator) ?? false;
+        if (!isAdministrator && result.OwnerUserId != userId && result.SupervisorUserId != userId)
+            throw new ForbiddenAccessException();
 
-        return new DocumentFileResult(content, employeeDocuments.ContentType, employeeDocuments.OriginalFileName);
+        var content = await _storage.GetAsync(result.Document.StorageKey, cancellationToken)
+            ?? throw new NotFoundException("File", result.Document.StorageKey);
+
+        return new DocumentFileResult(content, result.Document.ContentType, result.Document.OriginalFileName);
     }
 }

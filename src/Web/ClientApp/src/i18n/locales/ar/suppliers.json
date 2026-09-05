@@ -1,0 +1,35 @@
+{
+  "title": "الموردون",
+  "subtitle": "إدارة الموردين المستخدمين في سجلات إدخال المخزون.",
+  "addSupplier": "إضافة مورد",
+  "edit": "تعديل",
+  "delete": "حذف",
+  "columns": {
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "address": "العنوان"
+  },
+  "empty": "لا يوجد موردون.",
+  "fields": {
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "address": "العنوان"
+  },
+  "createDialog": {
+    "title": "إضافة مورد"
+  },
+  "editDialog": {
+    "title": "تعديل مورد"
+  },
+  "createSuccess": "تم إنشاء المورد.",
+  "updateSuccess": "تم تحديث المورد.",
+  "deleteConfirmTitle": "حذف هذا المورد؟",
+  "deleteConfirmDescription": "سيؤدي هذا إلى حذف \"{{name}}\" نهائياً. لا يمكن حذف الموردين المرتبطين بسجلات إدخال مخزون حالية.",
+  "deleteSuccess": "تم حذف المورد.",
+  "genericError": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+  "validation": {
+    "emailInvalid": "أدخل بريداً إلكترونياً صالحاً."
+  }
+}

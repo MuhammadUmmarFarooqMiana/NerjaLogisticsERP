@@ -1,12 +1,9 @@
 ﻿using NerjaLogisticsERP.Application.Common.Exceptions;
 using NerjaLogisticsERP.Application.Common.Interfaces;
-using NerjaLogisticsERP.Application.Common.Security;
-using NerjaLogisticsERP.Domain.Constants;
 using NerjaLogisticsERP.Domain.Entities;
 
 namespace NerjaLogisticsERP.Application.Platforms.Commands.CreatePlatform;
 
-[Authorize(Roles = Roles.Administrator)]
 public class CreatePlatformCommandHandler : IRequestHandler<CreatePlatformCommand, Guid>
 {
     private readonly IApplicationDbContext _context;

@@ -1,15 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
 using NerjaLogisticsERP.Application.Common.Exceptions;
 using NerjaLogisticsERP.Application.Common.Interfaces;
-using NerjaLogisticsERP.Application.Common.Security;
-using NerjaLogisticsERP.Domain.Constants;
 using NerjaLogisticsERP.Domain.Entities;
 using NerjaLogisticsERP.Domain.Enums;
 using NerjaLogisticsERP.Domain.Services;
 
 namespace NerjaLogisticsERP.Application.MonthlySummaries.Commands.GenerateMonthlySummary;
 
-[Authorize(Roles = $"{Roles.Administrator},{Roles.Accountant}")]
 public class GenerateMonthlySummaryCommandHandler : IRequestHandler<GenerateMonthlySummaryCommand, Guid>
 {
     private readonly IApplicationDbContext _context;
@@ -30,8 +27,42 @@ public class GenerateMonthlySummaryCommandHandler : IRequestHandler<GenerateMont
         if (existing is not null && existing.Status != MonthlySummaryStatus.Draft)
             throw new ConflictException($"Summary for {request.Year}-{request.Month} is already {existing.Status} and cannot be regenerated.");
 
+        // Closed means the rider ended their day, but a Supervisor/Administrator
+        // hasn't approved or rejected it yet — that count isn't settled, so it
+        // can't feed into a salary summary. Block generation and let the
+        // employee's supervisor know there's something waiting on them, rather
+        // than silently excluding those days from the total.
+        var pendingApprovalCount = await _context.DailyOrders
+            .CountAsync(o => o.EmployeeId == request.EmployeeId && o.OrderDate.Year == request.Year
+                && o.OrderDate.Month == request.Month && o.Status == DailyOrderStatus.Closed, cancellationToken);
+
+        if (pendingApprovalCount > 0)
+        {
+            if (employee.SupervisorId.HasValue)
+            {
+                var supervisor = await _context.Employees.FindAsync(new object[] { employee.SupervisorId.Value }, cancellationToken);
+                if (supervisor is not null)
+                {
+                    var notice = Notification.Create(
+                        supervisor.UserId,
+                        "DailyOrdersPendingApproval",
+                        "Daily orders awaiting approval",
+                        $"{employee.FullName} has {pendingApprovalCount} closed daily order(s) for {request.Year}-{request.Month:D2} " +
+                        "still awaiting your approval before their salary summary can be generated.");
+                    _context.Notifications.Add(notice);
+                    await _context.SaveChangesAsync(cancellationToken);
+                }
+            }
+
+            throw new ConflictException(
+                $"{pendingApprovalCount} daily order(s) for {employee.FullName} in {request.Year}-{request.Month:D2} " +
+                "are still awaiting supervisor approval. Approve or reject them before generating a salary summary.");
+        }
+
+        // Approved only — a Rejected day contributes 0, matching the supervisor's
+        // final call that the claimed count wasn't valid.
         var totalOrders = await _context.DailyOrders
-            .Where(o => o.EmployeeId == request.EmployeeId && o.OrderDate.Year == request.Year && o.OrderDate.Month == request.Month && o.Status == DailyOrderStatus.Closed)
+            .Where(o => o.EmployeeId == request.EmployeeId && o.OrderDate.Year == request.Year && o.OrderDate.Month == request.Month && o.Status == DailyOrderStatus.Approved)
             .SumAsync(o => o.CompletedOrders, cancellationToken);
 
         var asOf = new DateOnly(request.Year, request.Month, 1);

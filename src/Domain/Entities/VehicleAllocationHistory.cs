@@ -45,4 +45,17 @@ public class VehicleAllocationHistory : BaseAuditableEntity
 
         ReturnedDate = returnedDate;
     }
+
+    // Corrects or reallocates this record to a different employee/date — e.g. an
+    // admin fixing a data-entry mistake, or reassigning the vehicle without going
+    // through a separate Return + Allocate cycle.
+    public void Update(Guid employeeId, DateOnly assignedDate)
+    {
+        if (employeeId == Guid.Empty) throw new ArgumentException("EmployeeId is required.", nameof(employeeId));
+        if (ReturnedDate is not null && assignedDate > ReturnedDate)
+            throw new ArgumentException("AssignedDate cannot be after ReturnedDate.", nameof(assignedDate));
+
+        EmployeeId = employeeId;
+        AssignedDate = assignedDate;
+    }
 }

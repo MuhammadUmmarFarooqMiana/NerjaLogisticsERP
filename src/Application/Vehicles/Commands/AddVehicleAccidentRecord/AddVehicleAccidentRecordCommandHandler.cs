@@ -1,11 +1,8 @@
 ﻿using NerjaLogisticsERP.Application.Common.Interfaces;
-using NerjaLogisticsERP.Application.Common.Security;
-using NerjaLogisticsERP.Domain.Constants;
 using NerjaLogisticsERP.Domain.Entities;
 
 namespace NerjaLogisticsERP.Application.Vehicles.Commands.AddVehicleAccidentRecord;
 
-[Authorize(Roles = $"{Roles.Administrator},{Roles.Accountant}")]
 public class AddVehicleAccidentRecordCommandHandler : IRequestHandler<AddVehicleAccidentRecordCommand, Guid>
 {
     private readonly IApplicationDbContext _context;

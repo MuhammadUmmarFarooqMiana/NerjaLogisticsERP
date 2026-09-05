@@ -4,7 +4,6 @@ public class UpsertDailyOrderCommandValidator : AbstractValidator<UpsertDailyOrd
 {
     public UpsertDailyOrderCommandValidator()
     {
-        RuleFor(x => x.EmployeeId).NotEmpty();
         RuleFor(x => x.CompletedOrders).GreaterThanOrEqualTo(0);
     }
 }

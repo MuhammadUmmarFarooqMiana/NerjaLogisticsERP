@@ -1,5 +1,9 @@
-﻿namespace NerjaLogisticsERP.Application.Suppliers.Commands.UpdateSupplier;
+﻿using NerjaLogisticsERP.Application.Common.Security;
+using NerjaLogisticsERP.Domain.Constants;
 
+namespace NerjaLogisticsERP.Application.Suppliers.Commands.UpdateSupplier;
+
+[Authorize(Roles = $"{Roles.Administrator},{Roles.Accountant}")]
 public record UpdateSupplierCommand : IRequest
 {
     public Guid Id { get; init; }

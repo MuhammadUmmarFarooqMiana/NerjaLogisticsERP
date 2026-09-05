@@ -9,6 +9,7 @@ using NerjaLogisticsERP.Domain.Entities;
 
 namespace NerjaLogisticsERP.Application.Inventory.Commands.CreateInventoryItem;
 
+[Authorize(Roles = Roles.Administrator)]
 public record CreateInventoryItemCommand : IRequest<Guid>
 {
     public string ItemName { get; init; } = string.Empty;

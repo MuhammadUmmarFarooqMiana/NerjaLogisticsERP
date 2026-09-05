@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NerjaLogisticsERP.Application.LeaveRequest.Commands.SubmitLeaveRequest;
 using NerjaLogisticsERP.Application.LeaveRequest.Commands.ApproveLeaveRequest;
 using NerjaLogisticsERP.Application.LeaveRequest.Commands.RejectLeaveRequest;
+using NerjaLogisticsERP.Application.LeaveRequest.Commands.SubmitLeaveRequest;
+using NerjaLogisticsERP.Application.LeaveRequest.Queries;
+using NerjaLogisticsERP.Application.LeaveRequest.Queries.GetLeaveRequests;
+using NerjaLogisticsERP.Application.LeaveRequest.Queries.GetMyLeaveRequests;
+using NerjaLogisticsERP.Domain.Enums;
 
 namespace NerjaLogisticsERP.Web.Controllers;
 
@@ -9,6 +13,29 @@ namespace NerjaLogisticsERP.Web.Controllers;
 [ApiController]
 public class LeaveRequestsController : ApiControllerBase
 {
+    [HttpGet("me")]
+    public async Task<ActionResult<List<LeaveRequestDto>>> GetMy([FromQuery] int? pageNumber, [FromQuery] int? pageSize)
+    {
+        var result = await Mediator.Send(new GetMyLeaveRequestsQuery { PageNumber = pageNumber, PageSize = pageSize });
+        AddPaginationHeader(result);
+        return Ok(result.Items);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<List<LeaveRequestDto>>> GetAll(
+        [FromQuery] LeaveStatus? status, [FromQuery] Guid? employeeId, [FromQuery] int? pageNumber, [FromQuery] int? pageSize)
+    {
+        var result = await Mediator.Send(new GetLeaveRequestsQuery
+        {
+            Status = status,
+            EmployeeId = employeeId,
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        });
+        AddPaginationHeader(result);
+        return Ok(result.Items);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Submit(SubmitLeaveRequestCommand command)
     {
