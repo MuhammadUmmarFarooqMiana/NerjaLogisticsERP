@@ -1,0 +1,24 @@
+﻿using NerjaLogisticsERP.Application.Common.Interfaces;
+using NerjaLogisticsERP.Domain.Entities;
+
+namespace NerjaLogisticsERP.Application.Employees.Commands.RejectEmployee;
+
+public class RejectEmployeeCommandHandler : IRequestHandler<RejectEmployeeCommand>
+{
+    private readonly IApplicationDbContext _context;
+
+    public RejectEmployeeCommandHandler(IApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task Handle(RejectEmployeeCommand request, CancellationToken cancellationToken)
+    {
+        var employee = await _context.Employees.FindAsync(new object[] { request.EmployeeId }, cancellationToken)
+            ?? throw new NotFoundException(nameof(Employee), request.EmployeeId.ToString());
+
+        employee.Reject(request.Reason);
+
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+}

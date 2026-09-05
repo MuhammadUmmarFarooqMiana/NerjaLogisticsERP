@@ -1,0 +1,48 @@
+{
+  "title": "الملخصات الشهرية",
+  "subtitle": "إنشاء والتحقق من ملخصات رواتب الموظفين وتعليمها كمدفوعة.",
+  "myTitle": "ملخصي الشهري",
+  "mySubtitle": "راتبك وسلفك وغراماتك حسب الشهر.",
+  "generate": "إنشاء ملخص",
+  "verify": "تحقق",
+  "markAsPaid": "تعليم كمدفوع",
+  "empty": "لا توجد ملخصات شهرية.",
+  "filters": {
+    "employee": "الموظف",
+    "allEmployees": "كل الموظفين",
+    "year": "السنة",
+    "month": "الشهر",
+    "status": "الحالة",
+    "allStatuses": "كل الحالات"
+  },
+  "columns": {
+    "employee": "الموظف",
+    "period": "الفترة",
+    "orders": "الطلبات",
+    "totalSalary": "إجمالي الراتب",
+    "totalAdvances": "السلف",
+    "totalFines": "الغرامات",
+    "netPayable": "صافي المستحق",
+    "status": "الحالة"
+  },
+  "generateDialog": {
+    "title": "إنشاء ملخص شهري",
+    "employee": "الموظف",
+    "year": "السنة",
+    "month": "الشهر",
+    "submit": "إنشاء"
+  },
+  "markAsPaidDialog": {
+    "title": "تعليم كمدفوع",
+    "paymentReference": "مرجع الدفع",
+    "submit": "تأكيد"
+  },
+  "generateSuccess": "تم إنشاء الملخص الشهري.",
+  "verifySuccess": "تم التحقق من الملخص.",
+  "markAsPaidSuccess": "تم تعليم الملخص كمدفوع.",
+  "genericError": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+  "validation": {
+    "yearInvalid": "أدخل سنة صالحة.",
+    "monthInvalid": "يجب أن يكون الشهر بين 1 و 12."
+  }
+}

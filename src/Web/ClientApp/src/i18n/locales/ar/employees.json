@@ -1,0 +1,171 @@
+{
+  "list": {
+    "title": "الموظفون",
+    "filterStatus": "الحالة",
+    "allStatuses": "كل الحالات",
+    "columns": {
+      "name": "الاسم",
+      "platform": "المنصة",
+      "status": "الحالة",
+      "iqama": "رقم الإقامة",
+      "joiningDate": "تاريخ الالتحاق"
+    },
+    "viewAction": "عرض"
+  },
+  "pending": {
+    "title": "الموافقات المعلقة",
+    "empty": "لا توجد موافقات معلقة"
+  },
+  "detail": {
+    "title": "الملف الشخصي للموظف",
+    "backToList": "العودة إلى القائمة",
+    "fields": {
+      "status": "الحالة",
+      "performanceStatus": "الأداء",
+      "platform": "المنصة",
+      "vehicle": "المركبة",
+      "supervisor": "المشرف",
+      "iqamaNumber": "رقم الإقامة",
+      "platformIdNumber": "رقم المعرف في المنصة",
+      "joiningDate": "تاريخ الالتحاق",
+      "idExpiryDate": "تاريخ انتهاء الهوية",
+      "iqamaExpiryDate": "تاريخ انتهاء الإقامة",
+      "drivingLicenseExpiryDate": "تاريخ انتهاء رخصة القيادة",
+      "insuranceExpiryDate": "تاريخ انتهاء التأمين",
+      "profileSubmittedAt": "تاريخ تقديم الملف",
+      "rejectionReason": "سبب الرفض",
+      "email": "البريد الإلكتروني",
+      "phoneNumber": "رقم الهاتف",
+      "hasWhatsApp": "يحتوي على واتساب",
+      "emailConfirmed": "تم تأكيد البريد الإلكتروني"
+    },
+    "notProvided": "غير متوفر",
+    "yes": "نعم",
+    "no": "لا",
+    "performanceLevels": {
+      "Green": "ممتاز",
+      "Yellow": "متوسط",
+      "Red": "ضعيف"
+    },
+    "approve": "موافقة",
+    "reject": "رفض",
+    "approveConfirmTitle": "الموافقة على هذا الموظف؟",
+    "approveConfirmDescription": "يمكنك اختياريًا تعيين منصة ومركبة ومشرف قبل الموافقة. سيؤدي هذا إلى تعيين تاريخ الالتحاق إلى اليوم وتفعيل الحساب.",
+    "approveSuccess": "تمت الموافقة على الموظف.",
+    "rejectDialogTitle": "رفض الملف الشخصي",
+    "rejectReasonLabel": "السبب",
+    "rejectSubmit": "رفض",
+    "rejectSuccess": "تم رفض الموظف.",
+    "genericError": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+  },
+  "approveDialog": {
+    "platform": "المنصة",
+    "vehicle": "المركبة",
+    "supervisor": "المشرف",
+    "none": "بلا"
+  },
+  "profileSubmission": {
+    "title": "أرسل ملفك الشخصي",
+    "subtitle": "املأ بياناتك ليتم مراجعتها من قبل المسؤول أو المشرف.",
+    "basicDetailsTab": "البيانات الأساسية",
+    "documentsTab": "المستندات",
+    "fullName": "الاسم الكامل",
+    "email": "البريد الإلكتروني",
+    "phoneNumber": "رقم الهاتف",
+    "prefilledInfo": "اسمك وبريدك الإلكتروني ورقم هاتفك مسجلون بالفعل من التسجيل.",
+    "iqamaNumber": "رقم الإقامة",
+    "platformIdNumber": "رقم المعرف في المنصة",
+    "idExpiryDate": "تاريخ انتهاء الهوية",
+    "iqamaExpiryDate": "تاريخ انتهاء الإقامة",
+    "drivingLicenseExpiryDate": "تاريخ انتهاء رخصة القيادة",
+    "insuranceExpiryDate": "تاريخ انتهاء التأمين",
+    "documentsInfo": "قم برفع كل مستند أدناه، ثم أرسل ملفك الشخصي للمراجعة.",
+    "documentTypes": {
+      "profilePicture": "الصورة الشخصية",
+      "iqama": "صورة الإقامة",
+      "drivingLicense": "رخصة القيادة",
+      "passport": "جواز السفر",
+      "bikeRegistration": "تسجيل الدراجة",
+      "insurance": "وثيقة التأمين",
+      "employmentContract": "عقد العمل",
+      "platformIdProof": "إثبات رقم المعرف في المنصة"
+    },
+    "back": "رجوع",
+    "next": "التالي",
+    "submit": "إرسال للمراجعة",
+    "success": "تم إرسال الملف الشخصي للمراجعة.",
+    "genericError": "تعذر إرسال ملفك الشخصي. يرجى المحاولة مرة أخرى."
+  },
+  "myProfile": {
+    "title": "ملفي الشخصي",
+    "loadError": "تعذر تحميل ملفك الشخصي. يرجى المحاولة مرة أخرى.",
+    "pendingReview": "تم إرسال ملفك الشخصي وهو بانتظار المراجعة من قبل مسؤول أو مشرف.",
+    "rejectedBanner": "تم رفض إرسالك السابق: {{reason}}. يرجى تحديث بياناتك وإعادة الإرسال.",
+    "changePhoto": "تغيير الصورة",
+    "removePhoto": "إزالة",
+    "photoHint": "JPEG أو PNG، حتى 5 ميغابايت",
+    "photoUploadSuccess": "تم تحديث الصورة الشخصية.",
+    "photoRemoveSuccess": "تمت إزالة الصورة الشخصية.",
+    "photoUploadError": "تعذر رفع الصورة. يرجى استخدام صورة JPEG أو PNG أقل من 5 ميغابايت.",
+    "photoRemoveError": "تعذرت إزالة الصورة. يرجى المحاولة مرة أخرى."
+  },
+  "documents": {
+    "sectionTitle": "المستندات",
+    "upload": "رفع",
+    "replace": "استبدال",
+    "preview": "معاينة",
+    "download": "تنزيل",
+    "required": "مطلوب",
+    "missingRequired": "يرجى رفع {{types}} قبل الإرسال للمراجعة.",
+    "uploadSuccess": "تم رفع المستند.",
+    "downloadError": "تعذر تنزيل المستند. يرجى المحاولة مرة أخرى.",
+    "previewError": "تعذر فتح المعاينة. يرجى المحاولة مرة أخرى.",
+    "genericError": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+  },
+  "admin": {
+    "usersTab": "المستخدمون والأدوار",
+    "addEmployee": "إضافة موظف",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "suspend": "تعليق",
+    "reactivate": "إعادة تفعيل",
+    "terminate": "إنهاء الخدمة",
+    "createSuccess": "تم إنشاء الموظف.",
+    "updateSuccess": "تم تحديث الموظف.",
+    "deleteSuccess": "تم حذف الموظف.",
+    "suspendSuccess": "تم تعليق الموظف.",
+    "reactivateSuccess": "تمت إعادة تفعيل الموظف.",
+    "terminateSuccess": "تم إنهاء خدمة الموظف.",
+    "deleteConfirmTitle": "حذف هذا الموظف؟",
+    "deleteConfirmDescription": "سيتم إزالة {{name}} من جميع القوائم ولن يتمكن من تسجيل الدخول. سيتم الاحتفاظ بسجله (السلف، الغرامات، الطلبات، إلخ).",
+    "terminateConfirmTitle": "إنهاء خدمة هذا الموظف؟",
+    "terminateConfirmDescription": "سيتم تعيين حالة حساب {{name}} إلى \"منتهي الخدمة\" ولن يتمكن بعد ذلك من تسجيل الدخول. لا يمكن التراجع عن هذا من هنا.",
+    "createDialog": {
+      "title": "إضافة موظف",
+      "fullName": "الاسم الكامل",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "phoneNumber": "رقم الهاتف",
+      "roles": "الأدوار",
+      "noPlatform": "بدون منصة",
+      "submit": "إنشاء"
+    },
+    "editDialog": {
+      "title": "تعديل الموظف",
+      "submit": "حفظ التغييرات"
+    },
+    "roles": {
+      "Administrator": "مسؤول",
+      "SoftwareEngineer": "مهندس برمجيات",
+      "Supervisor": "مشرف",
+      "Accountant": "محاسب",
+      "Rider": "سائق"
+    },
+    "validation": {
+      "emailInvalid": "أدخل بريدًا إلكترونيًا صالحًا",
+      "passwordMinRegister": "يجب ألا تقل كلمة المرور عن 8 أحرف",
+      "passwordComplexity": "يجب أن تحتوي كلمة المرور على حرف كبير وحرف صغير ورقم ورمز",
+      "rolesRequired": "مطلوب دور واحد على الأقل"
+    }
+  }
+}

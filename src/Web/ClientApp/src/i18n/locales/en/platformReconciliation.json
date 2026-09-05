@@ -1,0 +1,58 @@
+{
+  "title": "Platform Reconciliation",
+  "subtitle": "Cross-verify a platform's payout sheet (Keeta/Hunger/Jahez) against Nerja's own salary records for the same month.",
+  "form": {
+    "platform": "Platform",
+    "year": "Year",
+    "month": "Month",
+    "file": "Payout file",
+    "chooseFile": "Choose file",
+    "replaceFile": "Replace file",
+    "noFileChosen": "No file chosen (.xlsx)",
+    "generate": "Generate Report",
+    "generating": "Generating…"
+  },
+  "errors": {
+    "platformRequired": "Select a platform.",
+    "fileRequired": "Choose the platform's payout Excel file.",
+    "generic": "Couldn't generate the report. Please check the file and try again.",
+    "sheetInvalid": "The uploaded file doesn't look like a platform payout sheet. Check the \"Rider LVL\" sheet and try again."
+  },
+  "summary": {
+    "matched": "Matched Riders",
+    "ordersMismatch": "Order Mismatches",
+    "unmatchedInPlatform": "Unmatched in Sheet",
+    "missingFromSheet": "Missing from Sheet",
+    "totalPenalties": "Total Penalties",
+    "totalOriginalNet": "Total Original Net Payable",
+    "totalAdjustedNet": "Total Adjusted Net Payable"
+  },
+  "sections": {
+    "matched": {
+      "title": "Matched Riders",
+      "description": "rider_id matched an employee's Platform ID Number, with a salary summary for this period."
+    },
+    "unmatchedInPlatform": {
+      "title": "In Platform Sheet, No Matching Employee",
+      "description": "The platform is paying out for a rider_id that matches no employee (or that employee has no salary summary yet for this period).",
+      "empty": "None — every rider_id in the sheet matched a Nerja employee."
+    },
+    "missingFromSheet": {
+      "title": "Nerja Employees Missing From Sheet",
+      "description": "Nerja has a salary summary for this employee on this platform, but the uploaded sheet has no row for them.",
+      "empty": "None — every Nerja employee on this platform appears in the sheet."
+    }
+  },
+  "columns": {
+    "employee": "Employee",
+    "platformIdNumber": "Platform ID Number",
+    "nerjaOrders": "Nerja Orders",
+    "platformOrders": "Platform Orders",
+    "ordersDifference": "Difference",
+    "totalPenalties": "Penalties",
+    "originalNetPayable": "Original Net Payable",
+    "adjustedNetPayable": "Adjusted Net Payable",
+    "status": "Status"
+  },
+  "empty": "Fill in the filters above and upload a payout file to generate the reconciliation."
+}

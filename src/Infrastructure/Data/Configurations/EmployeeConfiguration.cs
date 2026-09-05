@@ -19,15 +19,31 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
             .HasMaxLength(150)
             .IsRequired();
 
+        // Not required at the database level — null while Incomplete,
+        // populated when the employee submits their profile for review.
         builder.Property(e => e.IqamaNumber)
-            .HasMaxLength(30)
-            .IsRequired();
+            .HasMaxLength(30);
 
+        // Partial unique index: uniqueness only enforced where a value exists.
+        // Without the filter, multiple Incomplete employees (IqamaNumber = NULL)
+        // would violate a plain unique index against each other in some databases
+        // — Postgres actually treats NULLs as distinct by default, but being
+        // explicit here documents the intent and avoids relying on that default.
         builder.HasIndex(e => e.IqamaNumber)
-            .IsUnique();
+            .IsUnique()
+            .HasFilter("\"IqamaNumber\" IS NOT NULL");
 
         builder.Property(e => e.PlatformIdNumber)
             .HasMaxLength(50);
+
+        builder.Property(e => e.RejectionReason)
+           .HasMaxLength(5000);
+
+        builder.Property(e => e.ProfilePictureStorageKey)
+            .HasMaxLength(500);
+
+        builder.Property(e => e.ProfilePictureContentType)
+            .HasMaxLength(100);
 
         // Store enums as readable strings, not raw ints — future-you (or a DBA
         // running ad-hoc queries) will thank you when AccountStatus reads

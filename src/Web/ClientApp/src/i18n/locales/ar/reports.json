@@ -1,0 +1,189 @@
+{
+  "home": {
+    "title": "التقارير",
+    "subtitle": "إنشاء وتصدير التقارير عبر الأسطول.",
+    "available": "عرض التقرير",
+    "comingSoon": "قريباً"
+  },
+  "types": {
+    "orders": "الطلبات",
+    "expenses": "المصروفات",
+    "fines": "الغرامات",
+    "advances": "السلف",
+    "leaves": "الإجازات",
+    "vehicles": "المركبات",
+    "suppliers": "الموردون",
+    "inventory": "دفاتر المخزون",
+    "salaries": "الرواتب"
+  },
+  "orders": {
+    "title": "تقرير الطلبات",
+    "subtitle": "الطلبات المكتملة عبر الأسطول للفترة المحددة."
+  },
+  "fines": {
+    "title": "تقرير الغرامات",
+    "subtitle": "الغرامات المسجلة عبر الأسطول للفترة المحددة."
+  },
+  "advances": {
+    "title": "تقرير السلف",
+    "subtitle": "سلف الرواتب المسجلة عبر الأسطول للفترة المحددة."
+  },
+  "expenses": {
+    "title": "تقرير المصروفات",
+    "subtitle": "مصروفات التشغيل عبر الأسطول للفترة المحددة."
+  },
+  "leaves": {
+    "title": "تقرير الإجازات",
+    "subtitle": "طلبات الإجازة عبر الأسطول للفترة المحددة.",
+    "allStatuses": "كل الحالات",
+    "columns": {
+      "startDate": "تاريخ البدء",
+      "endDate": "تاريخ الانتهاء",
+      "days": "الأيام",
+      "reviewedBy": "تمت المراجعة بواسطة"
+    },
+    "summary": {
+      "totalRequests": "إجمالي الطلبات",
+      "totalDays": "إجمالي الأيام",
+      "approvedRejectedPending": "موافق عليه / مرفوض / قيد الانتظار"
+    }
+  },
+  "vehicles": {
+    "title": "تقرير المركبات",
+    "subtitle": "سجل تخصيص وصيانة الأسطول للفترة المحددة.",
+    "columns": {
+      "vehicle": "المركبة",
+      "recordType": "نوع السجل",
+      "cost": "التكلفة"
+    },
+    "filters": {
+      "vehicle": "المركبة",
+      "allVehicles": "كل المركبات"
+    },
+    "summary": {
+      "totalVehicles": "إجمالي المركبات",
+      "activeVehicles": "المركبات النشطة",
+      "totalMaintenanceCost": "إجمالي تكلفة الصيانة"
+    }
+  },
+  "suppliers": {
+    "title": "تقرير الموردين",
+    "subtitle": "المخزون المستلم من الموردين للفترة المحددة.",
+    "columns": {
+      "supplier": "المورد",
+      "item": "الصنف",
+      "quantity": "الكمية"
+    },
+    "filters": {
+      "supplier": "المورد",
+      "allSuppliers": "كل الموردين"
+    },
+    "summary": {
+      "totalSuppliers": "الموردون",
+      "totalTransactions": "المعاملات",
+      "totalQuantityReceived": "إجمالي الكمية المستلمة"
+    }
+  },
+  "inventory": {
+    "title": "تقرير دفتر المخزون",
+    "subtitle": "حركات المخزون والرصيد الجاري للفترة المحددة.",
+    "columns": {
+      "item": "الصنف",
+      "movementType": "النوع",
+      "reference": "المرجع",
+      "runningBalance": "الرصيد"
+    },
+    "filters": {
+      "item": "الصنف",
+      "allItems": "كل الأصناف"
+    },
+    "summary": {
+      "totalIn": "إجمالي الوارد",
+      "totalOut": "إجمالي الصادر",
+      "netChange": "صافي التغيير"
+    }
+  },
+  "salaries": {
+    "title": "تقرير الرواتب",
+    "subtitle": "ملخص الرواتب عبر الأسطول للفترة المحددة.",
+    "allStatuses": "كل الحالات",
+    "columns": {
+      "platformIdNumber": "رقم المعرف في المنصة",
+      "period": "الفترة",
+      "orders": "الطلبات",
+      "totalSalary": "الراتب",
+      "totalAdvances": "السلف",
+      "totalFines": "الغرامات",
+      "netPayable": "صافي المستحق"
+    },
+    "summary": {
+      "totalSalary": "إجمالي الراتب",
+      "totalAdvances": "إجمالي السلف",
+      "totalFines": "إجمالي الغرامات",
+      "totalNetPayable": "إجمالي صافي المستحق"
+    }
+  },
+  "periodTypes": {
+    "Daily": "يومي",
+    "Weekly": "أسبوعي",
+    "Monthly": "شهري",
+    "Custom": "مخصص"
+  },
+  "filters": {
+    "periodType": "الفترة",
+    "date": "التاريخ",
+    "weekOf": "أسبوع",
+    "year": "السنة",
+    "month": "الشهر",
+    "startDate": "تاريخ البدء",
+    "endDate": "تاريخ الانتهاء",
+    "platform": "المنصة",
+    "allPlatforms": "كل المنصات",
+    "employee": "الموظف",
+    "allEmployees": "كل الموظفين"
+  },
+  "months": {
+    "1": "يناير",
+    "2": "فبراير",
+    "3": "مارس",
+    "4": "أبريل",
+    "5": "مايو",
+    "6": "يونيو",
+    "7": "يوليو",
+    "8": "أغسطس",
+    "9": "سبتمبر",
+    "10": "أكتوبر",
+    "11": "نوفمبر",
+    "12": "ديسمبر"
+  },
+  "summary": {
+    "totalCompletedOrders": "إجمالي الطلبات المكتملة",
+    "totalSessions": "أيام العمل",
+    "uniqueRiders": "عدد السائقين",
+    "totalAmount": "إجمالي المبلغ",
+    "totalCount": "العدد"
+  },
+  "columns": {
+    "employee": "الموظف",
+    "platform": "المنصة",
+    "orderDate": "التاريخ",
+    "completedOrders": "الطلبات المكتملة",
+    "amount": "المبلغ",
+    "reason": "السبب",
+    "fineDate": "التاريخ",
+    "advanceDate": "التاريخ",
+    "remarks": "ملاحظات",
+    "category": "الفئة",
+    "description": "الوصف",
+    "status": "الحالة"
+  },
+  "customDateHint": "اختر تاريخ بدء وانتهاء لتشغيل هذا التقرير.",
+  "empty": "لا توجد سجلات لهذه الفترة.",
+  "preview": "معاينة",
+  "print": "طباعة",
+  "exportPdf": "تصدير PDF",
+  "exportExcel": "تصدير Excel",
+  "previewError": "تعذر فتح المعاينة. يرجى المحاولة مرة أخرى.",
+  "printError": "تعذر فتح نافذة الطباعة. يرجى المحاولة مرة أخرى.",
+  "exportError": "تعذر تصدير التقرير. يرجى المحاولة مرة أخرى."
+}

@@ -1,0 +1,43 @@
+{
+  "title": "طلبات الإجازة",
+  "subtitle": "قدّم وتابع طلبات إجازتك.",
+  "submitLeave": "تقديم طلب إجازة",
+  "approve": "موافقة",
+  "reject": "رفض",
+  "empty": "لا توجد طلبات إجازة.",
+  "submitSuccess": "تم تقديم طلب الإجازة.",
+  "approveSuccess": "تمت الموافقة على طلب الإجازة.",
+  "rejectSuccess": "تم رفض طلب الإجازة.",
+  "genericError": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+  "columns": {
+    "employee": "الموظف",
+    "startDate": "تاريخ البدء",
+    "endDate": "تاريخ الانتهاء",
+    "reason": "السبب",
+    "status": "الحالة",
+    "reviewedBy": "تمت المراجعة بواسطة",
+    "rejectionReason": "سبب الرفض"
+  },
+  "reviewQueue": {
+    "title": "طلبات الإجازة — قائمة المراجعة",
+    "subtitle": "الموافقة على طلبات إجازة فريقك أو رفضها.",
+    "employee": "الموظف",
+    "allEmployees": "كل الموظفين",
+    "allStatuses": "كل الحالات"
+  },
+  "submitDialog": {
+    "title": "تقديم طلب إجازة",
+    "startDate": "تاريخ البدء",
+    "endDate": "تاريخ الانتهاء",
+    "reason": "السبب",
+    "submit": "إرسال"
+  },
+  "rejectDialog": {
+    "title": "رفض طلب الإجازة",
+    "reason": "سبب الرفض",
+    "submit": "رفض"
+  },
+  "validation": {
+    "endDateBeforeStart": "لا يمكن أن يكون تاريخ الانتهاء قبل تاريخ البدء."
+  }
+}

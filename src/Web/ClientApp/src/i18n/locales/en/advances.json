@@ -1,0 +1,33 @@
+{
+  "title": "Advances",
+  "subtitle": "Record and review employee salary advances.",
+  "myTitle": "My Advances",
+  "mySubtitle": "Salary advances recorded against your account.",
+  "addAdvance": "Add Advance",
+  "columns": {
+    "employee": "Employee",
+    "amount": "Amount",
+    "advanceDate": "Date",
+    "remarks": "Remarks"
+  },
+  "filters": {
+    "employee": "Employee",
+    "allEmployees": "All Employees",
+    "startDate": "Start Date",
+    "endDate": "End Date"
+  },
+  "empty": "No advances found.",
+  "createDialog": {
+    "title": "Add Advance",
+    "employee": "Employee",
+    "amount": "Amount",
+    "advanceDate": "Advance Date",
+    "remarks": "Remarks",
+    "submit": "Save"
+  },
+  "createSuccess": "Advance recorded.",
+  "genericError": "Something went wrong. Please try again.",
+  "validation": {
+    "amountPositive": "Amount must be greater than 0."
+  }
+}

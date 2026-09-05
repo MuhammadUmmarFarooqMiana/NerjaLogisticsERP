@@ -1,0 +1,19 @@
+﻿using NerjaLogisticsERP.Application.Common.Interfaces;
+using NerjaLogisticsERP.Domain.Entities;
+
+namespace NerjaLogisticsERP.Application.Suppliers.Commands.CreateSupplier;
+
+public class CreateSupplierCommandHandler : IRequestHandler<CreateSupplierCommand, Guid>
+{
+    private readonly IApplicationDbContext _context;
+
+    public CreateSupplierCommandHandler(IApplicationDbContext context) => _context = context;
+
+    public async Task<Guid> Handle(CreateSupplierCommand request, CancellationToken cancellationToken)
+    {
+        var supplier = Supplier.Create(request.Name, request.Email, request.Phone, request.Address);
+        _context.Suppliers.Add(supplier);
+        await _context.SaveChangesAsync(cancellationToken);
+        return supplier.Id;
+    }
+}

@@ -1,0 +1,33 @@
+{
+  "title": "السلف",
+  "subtitle": "تسجيل ومراجعة سلف الموظفين.",
+  "myTitle": "سلفي",
+  "mySubtitle": "السلف المسجلة على حسابك.",
+  "addAdvance": "إضافة سلفة",
+  "columns": {
+    "employee": "الموظف",
+    "amount": "المبلغ",
+    "advanceDate": "التاريخ",
+    "remarks": "ملاحظات"
+  },
+  "filters": {
+    "employee": "الموظف",
+    "allEmployees": "كل الموظفين",
+    "startDate": "تاريخ البدء",
+    "endDate": "تاريخ الانتهاء"
+  },
+  "empty": "لا توجد سلف.",
+  "createDialog": {
+    "title": "إضافة سلفة",
+    "employee": "الموظف",
+    "amount": "المبلغ",
+    "advanceDate": "تاريخ السلفة",
+    "remarks": "ملاحظات",
+    "submit": "حفظ"
+  },
+  "createSuccess": "تم تسجيل السلفة.",
+  "genericError": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+  "validation": {
+    "amountPositive": "يجب أن يكون المبلغ أكبر من 0."
+  }
+}

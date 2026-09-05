@@ -1,0 +1,53 @@
+{
+  "title": "Company Documents",
+  "subtitle": "Legal, financial, and policy documents shared across the company.",
+  "uploadDocument": "Upload Document",
+  "createFolder": "New Folder",
+  "root": "Documents",
+  "createdBy": "Created by {{name}}",
+  "download": "Download",
+  "preview": "Preview",
+  "delete": "Delete",
+  "deleteFolder": "Delete folder",
+  "empty": "No documents uploaded yet.",
+  "uploadSuccess": "Document uploaded.",
+  "createFolderSuccess": "Folder created.",
+  "deleteFolderSuccess": "Folder deleted.",
+  "deleteSuccess": "Document deleted.",
+  "deleteFolderConfirmTitle": "Delete this folder?",
+  "deleteFolderConfirmDescription": "This will permanently remove \"{{name}}\". A folder can't be deleted while it still has subfolders or documents in it.",
+  "deleteConfirmTitle": "Delete this document?",
+  "deleteConfirmDescription": "This will permanently remove \"{{name}}\". This can't be undone.",
+  "downloadError": "Could not download the document. Please try again.",
+  "previewError": "Could not open the preview. Please try again.",
+  "genericError": "Something went wrong. Please try again.",
+  "columns": {
+    "title": "Title",
+    "category": "Category",
+    "fileName": "File",
+    "uploadedBy": "Uploaded By",
+    "uploaded": "Uploaded"
+  },
+  "categories": {
+    "legal": "Legal",
+    "financial": "Financial",
+    "contracts": "Contracts",
+    "policies": "Policies",
+    "other": "Other"
+  },
+  "createFolderDialog": {
+    "title": "New Folder",
+    "folderName": "Folder Name",
+    "nameRequired": "Folder name is required.",
+    "submit": "Create"
+  },
+  "uploadDialog": {
+    "title": "Upload Company Document",
+    "documentTitle": "Title",
+    "titleRequired": "Title is required.",
+    "category": "Category",
+    "chooseFile": "Choose file",
+    "fileRequired": "A file is required.",
+    "submit": "Upload"
+  }
+}

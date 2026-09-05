@@ -1,0 +1,25 @@
+{
+  "list": {
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "roles": "Roles"
+    },
+    "editRoles": "Edit Roles",
+    "empty": "No users found."
+  },
+  "roleDialog": {
+    "title": "Edit roles — {{name}}",
+    "description": "Select every role this user should hold.",
+    "success": "Roles updated.",
+    "submit": "Save"
+  },
+  "roles": {
+    "Administrator": "Administrator",
+    "SoftwareEngineer": "Software Engineer",
+    "Supervisor": "Supervisor",
+    "Accountant": "Accountant",
+    "Rider": "Rider"
+  },
+  "genericError": "Something went wrong. Please try again."
+}

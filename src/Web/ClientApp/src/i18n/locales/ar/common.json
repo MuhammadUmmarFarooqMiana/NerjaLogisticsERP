@@ -1,0 +1,141 @@
+{
+  "appName": "نيرجا للخدمات اللوجستية",
+  "language": {
+    "english": "الإنجليزية",
+    "arabic": "العربية"
+  },
+  "theme": {
+    "light": "فاتح",
+    "dark": "داكن",
+    "system": "النظام",
+    "toggle": "المظهر"
+  },
+  "dashboard": {
+    "viewAll": "عرض الكل",
+    "comingSoon": "قريباً",
+    "allPlatforms": "كل المنصات",
+    "unassignedPlatform": "غير محدد",
+    "stats": {
+      "totalRiders": "إجمالي الموظفين النشطين",
+      "activeRiders": "السائقون النشطون",
+      "todaysCompletedOrders": "الطلبات المكتملة اليوم",
+      "monthlyOrders": "الطلبات الشهرية",
+      "monthlyCompletedOrders": "الطلبات المكتملة هذا الشهر",
+      "totalAdvances": "إجمالي السلف هذا الشهر",
+      "totalFines": "إجمالي الغرامات هذا الشهر",
+      "totalExpenses": "إجمالي المصروفات هذا الشهر",
+      "stockOut": "إخراج المخزون هذا الشهر",
+      "totalPaidSalary": "إجمالي الرواتب المدفوعة هذا الشهر",
+      "totalSalaryToPay": "إجمالي الرواتب المستحقة هذا الشهر"
+    },
+    "myStats": {
+      "salary": "راتبي",
+      "advances": "سلفي",
+      "fines": "غراماتي",
+      "leaves": "رصيد الإجازات",
+      "ordersThisMonth": "طلبات هذا الشهر"
+    },
+    "charts": {
+      "noData": "لا توجد بيانات لهذه الفترة بعد.",
+      "units": "وحدة",
+      "amount": "المبلغ",
+      "completedOrders": "الطلبات المكتملة",
+      "fleetOrdersTrend": "الطلبات المكتملة خلال آخر 7 أيام",
+      "myOrdersTrend": "طلباتي المكتملة خلال آخر 7 أيام",
+      "employeeStatus": "توزيع حالة الموظفين",
+      "ridersByPlatform": "الأدوار حسب المنصة",
+      "platform": "المنصة",
+      "financialOverview": "نظرة عامة مالية — هذا الشهر",
+      "expensesTrend": "المصروفات — آخر 6 أشهر",
+      "salaryPaidTrend": "الرواتب المدفوعة — آخر 6 أشهر",
+      "fines": "الغرامات",
+      "advances": "السلف",
+      "expenses": "المصروفات"
+    }
+  },
+  "nav": {
+    "dashboard": "لوحة التحكم",
+    "leaveRequests": "طلبات الإجازة",
+    "dailyOrders": "الطلبات اليومية",
+    "employees": "الموظفون",
+    "pendingApprovals": "الموافقات المعلقة",
+    "reports": "التقارير",
+    "myProfile": "ملفي الشخصي",
+    "fines": "الغرامات",
+    "advances": "السلف",
+    "expenses": "المصروفات",
+    "salaryFormulas": "معادلات الرواتب",
+    "companyDocuments": "مستندات الشركة",
+    "monthlySummaries": "الملخصات الشهرية",
+    "vehicles": "المركبات",
+    "inventory": "المخزون",
+    "suppliers": "الموردون",
+    "mechanics": "الميكانيكيون",
+    "platformReconciliation": "مطابقة بيانات المنصات"
+  },
+  "actions": {
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "logoutSuccess": "تم تسجيل الخروج بنجاح.",
+    "sessionExpiredDueToInactivity": "تم تسجيل خروجك بسبب عدم النشاط.",
+    "loading": "جارٍ التحميل...",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "openMenu": "فتح القائمة",
+    "collapseSidebar": "طي الشريط الجانبي",
+    "expandSidebar": "توسيع الشريط الجانبي",
+    "showPassword": "إظهار كلمة المرور",
+    "hidePassword": "إخفاء كلمة المرور",
+    "changePassword": "تغيير كلمة المرور",
+    "userMenu": "قائمة الحساب"
+  },
+  "breadcrumbs": {
+    "home": "الرئيسية",
+    "employeeDetails": "تفاصيل الموظف",
+    "vehicleDetails": "تفاصيل المركبة"
+  },
+  "table": {
+    "search": "بحث",
+    "empty": "لا توجد سجلات",
+    "loadError": "فشل تحميل البيانات. يرجى المحاولة مرة أخرى.",
+    "rowsPerPage": "صفوف لكل صفحة:",
+    "displayedRows": "{{from}}–{{to}} من {{count}}"
+  },
+  "validation": {
+    "required": "هذا الحقل مطلوب",
+    "maxLength": "يجب ألا يتجاوز {{max}} حرفًا"
+  },
+  "errors": {
+    "reference": "المرجع: {{traceId}}",
+    "unexpectedTitle": "حدث خطأ ما",
+    "unexpectedMessage": "حدث خطأ غير متوقع. عادةً ما تؤدي إعادة تحميل الصفحة إلى حل المشكلة — إذا استمرت، يرجى إبلاغ المسؤول.",
+    "reload": "إعادة تحميل الصفحة"
+  },
+  "status": {
+    "accountStatus": {
+      "Incomplete": "غير مكتمل",
+      "PendingReview": "قيد المراجعة",
+      "Active": "نشط",
+      "Suspended": "موقوف",
+      "Rejected": "مرفوض",
+      "Terminated": "منتهي الخدمة"
+    },
+    "leaveStatus": {
+      "Pending": "قيد الانتظار",
+      "Approved": "موافق عليه",
+      "Rejected": "مرفوض"
+    },
+    "monthlySummaryStatus": {
+      "Draft": "مسودة",
+      "Verified": "تم التحقق",
+      "Paid": "مدفوع"
+    },
+    "dailyOrderStatus": {
+      "Open": "مفتوح",
+      "Closed": "بانتظار الموافقة",
+      "Approved": "تمت الموافقة",
+      "Rejected": "مرفوض",
+      "OnLeave": "في إجازة"
+    }
+  }
+}

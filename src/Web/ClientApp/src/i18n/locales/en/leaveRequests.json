@@ -1,0 +1,43 @@
+{
+  "title": "Leave Requests",
+  "subtitle": "Submit and track your leave requests.",
+  "submitLeave": "Submit Leave Request",
+  "approve": "Approve",
+  "reject": "Reject",
+  "empty": "No leave requests found.",
+  "submitSuccess": "Leave request submitted.",
+  "approveSuccess": "Leave request approved.",
+  "rejectSuccess": "Leave request rejected.",
+  "genericError": "Something went wrong. Please try again.",
+  "columns": {
+    "employee": "Employee",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "reason": "Reason",
+    "status": "Status",
+    "reviewedBy": "Reviewed By",
+    "rejectionReason": "Rejection Reason"
+  },
+  "reviewQueue": {
+    "title": "Leave Requests — Review Queue",
+    "subtitle": "Approve or reject leave requests from your team.",
+    "employee": "Employee",
+    "allEmployees": "All Employees",
+    "allStatuses": "All Statuses"
+  },
+  "submitDialog": {
+    "title": "Submit Leave Request",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "reason": "Reason",
+    "submit": "Submit"
+  },
+  "rejectDialog": {
+    "title": "Reject Leave Request",
+    "reason": "Rejection Reason",
+    "submit": "Reject"
+  },
+  "validation": {
+    "endDateBeforeStart": "End date cannot be before start date."
+  }
+}

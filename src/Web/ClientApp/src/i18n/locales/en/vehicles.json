@@ -1,0 +1,127 @@
+{
+  "title": "Vehicles",
+  "subtitle": "Manage the fleet, allocations, and maintenance records.",
+  "myTitle": "My Vehicle",
+  "mySubtitle": "The vehicle currently assigned to you.",
+  "myEmpty": "No vehicle is currently assigned to you.",
+  "addVehicle": "Add Vehicle",
+  "active": "Active",
+  "inactive": "Inactive",
+  "activate": "Activate",
+  "deactivate": "Deactivate",
+  "allocate": "Allocate",
+  "empty": "No vehicles found.",
+  "createSuccess": "Vehicle created.",
+  "activateSuccess": "Vehicle activated.",
+  "deactivateSuccess": "Vehicle deactivated.",
+  "allocateSuccess": "Vehicle allocated.",
+  "serviceRecordSuccess": "Service record added.",
+  "oilChangeSuccess": "Oil change recorded.",
+  "tyreReplacementSuccess": "Tyre replacement recorded.",
+  "accidentRecordSuccess": "Accident record added.",
+  "serviceRecordUpdateSuccess": "Service record updated.",
+  "oilChangeUpdateSuccess": "Oil change record updated.",
+  "tyreReplacementUpdateSuccess": "Tyre replacement record updated.",
+  "accidentRecordUpdateSuccess": "Accident record updated.",
+  "reallocateSuccess": "Vehicle reallocated.",
+  "genericError": "Something went wrong. Please try again.",
+  "filters": {
+    "activeOnly": "Active only"
+  },
+  "columns": {
+    "registrationNumber": "Registration Number",
+    "vehicleType": "Type",
+    "status": "Status",
+    "assignedTo": "Assigned To"
+  },
+  "types": {
+    "Motorcycle": "Motorcycle",
+    "Car": "Car",
+    "Pickup": "Pickup",
+    "Van": "Van",
+    "MiniTruck": "Mini Truck",
+    "Truck": "Truck",
+    "Trailer": "Trailer",
+    "RefrigeratedTruck": "Refrigerated Truck",
+    "Forklift": "Forklift",
+    "Other": "Other"
+  },
+  "createDialog": {
+    "title": "Add Vehicle",
+    "registrationNumber": "Registration Number",
+    "vehicleType": "Vehicle Type",
+    "submit": "Save"
+  },
+  "allocateDialog": {
+    "title": "Allocate {{registrationNumber}}",
+    "employee": "Employee",
+    "assignedDate": "Assigned Date"
+  },
+  "editAllocationDialog": {
+    "title": "Reallocate Vehicle"
+  },
+  "detail": {
+    "backToList": "Back to Vehicles",
+    "genericError": "Couldn't load this vehicle.",
+    "assignedTo": "Currently assigned to {{name}}",
+    "unassigned": "Not currently assigned",
+    "allocations": "Allocation History",
+    "serviceHistory": "Service History",
+    "oilChanges": "Oil Changes",
+    "tyreReplacements": "Tyre Replacements",
+    "accidentHistory": "Accident History",
+    "addRecord": "Add Record",
+    "empty": "No records yet.",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteSuccess": "Record deleted.",
+    "deleteConfirmTitle": "Delete this record?",
+    "deleteConfirmDescription": "This will remove the record from the vehicle's history. This action cannot be undone from the UI.",
+    "currentlyAllocated": "Currently Allocated",
+    "columns": {
+      "employee": "Employee",
+      "assignedDate": "Assigned Date",
+      "returnedDate": "Returned Date",
+      "date": "Date",
+      "odometer": "Odometer",
+      "description": "Description",
+      "cost": "Cost",
+      "numberOfTyres": "Tyres"
+    }
+  },
+  "addServiceDialog": {
+    "title": "Add Service Record",
+    "editTitle": "Edit Service Record",
+    "serviceDate": "Service Date",
+    "odometer": "Odometer",
+    "description": "Description",
+    "cost": "Cost"
+  },
+  "addOilChangeDialog": {
+    "title": "Add Oil Change",
+    "editTitle": "Edit Oil Change",
+    "changeDate": "Change Date",
+    "odometer": "Odometer",
+    "cost": "Cost"
+  },
+  "addTyreDialog": {
+    "title": "Add Tyre Replacement",
+    "editTitle": "Edit Tyre Replacement",
+    "replacementDate": "Replacement Date",
+    "odometer": "Odometer",
+    "numberOfTyres": "Number of Tyres",
+    "cost": "Cost"
+  },
+  "addAccidentDialog": {
+    "title": "Add Accident Record",
+    "editTitle": "Edit Accident Record",
+    "accidentDate": "Accident Date",
+    "description": "Description",
+    "repairCost": "Repair Cost"
+  },
+  "validation": {
+    "nonNegative": "Must be 0 or greater.",
+    "tyresPositive": "Must be at least 1.",
+    "tyresMax": "Must be 6 or fewer."
+  }
+}

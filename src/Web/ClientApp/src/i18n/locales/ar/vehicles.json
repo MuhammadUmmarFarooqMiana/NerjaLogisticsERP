@@ -1,0 +1,127 @@
+{
+  "title": "المركبات",
+  "subtitle": "إدارة الأسطول والتخصيصات وسجلات الصيانة.",
+  "myTitle": "مركبتي",
+  "mySubtitle": "المركبة المخصصة لك حالياً.",
+  "myEmpty": "لا توجد مركبة مخصصة لك حالياً.",
+  "addVehicle": "إضافة مركبة",
+  "active": "نشط",
+  "inactive": "غير نشط",
+  "activate": "تفعيل",
+  "deactivate": "إلغاء التفعيل",
+  "allocate": "تخصيص",
+  "empty": "لا توجد مركبات.",
+  "createSuccess": "تم إنشاء المركبة.",
+  "activateSuccess": "تم تفعيل المركبة.",
+  "deactivateSuccess": "تم إلغاء تفعيل المركبة.",
+  "allocateSuccess": "تم تخصيص المركبة.",
+  "serviceRecordSuccess": "تمت إضافة سجل الصيانة.",
+  "oilChangeSuccess": "تم تسجيل تغيير الزيت.",
+  "tyreReplacementSuccess": "تم تسجيل استبدال الإطارات.",
+  "accidentRecordSuccess": "تمت إضافة سجل الحادث.",
+  "serviceRecordUpdateSuccess": "تم تحديث سجل الصيانة.",
+  "oilChangeUpdateSuccess": "تم تحديث سجل تغيير الزيت.",
+  "tyreReplacementUpdateSuccess": "تم تحديث سجل استبدال الإطارات.",
+  "accidentRecordUpdateSuccess": "تم تحديث سجل الحادث.",
+  "reallocateSuccess": "تم إعادة تخصيص المركبة.",
+  "genericError": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+  "filters": {
+    "activeOnly": "النشطة فقط"
+  },
+  "columns": {
+    "registrationNumber": "رقم التسجيل",
+    "vehicleType": "النوع",
+    "status": "الحالة",
+    "assignedTo": "مخصصة لـ"
+  },
+  "types": {
+    "Motorcycle": "دراجة نارية",
+    "Car": "سيارة",
+    "Pickup": "بيك أب",
+    "Van": "فان",
+    "MiniTruck": "شاحنة صغيرة",
+    "Truck": "شاحنة",
+    "Trailer": "مقطورة",
+    "RefrigeratedTruck": "شاحنة مبردة",
+    "Forklift": "رافعة شوكية",
+    "Other": "أخرى"
+  },
+  "createDialog": {
+    "title": "إضافة مركبة",
+    "registrationNumber": "رقم التسجيل",
+    "vehicleType": "نوع المركبة",
+    "submit": "حفظ"
+  },
+  "allocateDialog": {
+    "title": "تخصيص {{registrationNumber}}",
+    "employee": "الموظف",
+    "assignedDate": "تاريخ التخصيص"
+  },
+  "editAllocationDialog": {
+    "title": "إعادة تخصيص المركبة"
+  },
+  "detail": {
+    "backToList": "العودة إلى المركبات",
+    "genericError": "تعذر تحميل هذه المركبة.",
+    "assignedTo": "مخصصة حالياً لـ {{name}}",
+    "unassigned": "غير مخصصة حالياً",
+    "allocations": "سجل التخصيص",
+    "serviceHistory": "سجل الصيانة",
+    "oilChanges": "تغييرات الزيت",
+    "tyreReplacements": "استبدال الإطارات",
+    "accidentHistory": "سجل الحوادث",
+    "addRecord": "إضافة سجل",
+    "empty": "لا توجد سجلات بعد.",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "deleteSuccess": "تم حذف السجل.",
+    "deleteConfirmTitle": "حذف هذا السجل؟",
+    "deleteConfirmDescription": "سيؤدي هذا إلى إزالة السجل من سجل المركبة. لا يمكن التراجع عن هذا الإجراء من الواجهة.",
+    "currentlyAllocated": "مخصصة حالياً",
+    "columns": {
+      "employee": "الموظف",
+      "assignedDate": "تاريخ التخصيص",
+      "returnedDate": "تاريخ الإرجاع",
+      "date": "التاريخ",
+      "odometer": "عداد المسافات",
+      "description": "الوصف",
+      "cost": "التكلفة",
+      "numberOfTyres": "الإطارات"
+    }
+  },
+  "addServiceDialog": {
+    "title": "إضافة سجل صيانة",
+    "editTitle": "تعديل سجل الصيانة",
+    "serviceDate": "تاريخ الصيانة",
+    "odometer": "عداد المسافات",
+    "description": "الوصف",
+    "cost": "التكلفة"
+  },
+  "addOilChangeDialog": {
+    "title": "إضافة تغيير زيت",
+    "editTitle": "تعديل تغيير الزيت",
+    "changeDate": "تاريخ التغيير",
+    "odometer": "عداد المسافات",
+    "cost": "التكلفة"
+  },
+  "addTyreDialog": {
+    "title": "إضافة استبدال إطارات",
+    "editTitle": "تعديل استبدال الإطارات",
+    "replacementDate": "تاريخ الاستبدال",
+    "odometer": "عداد المسافات",
+    "numberOfTyres": "عدد الإطارات",
+    "cost": "التكلفة"
+  },
+  "addAccidentDialog": {
+    "title": "إضافة سجل حادث",
+    "editTitle": "تعديل سجل الحادث",
+    "accidentDate": "تاريخ الحادث",
+    "description": "الوصف",
+    "repairCost": "تكلفة الإصلاح"
+  },
+  "validation": {
+    "nonNegative": "يجب أن يكون 0 أو أكبر.",
+    "tyresPositive": "يجب أن يكون 1 على الأقل.",
+    "tyresMax": "يجب أن يكون 6 أو أقل."
+  }
+}

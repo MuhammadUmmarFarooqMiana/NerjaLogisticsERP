@@ -1,0 +1,64 @@
+{
+  "title": "المخزون",
+  "subtitle": "تتبع مستويات ومخزون قطع الغيار وحركاتها.",
+  "addItem": "إضافة صنف",
+  "stockIn": "إدخال مخزون",
+  "stockOut": "إخراج مخزون",
+  "viewLedger": "عرض السجل",
+  "lowStock": "مخزون منخفض",
+  "inStock": "متوفر",
+  "empty": "لا توجد أصناف مخزون.",
+  "filters": {
+    "lowStockOnly": "المخزون المنخفض فقط"
+  },
+  "columns": {
+    "itemName": "الصنف",
+    "unit": "الوحدة",
+    "currentStock": "المخزون الحالي",
+    "reorderLevel": "حد إعادة الطلب",
+    "status": "الحالة"
+  },
+  "createDialog": {
+    "title": "إضافة صنف مخزون",
+    "itemName": "اسم الصنف",
+    "unit": "الوحدة",
+    "reorderLevel": "حد إعادة الطلب",
+    "submit": "حفظ"
+  },
+  "stockInDialog": {
+    "title": "إدخال مخزون — {{itemName}}",
+    "supplier": "المورد",
+    "quantity": "الكمية",
+    "stockDate": "تاريخ الحركة"
+  },
+  "stockOutDialog": {
+    "title": "إخراج مخزون — {{itemName}}",
+    "mechanic": "الميكانيكي",
+    "selectMechanicFirst": "اختر ميكانيكياً أولاً للمتابعة.",
+    "employee": "الموظف",
+    "quantity": "الكمية",
+    "stockDate": "تاريخ الحركة"
+  },
+  "ledgerDialog": {
+    "title": "سجل المخزون — {{itemName}}",
+    "empty": "لا توجد حركات مخزون.",
+    "columns": {
+      "date": "التاريخ",
+      "type": "النوع",
+      "quantity": "الكمية",
+      "detail": "التفاصيل"
+    },
+    "type": {
+      "In": "إدخال",
+      "Out": "إخراج"
+    }
+  },
+  "createSuccess": "تم إنشاء صنف المخزون.",
+  "stockInSuccess": "تم تسجيل إدخال المخزون.",
+  "stockOutSuccess": "تم تسجيل إخراج المخزون.",
+  "genericError": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+  "validation": {
+    "reorderLevelNonNegative": "يجب أن يكون 0 أو أكبر.",
+    "quantityPositive": "يجب أن تكون الكمية أكبر من 0."
+  }
+}

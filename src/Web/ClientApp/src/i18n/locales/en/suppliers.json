@@ -1,0 +1,35 @@
+{
+  "title": "Suppliers",
+  "subtitle": "Manage suppliers used for inventory stock-in records.",
+  "addSupplier": "Add Supplier",
+  "edit": "Edit",
+  "delete": "Delete",
+  "columns": {
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address"
+  },
+  "empty": "No suppliers found.",
+  "fields": {
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address"
+  },
+  "createDialog": {
+    "title": "Add Supplier"
+  },
+  "editDialog": {
+    "title": "Edit Supplier"
+  },
+  "createSuccess": "Supplier created.",
+  "updateSuccess": "Supplier updated.",
+  "deleteConfirmTitle": "Delete this supplier?",
+  "deleteConfirmDescription": "This will permanently remove \"{{name}}\". Suppliers referenced by existing stock-in records cannot be deleted.",
+  "deleteSuccess": "Supplier deleted.",
+  "genericError": "Something went wrong. Please try again.",
+  "validation": {
+    "emailInvalid": "Enter a valid email address."
+  }
+}

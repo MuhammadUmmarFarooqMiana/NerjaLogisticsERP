@@ -1,22 +1,22 @@
-﻿using NerjaLogisticsERP.Application.Common.Behaviours;
-using NerjaLogisticsERP.Application.Common.Interfaces;
-using NerjaLogisticsERP.Application.TodoItems.Commands.CreateTodoItem;
 using Microsoft.Extensions.Logging;
 using Moq;
+using NerjaLogisticsERP.Application.Common.Behaviours;
+using NerjaLogisticsERP.Application.Common.Interfaces;
+using NerjaLogisticsERP.Application.Platforms.Commands.CreatePlatform;
 using NUnit.Framework;
 
 namespace NerjaLogisticsERP.Application.UnitTests.Common.Behaviours;
 
 public class RequestLoggerTests
 {
-    private Mock<ILogger<CreateTodoItemCommand>> _logger = null!;
+    private Mock<ILogger<CreatePlatformCommand>> _logger = null!;
     private Mock<IUser> _user = null!;
     private Mock<IIdentityService> _identityService = null!;
 
     [SetUp]
     public void Setup()
     {
-        _logger = new Mock<ILogger<CreateTodoItemCommand>>();
+        _logger = new Mock<ILogger<CreatePlatformCommand>>();
         _user = new Mock<IUser>();
         _identityService = new Mock<IIdentityService>();
     }
@@ -24,22 +24,22 @@ public class RequestLoggerTests
     [Test]
     public async Task ShouldCallGetUserNameAsyncOnceIfAuthenticated()
     {
-        _user.Setup(x => x.Id).Returns(Guid.NewGuid().ToString());
+        _user.Setup(x => x.Id).Returns(Guid.NewGuid());
 
-        var requestLogger = new LoggingBehaviour<CreateTodoItemCommand>(_logger.Object, _user.Object, _identityService.Object);
+        var requestLogger = new LoggingBehaviour<CreatePlatformCommand>(_logger.Object, _user.Object, _identityService.Object);
 
-        await requestLogger.Process(new CreateTodoItemCommand { ListId = 1, Title = "title" }, new CancellationToken());
+        await requestLogger.Process(new CreatePlatformCommand { Name = "Hunger" }, new CancellationToken());
 
-        _identityService.Verify(i => i.GetUserNameAsync(It.IsAny<string>()), Times.Once);
+        _identityService.Verify(i => i.GetUserNameAsync(It.IsAny<Guid>()), Times.Once);
     }
 
     [Test]
     public async Task ShouldNotCallGetUserNameAsyncOnceIfUnauthenticated()
     {
-        var requestLogger = new LoggingBehaviour<CreateTodoItemCommand>(_logger.Object, _user.Object, _identityService.Object);
+        var requestLogger = new LoggingBehaviour<CreatePlatformCommand>(_logger.Object, _user.Object, _identityService.Object);
 
-        await requestLogger.Process(new CreateTodoItemCommand { ListId = 1, Title = "title" }, new CancellationToken());
+        await requestLogger.Process(new CreatePlatformCommand { Name = "Hunger" }, new CancellationToken());
 
-        _identityService.Verify(i => i.GetUserNameAsync(It.IsAny<string>()), Times.Never);
+        _identityService.Verify(i => i.GetUserNameAsync(It.IsAny<Guid>()), Times.Never);
     }
 }

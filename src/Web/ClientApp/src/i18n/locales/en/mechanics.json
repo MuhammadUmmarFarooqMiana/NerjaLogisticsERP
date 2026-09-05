@@ -1,0 +1,38 @@
+{
+  "title": "Mechanics",
+  "subtitle": "Manage mechanics used for inventory stock-out records.",
+  "addMechanic": "Add Mechanic",
+  "edit": "Edit",
+  "delete": "Delete",
+  "columns": {
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "specialty": "Specialty",
+    "address": "Address"
+  },
+  "empty": "No mechanics found.",
+  "fields": {
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "specialty": "Specialty",
+    "specialtyHint": "e.g. Engine, Electrical, General",
+    "address": "Address"
+  },
+  "createDialog": {
+    "title": "Add Mechanic"
+  },
+  "editDialog": {
+    "title": "Edit Mechanic"
+  },
+  "createSuccess": "Mechanic created.",
+  "updateSuccess": "Mechanic updated.",
+  "deleteConfirmTitle": "Delete this mechanic?",
+  "deleteConfirmDescription": "This will permanently remove \"{{name}}\". Mechanics referenced by existing stock-out records cannot be deleted.",
+  "deleteSuccess": "Mechanic deleted.",
+  "genericError": "Something went wrong. Please try again.",
+  "validation": {
+    "emailInvalid": "Enter a valid email address."
+  }
+}

@@ -28,6 +28,14 @@ public class IdentityService : IIdentityService
         return user?.UserName;
     }
 
+    public async Task<string?> GetUserNameAsync(Guid userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+
+        return user?.UserName;
+    }
+
+    [Obsolete("Already existing method")]
     public async Task<(Result Result, Guid UserId)> CreateUserAsync(string userName, string password)
     {
         var user = new ApplicationUser
@@ -41,6 +49,18 @@ public class IdentityService : IIdentityService
         return (result.ToApplicationResult(), user.Id);
     }
 
+    public async Task<(Result Result, Guid UserId)> CreateUserAsync(
+       string email, string password, string phoneNumber, bool hasWhatsApp)
+    {
+        var user = ApplicationUser.Create(phoneNumber, hasWhatsApp);
+        user.UserName = email;
+        user.Email = email;
+
+        var result = await _userManager.CreateAsync(user, password);
+
+        return (result.ToApplicationResult(), user.Id);
+    }
+
     public async Task<bool> IsInRoleAsync(string userId, string role)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -48,20 +68,55 @@ public class IdentityService : IIdentityService
         return user != null && await _userManager.IsInRoleAsync(user, role);
     }
 
-    public async Task<bool> AuthorizeAsync(string userId, string policyName)
+    public async Task<bool> EmailExistsAsync(string email)
     {
-        var user = await _userManager.FindByIdAsync(userId);
+        return await _userManager.FindByEmailAsync(email) is not null;
+    }
 
+    public async Task<bool> AuthorizeAsync(Guid userId, string policyName)
+    {
+        var user = await _userManager.FindByIdAsync(userId.ToString());
         if (user == null)
-        {
             return false;
-        }
 
         var principal = await _userClaimsPrincipalFactory.CreateAsync(user);
-
         var result = await _authorizationService.AuthorizeAsync(principal, policyName);
 
         return result.Succeeded;
+    }
+
+    public async Task<Result> AddToRoleAsync(Guid userId, string role)
+    {
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+        if (user is null)
+            return Result.Failure(new[] { "User not found." });
+
+        var result = await _userManager.AddToRoleAsync(user, role);
+        return result.ToApplicationResult();
+    }
+
+    public async Task<Result> RemoveFromRoleAsync(Guid userId, string role)
+    {
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+        if (user is null)
+            return Result.Failure(new[] { "User not found." });
+
+        var result = await _userManager.RemoveFromRoleAsync(user, role);
+        return result.ToApplicationResult();
+    }
+
+    public async Task<List<UserSummaryDto>> GetAllUsersAsync()
+    {
+        var users = _userManager.Users.ToList();
+        var summaries = new List<UserSummaryDto>(users.Count);
+
+        foreach (var user in users)
+        {
+            var roles = await _userManager.GetRolesAsync(user);
+            summaries.Add(new UserSummaryDto { Id = user.Id, Email = user.Email, Roles = roles });
+        }
+
+        return summaries;
     }
 
     public async Task<Result> DeleteUserAsync(string userId)
@@ -71,10 +126,55 @@ public class IdentityService : IIdentityService
         return user != null ? await DeleteUserAsync(user) : Result.Success();
     }
 
-    public async Task<Result> DeleteUserAsync(ApplicationUser user)
+    private async Task<Result> DeleteUserAsync(ApplicationUser user)
     {
         var result = await _userManager.DeleteAsync(user);
 
         return result.ToApplicationResult();
+    }
+
+    public async Task<Guid?> ValidateCredentialsAsync(string email, string password)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user is null) return null;
+
+        var passwordValid = await _userManager.CheckPasswordAsync(user, password);
+        return passwordValid ? user.Id : null;
+    }
+
+    public async Task<IList<string>> GetRolesAsync(Guid userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+        return user is null ? Array.Empty<string>() : await _userManager.GetRolesAsync(user);
+    }
+
+    public async Task<List<Guid>> GetUserIdsInRoleAsync(string role)
+    {
+        var users = await _userManager.GetUsersInRoleAsync(role);
+        return users.Select(u => u.Id).ToList();
+    }
+
+    public async Task<Result> ChangePasswordAsync(Guid userId, string currentPassword, string newPassword)
+    {
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+        if (user is null)
+            return Result.Failure(new[] { "User not found." });
+
+        var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+        return result.ToApplicationResult();
+    }
+
+    public async Task<UserProfileDto?> GetUserProfileAsync(Guid userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+        if (user is null) return null;
+
+        return new UserProfileDto
+        {
+            Email = user.Email,
+            PhoneNumber = user.PhoneNumber,
+            HasWhatsApp = user.HasWhatsApp,
+            EmailConfirmed = user.EmailConfirmed
+        };
     }
 }

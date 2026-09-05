@@ -1,0 +1,171 @@
+{
+  "list": {
+    "title": "Employees",
+    "filterStatus": "Status",
+    "allStatuses": "All statuses",
+    "columns": {
+      "name": "Name",
+      "platform": "Platform",
+      "status": "Status",
+      "iqama": "Iqama Number",
+      "joiningDate": "Joining Date"
+    },
+    "viewAction": "View"
+  },
+  "pending": {
+    "title": "Pending Approvals",
+    "empty": "No pending approvals"
+  },
+  "detail": {
+    "title": "Employee Profile",
+    "backToList": "Back to list",
+    "fields": {
+      "status": "Status",
+      "performanceStatus": "Performance",
+      "platform": "Platform",
+      "vehicle": "Vehicle",
+      "supervisor": "Supervisor",
+      "iqamaNumber": "Iqama Number",
+      "platformIdNumber": "Platform ID Number",
+      "joiningDate": "Joining Date",
+      "idExpiryDate": "ID Expiry Date",
+      "iqamaExpiryDate": "Iqama Expiry Date",
+      "drivingLicenseExpiryDate": "Driving License Expiry Date",
+      "insuranceExpiryDate": "Insurance Expiry Date",
+      "profileSubmittedAt": "Profile Submitted At",
+      "rejectionReason": "Rejection Reason",
+      "email": "Email",
+      "phoneNumber": "Phone Number",
+      "hasWhatsApp": "Has WhatsApp",
+      "emailConfirmed": "Email Confirmed"
+    },
+    "notProvided": "Not provided",
+    "yes": "Yes",
+    "no": "No",
+    "performanceLevels": {
+      "Green": "Excellent",
+      "Yellow": "Average",
+      "Red": "Poor"
+    },
+    "approve": "Approve",
+    "reject": "Reject",
+    "approveConfirmTitle": "Approve this employee?",
+    "approveConfirmDescription": "Optionally assign a platform, vehicle, and supervisor before approving. This sets their joining date to today and activates their account.",
+    "approveSuccess": "Employee approved.",
+    "rejectDialogTitle": "Reject profile",
+    "rejectReasonLabel": "Reason",
+    "rejectSubmit": "Reject",
+    "rejectSuccess": "Employee rejected.",
+    "genericError": "Something went wrong. Please try again."
+  },
+  "approveDialog": {
+    "platform": "Platform",
+    "vehicle": "Vehicle",
+    "supervisor": "Supervisor",
+    "none": "None"
+  },
+  "profileSubmission": {
+    "title": "Submit your profile",
+    "subtitle": "Fill in your details for review by an administrator or supervisor.",
+    "basicDetailsTab": "Basic Details",
+    "documentsTab": "Documents",
+    "fullName": "Full Name",
+    "email": "Email",
+    "phoneNumber": "Phone Number",
+    "prefilledInfo": "Your name, email, and phone number are already on file from registration.",
+    "iqamaNumber": "Iqama Number",
+    "platformIdNumber": "Platform ID Number",
+    "idExpiryDate": "ID Expiry Date",
+    "iqamaExpiryDate": "Iqama Expiry Date",
+    "drivingLicenseExpiryDate": "Driving License Expiry Date",
+    "insuranceExpiryDate": "Insurance Expiry Date",
+    "documentsInfo": "Upload each document below, then submit your profile for review.",
+    "documentTypes": {
+      "profilePicture": "Profile Picture",
+      "iqama": "Iqama Copy",
+      "drivingLicense": "Driving License",
+      "passport": "Passport",
+      "bikeRegistration": "Bike Registration",
+      "insurance": "Insurance Document",
+      "employmentContract": "Employment Contract",
+      "platformIdProof": "Platform ID Proof"
+    },
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit for Review",
+    "success": "Profile submitted for review.",
+    "genericError": "Could not submit your profile. Please try again."
+  },
+  "myProfile": {
+    "title": "My Profile",
+    "loadError": "Could not load your profile. Please try again.",
+    "pendingReview": "Your profile has been submitted and is awaiting review by an administrator or supervisor.",
+    "rejectedBanner": "Your previous submission was rejected: {{reason}}. Please update your details and resubmit.",
+    "changePhoto": "Change Photo",
+    "removePhoto": "Remove",
+    "photoHint": "JPEG or PNG, up to 5 MB",
+    "photoUploadSuccess": "Profile picture updated.",
+    "photoRemoveSuccess": "Profile picture removed.",
+    "photoUploadError": "Could not upload the picture. Please use a JPEG or PNG under 5 MB.",
+    "photoRemoveError": "Could not remove the picture. Please try again."
+  },
+  "documents": {
+    "sectionTitle": "Documents",
+    "upload": "Upload",
+    "replace": "Replace",
+    "preview": "Preview",
+    "download": "Download",
+    "required": "Required",
+    "missingRequired": "Please upload {{types}} before submitting for review.",
+    "uploadSuccess": "Document uploaded.",
+    "downloadError": "Could not download the document. Please try again.",
+    "previewError": "Could not open the preview. Please try again.",
+    "genericError": "Something went wrong. Please try again."
+  },
+  "admin": {
+    "usersTab": "Users & Roles",
+    "addEmployee": "Add Employee",
+    "edit": "Edit",
+    "delete": "Delete",
+    "suspend": "Suspend",
+    "reactivate": "Reactivate",
+    "terminate": "Terminate",
+    "createSuccess": "Employee created.",
+    "updateSuccess": "Employee updated.",
+    "deleteSuccess": "Employee deleted.",
+    "suspendSuccess": "Employee suspended.",
+    "reactivateSuccess": "Employee reactivated.",
+    "terminateSuccess": "Employee terminated.",
+    "deleteConfirmTitle": "Delete this employee?",
+    "deleteConfirmDescription": "{{name}} will be removed from all lists and won't be able to log in. Their history (advances, fines, orders, etc.) is kept.",
+    "terminateConfirmTitle": "Terminate this employee?",
+    "terminateConfirmDescription": "{{name}}'s account status will be set to Terminated and they will no longer be able to log in. This cannot be undone from here.",
+    "createDialog": {
+      "title": "Add Employee",
+      "fullName": "Full Name",
+      "email": "Email",
+      "password": "Password",
+      "phoneNumber": "Phone Number",
+      "roles": "Roles",
+      "noPlatform": "No platform",
+      "submit": "Create"
+    },
+    "editDialog": {
+      "title": "Edit Employee",
+      "submit": "Save Changes"
+    },
+    "roles": {
+      "Administrator": "Administrator",
+      "SoftwareEngineer": "Software Engineer",
+      "Supervisor": "Supervisor",
+      "Accountant": "Accountant",
+      "Rider": "Rider"
+    },
+    "validation": {
+      "emailInvalid": "Enter a valid email address",
+      "passwordMinRegister": "Password must be at least 8 characters",
+      "passwordComplexity": "Password must include an uppercase letter, a lowercase letter, a number, and a symbol",
+      "rolesRequired": "At least one role is required"
+    }
+  }
+}
