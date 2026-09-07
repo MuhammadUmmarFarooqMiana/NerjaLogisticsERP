@@ -1,26 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NerjaLogisticsERP.Domain.Constants;
 using NerjaLogisticsERP.Domain.Entities;
 using NerjaLogisticsERP.Infrastructure.Identity;
 
 namespace NerjaLogisticsERP.Infrastructure.Data;
-
-public static class InitialiserExtensions
-{
-    public static async Task InitialiseDatabaseAsync(this WebApplication app)
-    {
-        using var scope = app.Services.CreateScope();
-
-        var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
-
-        await initialiser.InitialiseAsync();
-        await initialiser.SeedAsync();
-    }
-}
 
 public class ApplicationDbContextInitialiser
 {
@@ -62,47 +47,60 @@ public class ApplicationDbContextInitialiser
         }
     }
 
-    public async Task SeedAsync()
+    /// <summary>
+    /// Creates the app's fixed set of roles, if they don't already exist. Idempotent and
+    /// carries no secrets — safe to call in every environment, and role-based [Authorize]
+    /// checks can't pass for anyone until these rows exist.
+    /// </summary>
+    public async Task SeedRolesAsync()
     {
         try
         {
-            await TrySeedAsync();
+            foreach (var roleName in AllRoles)
+            {
+                if (_roleManager.Roles.All(r => r.Name != roleName))
+                {
+                    await _roleManager.CreateAsync(new IdentityRole<Guid>
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = roleName
+                    });
+                }
+            }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An error occurred while seeding the database.");
+            _logger.LogError(ex, "An error occurred while seeding roles.");
             throw;
         }
     }
 
-    public async Task TrySeedAsync()
+    /// <summary>
+    /// Creates the built-in Administrator account with a hardcoded, publicly-known password.
+    /// Must only ever be wired up to run in Development — see
+    /// InitialiserExtensions.SeedDevelopmentAdministratorAsync's remarks.
+    /// </summary>
+    public async Task SeedDevelopmentAdministratorAsync()
     {
-        // Default roles
-        foreach (var roleName in AllRoles)
+        try
         {
-            if (_roleManager.Roles.All(r => r.Name != roleName))
-            {
-                await _roleManager.CreateAsync(new IdentityRole<Guid>
-                {
-                    Id = Guid.NewGuid(),
-                    Name = roleName
-                });
-            }
+            await TrySeedDevelopmentAdministratorAsync();
         }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while seeding the development administrator account.");
+            throw;
+        }
+    }
 
-        // Default roles
-        var administratorRole = new IdentityRole(Roles.Administrator);
-
-        // Default users
+    private async Task TrySeedDevelopmentAdministratorAsync()
+    {
         var administrator = new ApplicationUser { UserName = "administrator@nerja", Email = "administrator@nerja.com", PhoneNumber = "+966000000000", EmailConfirmed = true };
 
         if (_userManager.Users.All(u => u.UserName != administrator.UserName))
         {
             await _userManager.CreateAsync(administrator, "@Administrator1!");
-            if (!string.IsNullOrWhiteSpace(administratorRole.Name))
-            {
-                await _userManager.AddToRolesAsync(administrator, new[] { administratorRole.Name });
-            }
+            await _userManager.AddToRolesAsync(administrator, new[] { Roles.Administrator });
 
             // Seeded accounts should be immediately usable — create the Employee
             // profile and approve it in the same step, rather than leaving the

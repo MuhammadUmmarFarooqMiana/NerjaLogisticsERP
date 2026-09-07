@@ -12,6 +12,7 @@ using NerjaLogisticsERP.Infrastructure.BackgroundJobs;
 using NerjaLogisticsERP.Infrastructure.Data;
 using NerjaLogisticsERP.Infrastructure.Data.Interceptors;
 using NerjaLogisticsERP.Infrastructure.FileStorage;
+using NerjaLogisticsERP.Infrastructure.HealthChecks;
 using NerjaLogisticsERP.Infrastructure.Identity;
 using NerjaLogisticsERP.Infrastructure.Reports;
 
@@ -39,6 +40,9 @@ public static class DependencyInjection
         builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
         builder.Services.AddScoped<ApplicationDbContextInitialiser>();
+
+        builder.Services.AddHealthChecks()
+            .AddCheck<DatabaseHealthCheck>("database");
 
         //builder.Services.AddAuthentication(options =>
         //    {

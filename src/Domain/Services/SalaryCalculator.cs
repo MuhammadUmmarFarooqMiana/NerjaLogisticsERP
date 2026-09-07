@@ -18,7 +18,16 @@ public class SalaryCalculator : ISalaryCalculator
         if (completedOrders == spike.MinOrders)
             return spike.Rate;
 
-        var aboveTier = formula.Tiers.FirstOrDefault(t => t.RateType == SalaryTierRateType.PerOrder && t.MinOrders > spike.MinOrders);
+        // Pick the above-spike tier whose own [MinOrders, MaxOrders] range actually contains
+        // completedOrders — not just the first PerOrder tier above the spike in list order,
+        // which picked the wrong rate whenever more than one such tier existed and they weren't
+        // authored in ascending order. No matching tier (a gap in the configured ranges) falls
+        // back to 0 extra per-order pay, same as before.
+        var aboveTier = formula.Tiers.FirstOrDefault(t =>
+            t.RateType == SalaryTierRateType.PerOrder
+            && t.MinOrders > spike.MinOrders
+            && completedOrders >= t.MinOrders
+            && (t.MaxOrders is null || completedOrders <= t.MaxOrders));
         var extraOrders = completedOrders - spike.MinOrders;
 
         return spike.Rate + (aboveTier?.Rate ?? 0m) * extraOrders;

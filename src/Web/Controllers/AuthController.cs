@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using NerjaLogisticsERP.Application.Auth.Commands.ChangePassword;
 using NerjaLogisticsERP.Application.Auth.Commands.Login;
 using NerjaLogisticsERP.Application.Auth.Commands.Logout;
@@ -12,6 +13,7 @@ public class AuthController : ApiControllerBase
 {
     private const string RefreshTokenCookieName = "refreshToken";
 
+    [EnableRateLimiting("auth")]
     [HttpPost("register")]
     public async Task<ActionResult<Guid>> Register(RegisterEmployeeCommand command)
     {
@@ -24,6 +26,7 @@ public class AuthController : ApiControllerBase
         );
     }
 
+    [EnableRateLimiting("auth")]
     [HttpPost("login")]
     public async Task<ActionResult<AuthTokenResponseDto>> Login(LoginCommand command)
     {
