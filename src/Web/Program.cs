@@ -14,9 +14,18 @@ builder.AddWebServices();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+// Both applied in every environment: a freshly-provisioned production database has no
+// schema without the migration, and role-based [Authorize] checks can't pass for anyone
+// without the roles existing as real rows. The seeded ADMIN ACCOUNT is the one part that
+// stays Development-only — see SeedDevelopmentAdministratorAsync's remarks on why it must
+// not run unattended in production.
+await app.MigrateDatabaseAsync();
+await app.SeedRolesAsync();
+
 if (app.Environment.IsDevelopment())
 {
-    await app.InitialiseDatabaseAsync();
+    await app.SeedDevelopmentAdministratorAsync();
 }
 else
 {
@@ -55,10 +64,19 @@ app.UseCors(static builder =>
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Must come after UseAuthorization (matches the documented ASP.NET Core middleware order)
+// so a rejected-request short-circuit still runs through auth first.
+app.UseRateLimiter();
+
 app.UseFileServer();
 
 app.MapOpenApi();
 app.MapScalarApiReference();
+
+// Anonymous by design — a load balancer / uptime monitor needs to reach this without a
+// token. Response body is just the default Healthy/Unhealthy text, no details attached,
+// so it doesn't leak anything beyond "the database is/isn't reachable".
+app.MapHealthChecks("/health");
 
 app.MapDefaultEndpoints();
 app.MapEndpoints(typeof(Program).Assembly);

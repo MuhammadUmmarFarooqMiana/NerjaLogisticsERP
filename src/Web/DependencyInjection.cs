@@ -1,5 +1,7 @@
+using System.Threading.RateLimiting;
 using Azure.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using NerjaLogisticsERP.Application.Common.Interfaces;
 using NerjaLogisticsERP.Infrastructure.Data;
 using NerjaLogisticsERP.Web.Services;
@@ -43,6 +45,26 @@ public static class DependencyInjection
         });
 
         builder.Services.AddCors();
+
+        // "auth" policy: 5 requests per minute per client IP, applied to Login/Register.
+        // A fixed window keyed on the IP itself (rather than one shared AddFixedWindowLimiter)
+        // so one client hammering the endpoint can't exhaust the allowance for everyone else.
+        // QueueLimit 0 rejects the 6th+ request outright (429) instead of queueing it — for a
+        // login attempt, "try again in a bit" is correct; there's nothing worth waiting to process.
+        builder.Services.AddRateLimiter(options =>
+        {
+            options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+            options.AddPolicy("auth", httpContext =>
+                RateLimitPartition.GetFixedWindowLimiter(
+                    partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+                    factory: _ => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 5,
+                        Window = TimeSpan.FromMinutes(1),
+                        QueueLimit = 0
+                    }));
+        });
     }
 
     public static void AddKeyVaultIfConfigured(this IHostApplicationBuilder builder)
