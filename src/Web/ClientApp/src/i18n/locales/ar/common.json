@@ -92,7 +92,8 @@
   "breadcrumbs": {
     "home": "الرئيسية",
     "employeeDetails": "تفاصيل الموظف",
-    "vehicleDetails": "تفاصيل المركبة"
+    "vehicleDetails": "تفاصيل المركبة",
+    "monthlySummaryDetails": "تفاصيل الملخص الشهري"
   },
   "table": {
     "search": "بحث",

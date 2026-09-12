@@ -92,7 +92,8 @@
   "breadcrumbs": {
     "home": "Home",
     "employeeDetails": "Employee Details",
-    "vehicleDetails": "Vehicle Details"
+    "vehicleDetails": "Vehicle Details",
+    "monthlySummaryDetails": "Monthly Summary Details"
   },
   "table": {
     "search": "Search",

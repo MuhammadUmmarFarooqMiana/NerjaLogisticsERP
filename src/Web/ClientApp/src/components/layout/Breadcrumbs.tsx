@@ -59,6 +59,8 @@ export function Breadcrumbs() {
       label = t('common:breadcrumbs.employeeDetails');
     } else if (accumulatedPath.startsWith('/vehicles/')) {
       label = t('common:breadcrumbs.vehicleDetails');
+    } else if (accumulatedPath.startsWith('/monthly-summaries/')) {
+      label = t('common:breadcrumbs.monthlySummaryDetails');
     } else {
       label = humanize(segment);
     }
