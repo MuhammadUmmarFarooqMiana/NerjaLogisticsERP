@@ -9,12 +9,12 @@ import { useAppSelector } from '../../app/hooks';
 import { useToast } from '../../components/feedback/ToastContext';
 import { downloadFile, previewFile, printFile } from '../../lib/downloadFile';
 import { selectAccessToken } from '../auth/authSlice';
-import { RECONCILIATION_EXPORT_URL, type GenerateReconciliationReportArg } from '../../api/platformReconciliationApi';
+import { RECONCILIATION_EXPORT_URL, type GenerateReconciliationReportArg } from '../../api/auditInvoiceApi';
 
 const PDF = 0;
 const EXCEL = 1;
 
-interface PlatformReconciliationActionButtonsProps {
+interface AuditInvoiceActionButtonsProps {
   disabled: boolean;
   /** The same filters (platform/year/month/file) the preview was generated from — export
    * re-parses the file server-side rather than relying on anything cached from Generate. */
@@ -25,11 +25,11 @@ interface PlatformReconciliationActionButtonsProps {
 /** Same Preview/Print/Export PDF/Export Excel wiring as ReportActionButtons, but POSTing a
  * multipart body (the uploaded file + filters) instead of a GET query string, since this
  * report — uniquely among reports — takes a file upload. */
-export function PlatformReconciliationActionButtons({
+export function AuditInvoiceActionButtons({
   disabled,
   buildArg,
   fallbackFileName,
-}: PlatformReconciliationActionButtonsProps) {
+}: AuditInvoiceActionButtonsProps) {
   const { t } = useTranslation('reports');
   const toast = useToast();
   const accessToken = useAppSelector(selectAccessToken);

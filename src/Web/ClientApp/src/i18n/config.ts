@@ -36,8 +36,8 @@ import enUsers from './locales/en/users.json';
 import arUsers from './locales/ar/users.json';
 import enReports from './locales/en/reports.json';
 import arReports from './locales/ar/reports.json';
-import enPlatformReconciliation from './locales/en/platformReconciliation.json';
-import arPlatformReconciliation from './locales/ar/platformReconciliation.json';
+import enAuditInvoice from './locales/en/auditInvoice.json';
+import arAuditInvoice from './locales/ar/auditInvoice.json';
 
 export const defaultNamespace = 'common';
 
@@ -80,7 +80,7 @@ void i18n.use(initReactI18next).init({
       companyDocuments: enCompanyDocuments,
       users: enUsers,
       reports: enReports,
-      platformReconciliation: enPlatformReconciliation,
+      auditInvoice: enAuditInvoice,
     },
     ar: {
       common: arCommon,
@@ -101,7 +101,7 @@ void i18n.use(initReactI18next).init({
       companyDocuments: arCompanyDocuments,
       users: arUsers,
       reports: arReports,
-      platformReconciliation: arPlatformReconciliation,
+      auditInvoice: arAuditInvoice,
     },
   },
   ns: [
@@ -123,7 +123,7 @@ void i18n.use(initReactI18next).init({
     'companyDocuments',
     'users',
     'reports',
-    'platformReconciliation',
+    'auditInvoice',
   ],
   lng: getStoredLanguage(),
   fallbackLng: 'en',

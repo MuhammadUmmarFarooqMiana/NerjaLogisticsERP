@@ -71,7 +71,7 @@
     "inventory": "المخزون",
     "suppliers": "الموردون",
     "mechanics": "الميكانيكيون",
-    "platformReconciliation": "مطابقة بيانات المنصات"
+    "auditInvoice": "تدقيق الفاتورة"
   },
   "actions": {
     "login": "تسجيل الدخول",

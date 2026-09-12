@@ -34,7 +34,7 @@ const ROUTE_LABEL_KEYS: Record<string, string> = {
   '/reports/suppliers': 'reports:types.suppliers',
   '/reports/inventory-ledger': 'reports:types.inventory',
   '/reports/salaries': 'reports:types.salaries',
-  '/platform-reconciliation': 'common:nav.platformReconciliation',
+  '/audit-invoice': 'common:nav.auditInvoice',
 };
 
 function humanize(segment: string): string {

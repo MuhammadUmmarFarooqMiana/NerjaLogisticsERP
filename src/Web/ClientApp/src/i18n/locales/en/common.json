@@ -71,7 +71,7 @@
     "inventory": "Inventory",
     "suppliers": "Suppliers",
     "mechanics": "Mechanics",
-    "platformReconciliation": "Platform Reconciliation"
+    "auditInvoice": "Audit Invoice"
   },
   "actions": {
     "login": "Login",

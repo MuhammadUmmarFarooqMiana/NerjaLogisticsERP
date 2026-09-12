@@ -9,11 +9,11 @@ import type {
   PlatformReconciliationRowDto,
   PlatformReconciliationUnmatchedPlatformRowDto,
 } from '../../api/generated/apiSlice';
-import { useGenerateReconciliationReportMutation, type GenerateReconciliationReportArg } from '../../api/platformReconciliationApi';
+import { useGenerateReconciliationReportMutation, type GenerateReconciliationReportArg } from '../../api/auditInvoiceApi';
 import { DataTable } from '../../components/shared/DataTable';
 import { getApiErrorMessages } from '../../lib/apiError';
 import { CURRENT_MONTH, CURRENT_YEAR } from '../reports/reportConstants';
-import { PlatformReconciliationActionButtons } from './PlatformReconciliationActionButtons';
+import { AuditInvoiceActionButtons } from './AuditInvoiceActionButtons';
 
 const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);
 
@@ -32,8 +32,8 @@ function SummaryTile({ label, value }: { label: string; value: string }) {
   );
 }
 
-export default function PlatformReconciliationPage() {
-  const { t } = useTranslation('platformReconciliation');
+export default function AuditInvoicePage() {
+  const { t } = useTranslation('auditInvoice');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const { data: platforms } = useGetApiPlatformsQuery();
@@ -228,10 +228,10 @@ export default function PlatformReconciliationPage() {
             <Typography variant="subtitle1">
               {report.platformName} — {report.periodLabel}
             </Typography>
-            <PlatformReconciliationActionButtons
+            <AuditInvoiceActionButtons
               disabled={!report}
               buildArg={currentArg}
-              fallbackFileName="platform-reconciliation"
+              fallbackFileName="audit-invoice"
             />
           </Stack>
 

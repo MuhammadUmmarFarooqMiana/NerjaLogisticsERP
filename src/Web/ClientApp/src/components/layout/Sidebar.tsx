@@ -154,8 +154,8 @@ const navItems: NavItem[] = [
         roles: [Roles.Administrator, Roles.Supervisor, Roles.Accountant],
     },
     {
-        labelKey: 'nav.platformReconciliation',
-        path: '/platform-reconciliation',
+        labelKey: 'nav.auditInvoice',
+        path: '/audit-invoice',
         icon: FactCheckOutlinedIcon,
         roles: [Roles.Administrator, Roles.Accountant],
     },
