@@ -8,12 +8,13 @@ namespace NerjaLogisticsERP.Application.Employees.Commands.SubmitProfileForRevie
 
 public class SubmitProfileForReviewCommandHandler : IRequestHandler<SubmitProfileForReviewCommand>
 {
-    // Enforced server-side (not just in the UI) because documents are uploaded
-    // through a separate endpoint, independent of this command — a client that
-    // skips the upload step, or calls the API directly, must still be blocked.
+    // Enforced server-side (not just in the UI) because documents/the profile picture are
+    // uploaded through separate endpoints, independent of this command — a client that skips
+    // an upload step, or calls the API directly, must still be blocked. The profile picture
+    // isn't in this list: it isn't an EmployeeDocument at all, it's Employee.
+    // ProfilePictureStorageKey, checked separately below.
     private static readonly EmployeeDocumentType[] RequiredDocumentTypes =
     [
-        EmployeeDocumentType.ProfilePicture,
         EmployeeDocumentType.PlatformIdProof
     ];
 
@@ -42,9 +43,14 @@ public class SubmitProfileForReviewCommandHandler : IRequestHandler<SubmitProfil
             .ToListAsync(cancellationToken);
 
         var missingTypes = RequiredDocumentTypes.Where(t => !uploadedTypes.Contains(t)).ToList();
-        if (missingTypes.Count > 0)
-            throw new Application.Common.Exceptions.ValidationException(missingTypes.Select(t =>
-                new ValidationFailure(t.ToString(), $"{t} document must be uploaded before submitting for review.")));
+        var failures = missingTypes.Select(t =>
+            new ValidationFailure(t.ToString(), $"{t} document must be uploaded before submitting for review.")).ToList();
+
+        if (string.IsNullOrEmpty(employee.ProfilePictureStorageKey))
+            failures.Add(new ValidationFailure(nameof(Employee.ProfilePictureStorageKey), "Profile picture must be uploaded before submitting for review."));
+
+        if (failures.Count > 0)
+            throw new Application.Common.Exceptions.ValidationException(failures);
 
         employee.SubmitProfileForReview(
             request.IqamaNumber, request.PlatformIdNumber, request.IdExpiryDate, request.IqamaExpiryDate,
