@@ -28,7 +28,9 @@ import { FormDatePicker } from '../../components/shared/FormDatePicker';
 import { useToast } from '../../components/feedback/ToastContext';
 import { getApiErrorMessages } from '../../lib/apiError';
 import { selectCurrentUser } from '../auth/authSlice';
+import { useMyProfilePicture } from '../auth/useMyProfilePicture';
 import { EmployeeDocumentsPanel } from './EmployeeDocumentsPanel';
+import { ProfilePictureUploader } from './ProfilePictureUploader';
 import { REQUIRED_EMPLOYEE_DOCUMENT_TYPES } from './employeeDocumentTypes';
 import { buildProfileSubmissionSchema, type ProfileSubmissionFormValues } from './schemas';
 
@@ -43,6 +45,7 @@ export default function ProfileSubmissionForm({ employee }: ProfileSubmissionFor
   const toast = useToast();
   const [submitProfile, { isLoading }] = usePostApiEmployeesByIdSubmitProfileMutation();
   const { data: documents = [] } = useGetApiEmployeeDocumentsQuery();
+  const { pictureUrl } = useMyProfilePicture();
   const [step, setStep] = useState<0 | 1>(0);
 
   const {
@@ -78,16 +81,19 @@ export default function ProfileSubmissionForm({ employee }: ProfileSubmissionFor
 
     // Mirrors the server-side check in SubmitProfileForReviewCommandHandler —
     // catching it here avoids a round trip and points the rider straight at
-    // the Documents tab instead of a generic error after submitting.
+    // the Documents tab instead of a generic error after submitting. The profile picture
+    // isn't an EmployeeDocument (see employeeDocumentTypes.ts), so it's checked separately
+    // via whether an avatar has actually been uploaded, not via `documents`.
     const uploadedTypes = new Set(documents.map((d) => d.type));
-    const missing = REQUIRED_EMPLOYEE_DOCUMENT_TYPES.filter((docType) => !uploadedTypes.has(docType.enumName));
-    if (missing.length > 0) {
+    const missingLabels = REQUIRED_EMPLOYEE_DOCUMENT_TYPES
+      .filter((docType) => !uploadedTypes.has(docType.enumName))
+      .map((docType) => t(`profileSubmission.documentTypes.${docType.key}`));
+    if (!pictureUrl) {
+      missingLabels.unshift(t('profileSubmission.documentTypes.profilePicture'));
+    }
+    if (missingLabels.length > 0) {
       setStep(1);
-      toast.error(
-        t('documents.missingRequired', {
-          types: missing.map((docType) => t(`profileSubmission.documentTypes.${docType.key}`)).join(', '),
-        })
-      );
+      toast.error(t('documents.missingRequired', { types: missingLabels.join(', ') }));
       return;
     }
 
@@ -237,6 +243,8 @@ export default function ProfileSubmissionForm({ employee }: ProfileSubmissionFor
           {step === 1 && (
             <Stack spacing={3}>
               <Alert severity="info">{t('profileSubmission.documentsInfo')}</Alert>
+
+              <ProfilePictureUploader />
 
               <EmployeeDocumentsPanel />
 
