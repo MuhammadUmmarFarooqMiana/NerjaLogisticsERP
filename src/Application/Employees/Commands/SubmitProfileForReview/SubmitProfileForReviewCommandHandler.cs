@@ -19,18 +19,22 @@ public class SubmitProfileForReviewCommandHandler : IRequestHandler<SubmitProfil
     ];
 
     private readonly IApplicationDbContext _context;
+    private readonly IUser _user;
 
-    public SubmitProfileForReviewCommandHandler(IApplicationDbContext context) => _context = context;
+    public SubmitProfileForReviewCommandHandler(IApplicationDbContext context, IUser user)
+    {
+        _context = context;
+        _user = user;
+    }
 
     public async Task Handle(SubmitProfileForReviewCommand request, CancellationToken cancellationToken)
     {
-        // FindAsync looks up by primary key (Employee.Id) — request.UserId is
-        // the FK to ApplicationUser, a different value, so this must be a
-        // FirstOrDefaultAsync filter instead (matches UpdateEmployeeProfileCommandHandler's
-        // already-correct pattern for the same self-service lookup).
+        // Always the caller's own record — request.UserId is client-supplied and must never be
+        // trusted to pick which employee gets mutated (see the comment on the command itself).
+        var userId = _user.Id!.Value;
         var employee = await _context.Employees
-            .FirstOrDefaultAsync(e => e.UserId == request.UserId, cancellationToken)
-            ?? throw new NotFoundException(nameof(Employee), request.UserId.ToString());
+            .FirstOrDefaultAsync(e => e.UserId == userId, cancellationToken)
+            ?? throw new NotFoundException(nameof(Employee), userId.ToString());
 
         var iqamaTaken = await _context.Employees
             .AnyAsync(e => e.IqamaNumber == request.IqamaNumber && e.Id != employee.Id, cancellationToken);
