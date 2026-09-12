@@ -8,6 +8,7 @@ import AdvancesPage from '../features/advances/AdvancesPage';
 import ExpensesPage from '../features/expenses/ExpensesPage';
 import SalaryFormulasPage from '../features/salary-formulas/SalaryFormulasPage';
 import MonthlySummariesPage from '../features/monthly-summaries/MonthlySummariesPage';
+import MonthlySummaryDetailPage from '../features/monthly-summaries/MonthlySummaryDetailPage';
 import VehiclesPage from '../features/vehicles/VehiclesPage';
 import VehicleDetailPage from '../features/vehicles/VehicleDetailPage';
 import InventoryPage from '../features/inventory/InventoryPage';
@@ -90,6 +91,7 @@ export default function AppRoutes() {
               <Route path="inventory" element={<InventoryPage />} />
               <Route path="suppliers" element={<SuppliersPage />} />
               <Route path="mechanics" element={<MechanicsPage />} />
+              <Route path="monthly-summaries/:id" element={<MonthlySummaryDetailPage />} />
             </Route>
 
             {/* Reports home is shared by every role that can reach at least one report type —

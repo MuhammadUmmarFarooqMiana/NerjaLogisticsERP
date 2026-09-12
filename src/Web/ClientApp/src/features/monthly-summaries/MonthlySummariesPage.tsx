@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Button, MenuItem, Stack, TextField, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import type { ColumnDef } from '@tanstack/react-table';
@@ -118,6 +119,7 @@ function MyMonthlySummariesView() {
 
 function MonthlySummariesManagementView() {
   const { t } = useTranslation('monthlySummaries');
+  const navigate = useNavigate();
   const toast = useToast();
   const user = useAppSelector(selectCurrentUser);
   const isAccountant = !!user?.roles.some((role) => role === Roles.Accountant);
@@ -216,17 +218,33 @@ function MonthlySummariesManagementView() {
           {
             id: 'actions',
             header: '',
+            // Rows navigate to the detail page on click (see onRowClick below) — these
+            // buttons live inside that same row, so their clicks must not bubble up
+            // and trigger a navigation on top of the intended action.
             cell: ({ row }: { row: { original: MonthlySummaryDto } }) => {
               if (row.original.status === 'Draft') {
                 return (
-                  <Button size="small" onClick={() => void handleVerify(row.original.id!)} disabled={verifying}>
+                  <Button
+                    size="small"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      void handleVerify(row.original.id!);
+                    }}
+                    disabled={verifying}
+                  >
                     {t('verify')}
                   </Button>
                 );
               }
               if (row.original.status === 'Verified') {
                 return (
-                  <Button size="small" onClick={() => setMarkAsPaidTarget(row.original)}>
+                  <Button
+                    size="small"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setMarkAsPaidTarget(row.original);
+                    }}
+                  >
                     {t('markAsPaid')}
                   </Button>
                 );
@@ -322,6 +340,7 @@ function MonthlySummariesManagementView() {
         isLoading={isLoading}
         error={error}
         emptyMessage={t('empty')}
+        onRowClick={(row) => navigate(`/monthly-summaries/${row.id}`)}
         serverPagination={{
           pageIndex: page,
           pageSize,

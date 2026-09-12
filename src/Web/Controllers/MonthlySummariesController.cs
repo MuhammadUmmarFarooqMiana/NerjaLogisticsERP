@@ -33,7 +33,7 @@ public class MonthlySummariesController : ApiControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<MonthlySummaryDto>> GetById(Guid id)
+    public async Task<ActionResult<MonthlySummaryDetailDto>> GetById(Guid id)
         => Ok(await Mediator.Send(new GetMonthlySummaryByIdQuery { Id = id }));
 
     [HttpGet("me")]

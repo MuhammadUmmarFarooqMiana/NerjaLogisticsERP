@@ -44,5 +44,30 @@
   "validation": {
     "yearInvalid": "Enter a valid year.",
     "monthInvalid": "Month must be between 1 and 12."
+  },
+  "detail": {
+    "backToList": "Back to list",
+    "genericError": "Something went wrong. Please try again.",
+    "notProvided": "Not provided",
+    "fields": {
+      "period": "Period",
+      "orders": "Completed Orders",
+      "generatedOn": "Generated On",
+      "totalSalary": "Total Salary",
+      "totalAdvances": "Advances",
+      "totalFines": "Fines",
+      "netPayable": "Net Payable"
+    },
+    "verification": {
+      "title": "Verification",
+      "verifiedBy": "Verified By",
+      "verifiedAt": "Verified At"
+    },
+    "payment": {
+      "title": "Payment",
+      "paidBy": "Paid By",
+      "paidAt": "Paid At",
+      "paymentReference": "Payment Reference"
+    }
   }
 }

@@ -1834,7 +1834,7 @@ export type GetApiMonthlySummariesApiArg = {
   pageSize?: number | string;
 };
 export type GetApiMonthlySummariesByIdApiResponse =
-  /** status 200 OK */ MonthlySummaryDto;
+  /** status 200 OK */ MonthlySummaryDetailDto;
 export type GetApiMonthlySummariesByIdApiArg = {
   id: string;
 };
@@ -2596,6 +2596,27 @@ export type MonthlySummaryDto = {
   status?: string;
 };
 export type MonthlySummaryStatus = number;
+export type MonthlySummaryDetailDto = {
+  id?: string;
+  employeeId?: string;
+  employeeName?: string;
+  year?: number | string;
+  month?: number | string;
+  totalCompletedOrders?: number | string;
+  totalSalary?: number | string;
+  totalAdvances?: number | string;
+  totalFines?: number | string;
+  netSalaryPayable?: number | string;
+  status?: string;
+  created?: string;
+  verifiedBy?: null | string;
+  verifiedByName?: null | string;
+  verifiedAt?: null | string;
+  paidBy?: null | string;
+  paidByName?: null | string;
+  paidAt?: null | string;
+  paymentReference?: null | string;
+};
 export type GenerateMonthlySummaryCommand = {
   employeeId?: string;
   year?: number | string;

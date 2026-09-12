@@ -44,5 +44,30 @@
   "validation": {
     "yearInvalid": "أدخل سنة صالحة.",
     "monthInvalid": "يجب أن يكون الشهر بين 1 و 12."
+  },
+  "detail": {
+    "backToList": "العودة إلى القائمة",
+    "genericError": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+    "notProvided": "غير متوفر",
+    "fields": {
+      "period": "الفترة",
+      "orders": "الطلبات المكتملة",
+      "generatedOn": "تاريخ الإنشاء",
+      "totalSalary": "إجمالي الراتب",
+      "totalAdvances": "السلف",
+      "totalFines": "الغرامات",
+      "netPayable": "صافي المستحق"
+    },
+    "verification": {
+      "title": "التحقق",
+      "verifiedBy": "تم التحقق بواسطة",
+      "verifiedAt": "تاريخ التحقق"
+    },
+    "payment": {
+      "title": "الدفع",
+      "paidBy": "تم الدفع بواسطة",
+      "paidAt": "تاريخ الدفع",
+      "paymentReference": "مرجع الدفع"
+    }
   }
 }
