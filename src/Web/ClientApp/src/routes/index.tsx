@@ -29,7 +29,7 @@ import VehiclesReportPage from '../features/reports/VehiclesReportPage';
 import SuppliersReportPage from '../features/reports/SuppliersReportPage';
 import InventoryLedgerReportPage from '../features/reports/InventoryLedgerReportPage';
 import SalariesReportPage from '../features/reports/SalariesReportPage';
-import PlatformReconciliationPage from '../features/platform-reconciliation/PlatformReconciliationPage';
+import AuditInvoicePage from '../features/audit-invoice/AuditInvoicePage';
 import AppShell from '../components/layout/AppShell';
 import ProtectedRoute from './ProtectedRoute';
 import RequireActiveProfile from './RequireActiveProfile';
@@ -115,7 +115,7 @@ export default function AppRoutes() {
             </Route>
 
             <Route element={<RoleGate roles={[Roles.Administrator, Roles.Accountant]} />}>
-              <Route path="platform-reconciliation" element={<PlatformReconciliationPage />} />
+              <Route path="audit-invoice" element={<AuditInvoicePage />} />
             </Route>
           </Route>
         </Route>

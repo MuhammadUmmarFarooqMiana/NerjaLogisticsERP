@@ -21,7 +21,10 @@ function buildFormData({ file, year, month, platformId }: GenerateReconciliation
   return formData;
 }
 
-export const platformReconciliationApi = apiSlice.injectEndpoints({
+// Named for the backend command it calls (GenerateReconciliationReportCommand /
+// /api/Reports/platform-reconciliation/...) rather than the "Audit Invoice" display name —
+// only the tab/route/page-facing names changed, not the backend contract this wraps.
+export const auditInvoiceApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
     generateReconciliationReport: build.mutation<PlatformReconciliationReportDto, GenerateReconciliationReportArg>({
       query: (arg) => ({
@@ -33,7 +36,7 @@ export const platformReconciliationApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGenerateReconciliationReportMutation } = platformReconciliationApi;
+export const { useGenerateReconciliationReportMutation } = auditInvoiceApi;
 
 /** Export goes through downloadFile/previewFile/printFile (raw file response, not JSON) — this
  * just builds the multipart body they POST, mirroring buildFormData above plus the format field. */
