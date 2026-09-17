@@ -3,6 +3,7 @@ using NerjaLogisticsERP.Application.Common.Mappings;
 using NerjaLogisticsERP.Application.Common.Models;
 using NerjaLogisticsERP.Application.Employees.Queries;
 using NerjaLogisticsERP.Domain.Constants;
+using NerjaLogisticsERP.Domain.Enums;
 
 namespace NerjaLogisticsERP.Application.Employees.Queries.GetEmployees;
 
@@ -10,16 +11,38 @@ public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, Pagin
 {
     private readonly IApplicationDbContext _context;
     private readonly IIdentityService _identityService;
+    private readonly IUser _user;
 
-    public GetEmployeesQueryHandler(IApplicationDbContext context, IIdentityService identityService)
+    public GetEmployeesQueryHandler(IApplicationDbContext context, IIdentityService identityService, IUser user)
     {
         _context = context;
         _identityService = identityService;
+        _user = user;
     }
 
     public async Task<PaginatedList<EmployeeListItemDto>> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
     {
         var query = _context.Employees.AsQueryable();
+
+        // A Supervisor only manages their own assigned team, unlike Administrator (full fleet)
+        // and Accountant (also uses this query to populate employee pickers on Fines/Advances/
+        // etc., where every employee must be selectable). PendingReview employees are exempt
+        // from the team filter: SupervisorId is only assigned at approval time via
+        // ApproveEmployeeCommand — which Supervisors are themselves authorized to call — so
+        // scoping them out here would make a Supervisor unable to ever see or approve a new hire.
+        var isSupervisor = _user.Roles?.Contains(Roles.Supervisor) ?? false;
+        var isAdministrator = _user.Roles?.Contains(Roles.Administrator) ?? false;
+        if (isSupervisor && !isAdministrator)
+        {
+            var userId = _user.Id!.Value;
+            var supervisorEmployeeId = await _context.Employees
+                .Where(e => e.UserId == userId)
+                .Select(e => e.Id)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            query = query.Where(e =>
+                e.SupervisorId == supervisorEmployeeId || e.AccountStatus == AccountStatus.PendingReview);
+        }
 
         if (request.Status.HasValue)
             query = query.Where(e => e.AccountStatus == request.Status);
