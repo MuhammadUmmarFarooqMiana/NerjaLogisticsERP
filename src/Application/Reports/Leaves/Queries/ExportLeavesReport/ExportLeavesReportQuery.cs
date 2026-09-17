@@ -6,7 +6,7 @@ using NerjaLogisticsERP.Domain.Enums;
 
 namespace NerjaLogisticsERP.Application.Reports.Leaves.Queries.ExportLeavesReport;
 
-[Authorize(Roles = $"{Roles.Administrator},{Roles.Supervisor}")]
+[Authorize(Roles = $"{Roles.Administrator},{Roles.Supervisor},{Roles.Accountant}")]
 public record ExportLeavesReportQuery : IRequest<DocumentFileResult>
 {
     public ReportPeriodType PeriodType { get; init; }

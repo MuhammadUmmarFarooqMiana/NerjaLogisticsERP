@@ -5,10 +5,10 @@ using NerjaLogisticsERP.Domain.Constants;
 namespace NerjaLogisticsERP.Application.Reports.Orders.Queries.GetOrdersReport;
 
 // Fleet-wide reporting: Administrator sees every rider, Supervisor is scoped to
-// their own team (mirrors GetDailyOrderHistoryQuery) — Accountant/Rider have no
-// use for a fleet orders report, so unlike the self-service queries this is
-// role-gated rather than open to every authenticated user.
-[Authorize(Roles = $"{Roles.Administrator},{Roles.Supervisor}")]
+// their own team (mirrors GetDailyOrderHistoryQuery). Accountant sees every rider too,
+// same as Administrator — Rider has no use for a fleet orders report, so unlike the
+// self-service queries this is role-gated rather than open to every authenticated user.
+[Authorize(Roles = $"{Roles.Administrator},{Roles.Supervisor},{Roles.Accountant}")]
 public record GetOrdersReportQuery : IRequest<OrdersReportDto>
 {
     public ReportPeriodType PeriodType { get; init; }

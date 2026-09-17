@@ -101,7 +101,7 @@ export default function AppRoutes() {
               <Route path="reports" element={<ReportsHomePage />} />
             </Route>
 
-            <Route element={<RoleGate roles={[Roles.Administrator, Roles.Supervisor]} />}>
+            <Route element={<RoleGate roles={[Roles.Administrator, Roles.Supervisor, Roles.Accountant]} />}>
               <Route path="reports/orders" element={<OrdersReportPage />} />
               <Route path="reports/leaves" element={<LeavesReportPage />} />
             </Route>
