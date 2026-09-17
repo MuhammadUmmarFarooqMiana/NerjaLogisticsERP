@@ -35,6 +35,21 @@ else
 
 app.UseHttpsRedirection();
 
+// Applied to every response, error pages included, since it's registered before
+// UseExceptionHandler. Cheap, standard baseline hardening with no functional downside for
+// this app: nosniff stops a browser from executing an uploaded file as a different content
+// type than what the server declared (relevant since AllowedFileTypes.IsAllowed only checks
+// the client-supplied Content-Type/extension, not the file's actual bytes); DENY is safe
+// because nothing here is meant to be iframed; the referrer policy just avoids leaking full
+// URLs (which can carry route params like ids) to a cross-origin request's Referer header.
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
+    context.Response.Headers.Append("X-Frame-Options", "DENY");
+    context.Response.Headers.Append("Referrer-Policy", "strict-origin-when-cross-origin");
+    await next();
+});
+
 // Registered before UseCors/UseAuthentication/UseAuthorization so it also catches exceptions
 // thrown by those stages (a misconfigured auth scheme, a CORS policy bug, etc.) — positioned
 // after them, it would only ever see exceptions from MVC action execution.
