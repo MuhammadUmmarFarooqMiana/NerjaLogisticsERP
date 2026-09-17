@@ -26,12 +26,12 @@ interface ReportCardDef {
 
 const REPORT_CARDS: ReportCardDef[] = [
   { key: 'salaries', icon: AccountBalanceWalletOutlinedIcon, path: '/reports/salaries', roles: [Roles.Administrator, Roles.Accountant] },
-  { key: 'orders', icon: LocalShippingOutlinedIcon, path: '/reports/orders', roles: [Roles.Administrator, Roles.Supervisor] },
+  { key: 'orders', icon: LocalShippingOutlinedIcon, path: '/reports/orders', roles: [Roles.Administrator, Roles.Supervisor, Roles.Accountant] },
   { key: 'expenses', icon: ReceiptLongOutlinedIcon, path: '/reports/expenses', roles: [Roles.Administrator, Roles.Accountant] },
   { key: 'fines', icon: GavelOutlinedIcon, path: '/reports/fines', roles: [Roles.Administrator, Roles.Accountant] },
   { key: 'advances', icon: WalletOutlinedIcon, path: '/reports/advances', roles: [Roles.Administrator, Roles.Accountant] },
   { key: 'vehicles', icon: DirectionsCarFilledOutlinedIcon, path: '/reports/vehicles', roles: [Roles.Administrator, Roles.Accountant] },
-  { key: 'leaves', icon: EventBusyOutlinedIcon, path: '/reports/leaves', roles: [Roles.Administrator, Roles.Supervisor] },
+  { key: 'leaves', icon: EventBusyOutlinedIcon, path: '/reports/leaves', roles: [Roles.Administrator, Roles.Supervisor, Roles.Accountant] },
   { key: 'suppliers', icon: StorefrontOutlinedIcon, path: '/reports/suppliers', roles: [Roles.Administrator, Roles.Accountant] },
   { key: 'inventory', icon: Inventory2OutlinedIcon, path: '/reports/inventory-ledger', roles: [Roles.Administrator, Roles.Accountant] },
 ];

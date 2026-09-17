@@ -30,8 +30,11 @@ public class GetOrdersReportQueryHandler : IRequestHandler<GetOrdersReportQuery,
         var query = _context.DailyOrders
             .Where(o => o.Status != DailyOrderStatus.Open && o.OrderDate >= period.Start && o.OrderDate <= period.End);
 
-        var isAdministrator = _user.Roles?.Contains(Roles.Administrator) ?? false;
-        if (!isAdministrator)
+        // Accountant sees the full fleet, same as Administrator — only Supervisor (who has
+        // no fleet-wide use case, just their own team) gets scoped down below.
+        var seesFullFleet = _user.Roles?.Contains(Roles.Administrator) ?? false;
+        seesFullFleet |= _user.Roles?.Contains(Roles.Accountant) ?? false;
+        if (!seesFullFleet)
         {
             var userId = _user.Id!.Value;
             var supervisorEmployeeId = await _context.Employees

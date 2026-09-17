@@ -5,7 +5,7 @@ using NerjaLogisticsERP.Domain.Constants;
 
 namespace NerjaLogisticsERP.Application.Reports.Orders.Queries.ExportOrdersReport;
 
-[Authorize(Roles = $"{Roles.Administrator},{Roles.Supervisor}")]
+[Authorize(Roles = $"{Roles.Administrator},{Roles.Supervisor},{Roles.Accountant}")]
 public record ExportOrdersReportQuery : IRequest<DocumentFileResult>
 {
     public ReportPeriodType PeriodType { get; init; }
