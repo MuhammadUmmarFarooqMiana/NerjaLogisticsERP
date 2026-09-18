@@ -74,7 +74,7 @@ export default function AppRoutes() {
               <Route path="expenses" element={<ExpensesPage />} />
             </Route>
 
-            <Route element={<RoleGate roles={[Roles.Administrator]} />}>
+            <Route element={<RoleGate roles={[Roles.Administrator, Roles.Accountant]} />}>
               <Route path="salary-formulas" element={<SalaryFormulasPage />} />
             </Route>
 
@@ -82,7 +82,7 @@ export default function AppRoutes() {
               <Route path="company-documents" element={<CompanyDocumentsPage />} />
             </Route>
 
-            <Route element={<RoleGate roles={[Roles.Administrator, Roles.Accountant, Roles.Rider]} />}>
+            <Route element={<RoleGate roles={[Roles.Administrator, Roles.Supervisor, Roles.Accountant, Roles.Rider]} />}>
               <Route path="vehicles" element={<VehiclesPage />} />
             </Route>
 

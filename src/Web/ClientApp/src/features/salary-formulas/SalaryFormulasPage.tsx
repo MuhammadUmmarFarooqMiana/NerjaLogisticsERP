@@ -9,18 +9,26 @@ import {
 } from '../../api/salaryFormulasApi';
 import { useGetApiPlatformsQuery } from '../../api/generated/apiSlice';
 import type { SalaryFormulaDto } from '../../api/generated/apiSlice';
+import { useAppSelector } from '../../app/hooks';
 import { ConfirmDialog } from '../../components/shared/ConfirmDialog';
 import { DataTable } from '../../components/shared/DataTable';
 import { useToast } from '../../components/feedback/ToastContext';
 import { getApiErrorMessages } from '../../lib/apiError';
 import { formatDate } from '../../lib/formatDate';
 import { getPaginationMeta } from '../../lib/pagination';
+import { Roles } from '../../lib/roles';
+import { selectCurrentUser } from '../auth/authSlice';
 import { CreateSalaryFormulaDialog } from './CreateSalaryFormulaDialog';
 import { SalaryFormulaDetailDialog } from './SalaryFormulaDetailDialog';
 
 export default function SalaryFormulasPage() {
   const { t, i18n } = useTranslation('salaryFormulas');
   const toast = useToast();
+  // Accountant can view (backend allows it), but Create/Update/Deactivate are
+  // Administrator-only — matches SalaryFormulaDetailDialog's own canEdit gate,
+  // which already hides its Save/Add-Tier controls the same way.
+  const user = useAppSelector(selectCurrentUser);
+  const canEdit = !!user?.roles.some((role) => role === Roles.Administrator);
   const { data: platforms } = useGetApiPlatformsQuery();
   const [platformId, setPlatformId] = useState('');
   const [activeOnly, setActiveOnly] = useState(true);
@@ -89,7 +97,7 @@ export default function SalaryFormulasPage() {
       id: 'actions',
       header: '',
       cell: ({ row }) =>
-        row.original.effectiveTo == null ? (
+        canEdit && row.original.effectiveTo == null ? (
           <Button
             size="small"
             color="error"
@@ -115,9 +123,11 @@ export default function SalaryFormulasPage() {
             {t('subtitle')}
           </Typography>
         </Box>
-        <Button variant="contained" startIcon={<AddIcon />} onClick={() => setDialogOpen(true)}>
-          {t('addFormula')}
-        </Button>
+        {canEdit && (
+          <Button variant="contained" startIcon={<AddIcon />} onClick={() => setDialogOpen(true)}>
+            {t('addFormula')}
+          </Button>
+        )}
       </Stack>
 
       <Stack direction="row" spacing={2} sx={{ my: 2, alignItems: 'center', flexWrap: 'wrap' }}>

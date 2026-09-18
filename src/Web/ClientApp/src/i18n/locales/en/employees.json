@@ -150,6 +150,7 @@
       "phoneNumber": "Phone Number",
       "roles": "Roles",
       "noPlatform": "No platform",
+      "noSupervisor": "No supervisor",
       "submit": "Create"
     },
     "editDialog": {

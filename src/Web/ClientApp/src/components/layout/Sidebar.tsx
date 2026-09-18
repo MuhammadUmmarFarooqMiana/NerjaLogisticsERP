@@ -101,7 +101,7 @@ const navItems: NavItem[] = [
         labelKey: 'nav.vehicles',
         path: '/vehicles',
         icon: DirectionsCarFilledOutlinedIcon,
-        roles: [Roles.Administrator, Roles.Accountant, Roles.Rider],
+        roles: [Roles.Administrator, Roles.Supervisor, Roles.Accountant, Roles.Rider],
     }, {
         labelKey: 'nav.inventory',
         path: '/inventory',

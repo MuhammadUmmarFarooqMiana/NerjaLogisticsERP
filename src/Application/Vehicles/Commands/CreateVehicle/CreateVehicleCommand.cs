@@ -4,7 +4,7 @@ using NerjaLogisticsERP.Domain.Enums;
 
 namespace NerjaLogisticsERP.Application.Vehicles.Commands.CreateVehicle;
 
-[Authorize(Roles = Roles.Administrator)]
+[Authorize(Roles = $"{Roles.Administrator},{Roles.Supervisor}")]
 public record CreateVehicleCommand : IRequest<Guid>
 {
     public string RegistrationNumber { get; init; } = string.Empty;

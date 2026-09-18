@@ -1,4 +1,4 @@
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, type DefaultValues } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Box,
@@ -24,7 +24,9 @@ interface CreateVehicleDialogProps {
   onClose: () => void;
 }
 
-const defaultValues: VehicleFormValues = { registrationNumber: '', vehicleType: 1 };
+// vehicleType starts undefined rather than defaulting to a real type (it previously
+// hardcoded 1 = Car) — the user must actively choose one.
+const defaultValues: DefaultValues<VehicleFormValues> = { registrationNumber: '', vehicleType: undefined };
 
 export function CreateVehicleDialog({ open, onClose }: CreateVehicleDialogProps) {
   const { t } = useTranslation('vehicles');

@@ -19,7 +19,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { usePostApiEmployeesMutation } from '../../api/employeesApi';
+import { useGetApiEmployeesSupervisorsQuery, usePostApiEmployeesMutation } from '../../api/employeesApi';
 import { useGetApiPlatformsQuery } from '../../api/generated/apiSlice';
 import { FormDatePicker } from '../../components/shared/FormDatePicker';
 import { useToast } from '../../components/feedback/ToastContext';
@@ -44,6 +44,7 @@ const defaultValues: CreateEmployeeFormValues = {
   iqamaNumber: '',
   platformId: '',
   platformIdNumber: '',
+  supervisorId: '',
   joiningDate: '',
   idExpiryDate: '',
   iqamaExpiryDate: '',
@@ -55,6 +56,7 @@ export function CreateEmployeeDialog({ open, onClose }: CreateEmployeeDialogProp
   const { t } = useTranslation('employees');
   const toast = useToast();
   const { data: platforms } = useGetApiPlatformsQuery(undefined, { skip: !open });
+  const { data: supervisors } = useGetApiEmployeesSupervisorsQuery(undefined, { skip: !open });
   const [createEmployee, { isLoading: saving }] = usePostApiEmployeesMutation();
 
   const {
@@ -89,6 +91,7 @@ export function CreateEmployeeDialog({ open, onClose }: CreateEmployeeDialogProp
           iqamaNumber: values.iqamaNumber,
           platformId: values.platformId || null,
           platformIdNumber: values.platformId ? values.platformIdNumber || null : null,
+          supervisorId: values.supervisorId || null,
           joiningDate: values.joiningDate || null,
           idExpiryDate: values.idExpiryDate || null,
           iqamaExpiryDate: values.iqamaExpiryDate || null,
@@ -229,6 +232,20 @@ export function CreateEmployeeDialog({ open, onClose }: CreateEmployeeDialogProp
                 fullWidth
               />
             )}
+            <Controller
+              name="supervisorId"
+              control={control}
+              render={({ field }) => (
+                <TextField {...field} select label={t('detail.fields.supervisor')} fullWidth>
+                  <MenuItem value="">{t('admin.createDialog.noSupervisor')}</MenuItem>
+                  {(supervisors ?? []).map((supervisor) => (
+                    <MenuItem key={supervisor.id} value={supervisor.id}>
+                      {supervisor.fullName}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
             <FormDatePicker name="joiningDate" control={control} label={t('detail.fields.joiningDate')} />
             <FormDatePicker name="idExpiryDate" control={control} label={t('detail.fields.idExpiryDate')} />
             <FormDatePicker name="iqamaExpiryDate" control={control} label={t('detail.fields.iqamaExpiryDate')} />
