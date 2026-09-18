@@ -16,6 +16,8 @@
     "title": "الفريق — الطلبات اليومية",
     "subtitle": "راجع ووافق على حالة طلبات فريقك لليوم المحدد.",
     "dateLabel": "التاريخ",
+    "employeeFilter": "الموظف",
+    "allEmployees": "كل الموظفين",
     "columns": {
       "name": "الاسم",
       "completedOrders": "الطلبات المكتملة",

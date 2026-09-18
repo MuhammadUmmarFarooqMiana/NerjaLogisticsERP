@@ -6,6 +6,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import type { ColumnDef } from '@tanstack/react-table';
 import { useTranslation } from 'react-i18next';
 import { DataTable } from '../../components/shared/DataTable';
+import { EmployeeAutocomplete } from '../../components/shared/EmployeeAutocomplete';
 import { StatusBadge } from '../../components/shared/StatusBadge';
 import { useDeleteApiEmployeesByIdMutation, useGetApiEmployeesQuery } from '../../api/employeesApi';
 import type { EmployeeListItemDto } from '../../api/generated/apiSlice';
@@ -34,14 +35,20 @@ export function EmployeeListView({ title, fixedStatus, emptyMessage }: EmployeeL
   const user = useAppSelector(selectCurrentUser);
   const isAdmin = !!user?.roles.some((role) => role === Roles.Administrator);
   const [status, setStatus] = useState('');
+  const [employeeId, setEmployeeId] = useState('');
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [createOpen, setCreateOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<EmployeeListItemDto | null>(null);
 
+  // Unpaginated, unfiltered — feeds the picker's option list, kept separate from
+  // `data` below (which is the current page of the actual, possibly-filtered table).
+  const { data: allEmployees } = useGetApiEmployeesQuery({});
+
   const effectiveStatus = fixedStatus ?? (status || undefined);
   const { data, isLoading, error } = useGetApiEmployeesQuery({
     status: effectiveStatus,
+    employeeId: employeeId || undefined,
     pageNumber: page + 1,
     pageSize,
   });
@@ -124,7 +131,17 @@ export function EmployeeListView({ title, fixedStatus, emptyMessage }: EmployeeL
         )}
       </Stack>
       {!fixedStatus && (
-        <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
+        <Stack direction="row" spacing={2} sx={{ mb: 2, flexWrap: 'wrap' }}>
+          <EmployeeAutocomplete
+            employees={allEmployees ?? []}
+            value={employeeId}
+            onChange={(id) => {
+              setEmployeeId(id);
+              setPage(0);
+            }}
+            label={t('list.filterEmployee')}
+            allLabel={t('list.allEmployees')}
+          />
           <TextField
             select
             size="small"

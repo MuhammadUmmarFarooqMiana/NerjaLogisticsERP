@@ -14,6 +14,7 @@ public record GetEmployeesQuery : IRequest<PaginatedList<EmployeeListItemDto>>
 {
     public AccountStatus? Status { get; init; }
     public Guid? PlatformId { get; init; }
+    public Guid? EmployeeId { get; init; }
     public string? SearchTerm { get; init; }
     /// <summary>Both null (the default) returns every row, matching pre-pagination behavior.</summary>
     public int? PageNumber { get; init; }

@@ -15,9 +15,9 @@ import type { MonthlySummaryDto } from '../../api/generated/apiSlice';
 import { useAppSelector } from '../../app/hooks';
 import { useToast } from '../../components/feedback/ToastContext';
 import { DataTable } from '../../components/shared/DataTable';
+import { EmployeeAutocomplete } from '../../components/shared/EmployeeAutocomplete';
 import { StatusBadge } from '../../components/shared/StatusBadge';
 import { getApiErrorMessages } from '../../lib/apiError';
-import { employeeOptionLabel } from '../../lib/employeeDisplay';
 import { getPaginationMeta } from '../../lib/pagination';
 import { Roles } from '../../lib/roles';
 import { selectCurrentUser } from '../auth/authSlice';
@@ -273,24 +273,16 @@ function MonthlySummariesManagementView() {
       </Stack>
 
       <Stack direction="row" spacing={2} sx={{ my: 2, flexWrap: 'wrap' }}>
-        <TextField
-          select
-          size="small"
-          label={t('filters.employee')}
+        <EmployeeAutocomplete
+          employees={employees ?? []}
           value={employeeId}
-          onChange={(event) => {
-            setEmployeeId(event.target.value);
+          onChange={(id) => {
+            setEmployeeId(id);
             setPage(0);
           }}
-          sx={{ minWidth: 200 }}
-        >
-          <MenuItem value="">{t('filters.allEmployees')}</MenuItem>
-          {(employees ?? []).map((employee) => (
-            <MenuItem key={employee.id} value={employee.id}>
-              {employeeOptionLabel(employee)}
-            </MenuItem>
-          ))}
-        </TextField>
+          label={t('filters.employee')}
+          allLabel={t('filters.allEmployees')}
+        />
         <TextField
           label={t('filters.year')}
           type="number"

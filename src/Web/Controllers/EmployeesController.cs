@@ -29,6 +29,7 @@ public class EmployeesController : ApiControllerBase
     public async Task<ActionResult<List<EmployeeListItemDto>>> GetEmployees(
         [FromQuery] string? status,
         [FromQuery] Guid? platformId,
+        [FromQuery] Guid? employeeId,
         [FromQuery] string? searchTerm,
         [FromQuery] int? pageNumber,
         [FromQuery] int? pageSize)
@@ -43,6 +44,7 @@ public class EmployeesController : ApiControllerBase
         {
             Status = parsedStatus,
             PlatformId = platformId,
+            EmployeeId = employeeId,
             SearchTerm = searchTerm,
             PageNumber = pageNumber,
             PageSize = pageSize

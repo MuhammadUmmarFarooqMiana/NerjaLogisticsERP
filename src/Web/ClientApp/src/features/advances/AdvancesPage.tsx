@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, MenuItem, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import type { ColumnDef } from '@tanstack/react-table';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,7 @@ import type { AdvanceDto } from '../../api/generated/apiSlice';
 import { useAppSelector } from '../../app/hooks';
 import { AppDatePicker } from '../../components/shared/AppDatePicker';
 import { DataTable } from '../../components/shared/DataTable';
-import { employeeOptionLabel } from '../../lib/employeeDisplay';
+import { EmployeeAutocomplete } from '../../components/shared/EmployeeAutocomplete';
 import { formatDate } from '../../lib/formatDate';
 import { getPaginationMeta } from '../../lib/pagination';
 import { Roles } from '../../lib/roles';
@@ -132,24 +132,16 @@ function AdvancesManagementView() {
       </Stack>
 
       <Stack direction="row" spacing={2} sx={{ my: 2, flexWrap: 'wrap' }}>
-        <TextField
-          select
-          size="small"
-          label={t('filters.employee')}
+        <EmployeeAutocomplete
+          employees={employees ?? []}
           value={employeeId}
-          onChange={(event) => {
-            setEmployeeId(event.target.value);
+          onChange={(id) => {
+            setEmployeeId(id);
             setPage(0);
           }}
-          sx={{ minWidth: 220 }}
-        >
-          <MenuItem value="">{t('filters.allEmployees')}</MenuItem>
-          {(employees ?? []).map((employee) => (
-            <MenuItem key={employee.id} value={employee.id}>
-              {employeeOptionLabel(employee)}
-            </MenuItem>
-          ))}
-        </TextField>
+          label={t('filters.employee')}
+          allLabel={t('filters.allEmployees')}
+        />
         <AppDatePicker
           label={t('filters.startDate')}
           value={startDate}

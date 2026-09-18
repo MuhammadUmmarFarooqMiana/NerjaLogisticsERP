@@ -11,12 +11,14 @@ import {
   usePostApiDailyOrdersCloseMutation,
   usePostApiDailyOrdersUpsertOrderCountMutation,
 } from '../../api/dailyOrdersApi';
+import { useGetApiEmployeesQuery } from '../../api/employeesApi';
 import type { DailyOrderListItemDto } from '../../api/generated/apiSlice';
 import { useAppSelector } from '../../app/hooks';
 import { useToast } from '../../components/feedback/ToastContext';
 import { AppDatePicker } from '../../components/shared/AppDatePicker';
 import { ConfirmDialog } from '../../components/shared/ConfirmDialog';
 import { DataTable } from '../../components/shared/DataTable';
+import { EmployeeAutocomplete } from '../../components/shared/EmployeeAutocomplete';
 import { StatusBadge } from '../../components/shared/StatusBadge';
 import { getApiErrorMessages } from '../../lib/apiError';
 import { formatDateTime } from '../../lib/formatDate';
@@ -166,9 +168,16 @@ function TeamDailyOrdersTable() {
   const { t, i18n } = useTranslation('dailyOrders');
   const toast = useToast();
   const [date, setDate] = useState(() => toIsoDate(new Date()));
+  const [employeeId, setEmployeeId] = useState('');
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-  const { data, isLoading, error } = useGetApiDailyOrdersQuery({ date, pageNumber: page + 1, pageSize });
+  const { data: employees } = useGetApiEmployeesQuery({});
+  const { data, isLoading, error } = useGetApiDailyOrdersQuery({
+    date,
+    employeeId: employeeId || undefined,
+    pageNumber: page + 1,
+    pageSize,
+  });
   const rowCount = getPaginationMeta(data)?.totalCount ?? 0;
 
   const [approve, { isLoading: approving }] = usePostApiDailyOrdersByIdApproveMutation();
@@ -239,15 +248,27 @@ function TeamDailyOrdersTable() {
         {t('team.subtitle')}
       </Typography>
 
-      <AppDatePicker
-        label={t('team.dateLabel')}
-        value={date}
-        onChange={(value) => {
-          setDate(value);
-          setPage(0);
-        }}
-        slotProps={{ textField: { size: 'small', sx: { mb: 2 } } }}
-      />
+      <Stack direction="row" spacing={2} sx={{ mb: 2, flexWrap: 'wrap' }}>
+        <AppDatePicker
+          label={t('team.dateLabel')}
+          value={date}
+          onChange={(value) => {
+            setDate(value);
+            setPage(0);
+          }}
+          slotProps={{ textField: { size: 'small' } }}
+        />
+        <EmployeeAutocomplete
+          employees={employees ?? []}
+          value={employeeId}
+          onChange={(id) => {
+            setEmployeeId(id);
+            setPage(0);
+          }}
+          label={t('team.employeeFilter')}
+          allLabel={t('team.allEmployees')}
+        />
+      </Stack>
 
       <DataTable
         columns={columns}

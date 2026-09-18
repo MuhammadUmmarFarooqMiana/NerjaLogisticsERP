@@ -3,6 +3,8 @@
     "title": "الموظفون",
     "filterStatus": "الحالة",
     "allStatuses": "كل الحالات",
+    "filterEmployee": "الموظف",
+    "allEmployees": "كل الموظفين",
     "columns": {
       "name": "الاسم",
       "platform": "المنصة",

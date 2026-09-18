@@ -13,9 +13,9 @@ import type { LeaveRequestDto } from '../../api/generated/apiSlice';
 import { useAppSelector } from '../../app/hooks';
 import { useToast } from '../../components/feedback/ToastContext';
 import { DataTable } from '../../components/shared/DataTable';
+import { EmployeeAutocomplete } from '../../components/shared/EmployeeAutocomplete';
 import { StatusBadge } from '../../components/shared/StatusBadge';
 import { getApiErrorMessages } from '../../lib/apiError';
-import { employeeOptionLabel } from '../../lib/employeeDisplay';
 import { formatDate } from '../../lib/formatDate';
 import { getPaginationMeta } from '../../lib/pagination';
 import { Roles } from '../../lib/roles';
@@ -180,24 +180,16 @@ function LeaveRequestsReviewQueue() {
       </Typography>
 
       <Stack direction="row" spacing={2} sx={{ mb: 2, flexWrap: 'wrap' }}>
-        <TextField
-          select
-          size="small"
-          label={t('reviewQueue.employee')}
+        <EmployeeAutocomplete
+          employees={employees ?? []}
           value={employeeId}
-          onChange={(event) => {
-            setEmployeeId(event.target.value);
+          onChange={(id) => {
+            setEmployeeId(id);
             setPage(0);
           }}
-          sx={{ minWidth: 220 }}
-        >
-          <MenuItem value="">{t('reviewQueue.allEmployees')}</MenuItem>
-          {(employees ?? []).map((employee) => (
-            <MenuItem key={employee.id} value={employee.id}>
-              {employeeOptionLabel(employee)}
-            </MenuItem>
-          ))}
-        </TextField>
+          label={t('reviewQueue.employee')}
+          allLabel={t('reviewQueue.allEmployees')}
+        />
         <TextField
           select
           size="small"
