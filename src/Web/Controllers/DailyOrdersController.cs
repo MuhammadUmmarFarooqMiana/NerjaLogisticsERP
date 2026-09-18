@@ -36,9 +36,15 @@ public class DailyOrdersController : ApiControllerBase
 
     [HttpGet]
     public async Task<ActionResult<List<DailyOrderListItemDto>>> GetDailyOrders(
-        [FromQuery] DateOnly? date, [FromQuery] int? pageNumber, [FromQuery] int? pageSize)
+        [FromQuery] DateOnly? date, [FromQuery] Guid? employeeId, [FromQuery] int? pageNumber, [FromQuery] int? pageSize)
     {
-        var result = await Mediator.Send(new GetDailyOrdersQuery { Date = date, PageNumber = pageNumber, PageSize = pageSize });
+        var result = await Mediator.Send(new GetDailyOrdersQuery
+        {
+            Date = date,
+            EmployeeId = employeeId,
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        });
         AddPaginationHeader(result);
         return Ok(result.Items);
     }

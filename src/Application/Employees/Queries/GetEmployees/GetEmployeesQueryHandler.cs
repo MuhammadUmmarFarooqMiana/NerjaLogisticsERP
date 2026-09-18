@@ -50,6 +50,9 @@ public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, Pagin
         if (request.PlatformId.HasValue)
             query = query.Where(e => e.PlatformId == request.PlatformId);
 
+        if (request.EmployeeId.HasValue)
+            query = query.Where(e => e.Id == request.EmployeeId);
+
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {
             var term = request.SearchTerm.Trim();

@@ -37,6 +37,9 @@ public class GetDailyOrdersQueryHandler : IRequestHandler<GetDailyOrdersQuery, P
             employeesQuery = employeesQuery.Where(e => e.SupervisorId == supervisorEmployeeId);
         }
 
+        if (request.EmployeeId.HasValue)
+            employeesQuery = employeesQuery.Where(e => e.Id == request.EmployeeId);
+
         // Left join so riders who haven't logged anything yet today still show up (as Open/0).
         // Ordering happens once, below, after ClosedAt is available on the projected DTO.
         var rows = await employeesQuery

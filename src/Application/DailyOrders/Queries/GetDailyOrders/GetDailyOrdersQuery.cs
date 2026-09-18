@@ -11,6 +11,7 @@ namespace NerjaLogisticsERP.Application.DailyOrders.Queries.GetDailyOrders;
 public record GetDailyOrdersQuery : IRequest<PaginatedList<DailyOrderListItemDto>>
 {
     public DateOnly? Date { get; init; }
+    public Guid? EmployeeId { get; init; }
     /// <summary>Both null (the default) returns every row, matching pre-pagination behavior.</summary>
     public int? PageNumber { get; init; }
     public int? PageSize { get; init; }

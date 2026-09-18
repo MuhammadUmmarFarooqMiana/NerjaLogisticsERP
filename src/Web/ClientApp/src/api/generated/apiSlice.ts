@@ -188,6 +188,7 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/DailyOrders`,
         params: {
           date: queryArg.date,
+          employeeId: queryArg.employeeId,
           pageNumber: queryArg.pageNumber,
           pageSize: queryArg.pageSize,
         },
@@ -297,6 +298,7 @@ const injectedRtkApi = api.injectEndpoints({
         params: {
           status: queryArg.status,
           platformId: queryArg.platformId,
+          employeeId: queryArg.employeeId,
           searchTerm: queryArg.searchTerm,
           pageNumber: queryArg.pageNumber,
           pageSize: queryArg.pageSize,
@@ -1573,6 +1575,7 @@ export type GetApiDailyOrdersApiResponse =
   /** status 200 OK */ DailyOrderListItemDto[];
 export type GetApiDailyOrdersApiArg = {
   date?: string;
+  employeeId?: string;
   pageNumber?: number | string;
   pageSize?: number | string;
 };
@@ -1638,6 +1641,7 @@ export type GetApiEmployeesApiResponse =
 export type GetApiEmployeesApiArg = {
   status?: string;
   platformId?: string;
+  employeeId?: string;
   searchTerm?: string;
   pageNumber?: number | string;
   pageSize?: number | string;

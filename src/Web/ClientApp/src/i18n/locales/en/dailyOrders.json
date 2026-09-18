@@ -16,6 +16,8 @@
     "title": "Team — Daily Orders",
     "subtitle": "Review and approve your team's order status for the selected day.",
     "dateLabel": "Date",
+    "employeeFilter": "Employee",
+    "allEmployees": "All Employees",
     "columns": {
       "name": "Name",
       "completedOrders": "Completed Orders",

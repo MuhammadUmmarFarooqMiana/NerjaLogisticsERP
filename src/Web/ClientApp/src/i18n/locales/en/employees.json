@@ -3,6 +3,8 @@
     "title": "Employees",
     "filterStatus": "Status",
     "allStatuses": "All statuses",
+    "filterEmployee": "Employee",
+    "allEmployees": "All Employees",
     "columns": {
       "name": "Name",
       "platform": "Platform",
