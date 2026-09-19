@@ -46,6 +46,12 @@ export default function VehicleDetailPage() {
   const toast = useToast();
   const user = useAppSelector(selectCurrentUser);
   const isAdmin = !!user?.roles.some((role) => role === Roles.Administrator);
+  // Maintenance records (service/oil/tyre/accident) are backend-restricted to
+  // Administrator+Accountant — Supervisor can reach this page (view + allocate)
+  // but not these, so hide the Add/Edit controls rather than let them 403.
+  const canManageMaintenance = !!user?.roles.some(
+    (role) => role === Roles.Administrator || role === Roles.Accountant
+  );
 
   const { data: vehicle, isLoading, error } = useGetApiVehiclesByIdQuery({ id: id ?? '' }, { skip: !id });
   const {
@@ -173,26 +179,27 @@ export default function VehicleDetailPage() {
     {
       id: 'actions',
       header: '',
-      cell: ({ row }) => (
-        <Stack direction="row" spacing={0.5}>
-          <IconButton
-            size="small"
-            aria-label={t('detail.edit')}
-            onClick={() => setServiceDialog({ open: true, record: row.original })}
-          >
-            <EditOutlinedIcon fontSize="small" />
-          </IconButton>
-          {isAdmin && (
+      cell: ({ row }) =>
+        canManageMaintenance ? (
+          <Stack direction="row" spacing={0.5}>
             <IconButton
               size="small"
-              aria-label={t('detail.delete')}
-              onClick={() => setDeleteTarget({ kind: 'service', id: row.original.id })}
+              aria-label={t('detail.edit')}
+              onClick={() => setServiceDialog({ open: true, record: row.original })}
             >
-              <DeleteOutlineIcon fontSize="small" />
+              <EditOutlinedIcon fontSize="small" />
             </IconButton>
-          )}
-        </Stack>
-      ),
+            {isAdmin && (
+              <IconButton
+                size="small"
+                aria-label={t('detail.delete')}
+                onClick={() => setDeleteTarget({ kind: 'service', id: row.original.id })}
+              >
+                <DeleteOutlineIcon fontSize="small" />
+              </IconButton>
+            )}
+          </Stack>
+        ) : null,
     },
   ];
 
@@ -203,26 +210,27 @@ export default function VehicleDetailPage() {
     {
       id: 'actions',
       header: '',
-      cell: ({ row }) => (
-        <Stack direction="row" spacing={0.5}>
-          <IconButton
-            size="small"
-            aria-label={t('detail.edit')}
-            onClick={() => setOilDialog({ open: true, record: row.original })}
-          >
-            <EditOutlinedIcon fontSize="small" />
-          </IconButton>
-          {isAdmin && (
+      cell: ({ row }) =>
+        canManageMaintenance ? (
+          <Stack direction="row" spacing={0.5}>
             <IconButton
               size="small"
-              aria-label={t('detail.delete')}
-              onClick={() => setDeleteTarget({ kind: 'oilChange', id: row.original.id })}
+              aria-label={t('detail.edit')}
+              onClick={() => setOilDialog({ open: true, record: row.original })}
             >
-              <DeleteOutlineIcon fontSize="small" />
+              <EditOutlinedIcon fontSize="small" />
             </IconButton>
-          )}
-        </Stack>
-      ),
+            {isAdmin && (
+              <IconButton
+                size="small"
+                aria-label={t('detail.delete')}
+                onClick={() => setDeleteTarget({ kind: 'oilChange', id: row.original.id })}
+              >
+                <DeleteOutlineIcon fontSize="small" />
+              </IconButton>
+            )}
+          </Stack>
+        ) : null,
     },
   ];
 
@@ -234,26 +242,27 @@ export default function VehicleDetailPage() {
     {
       id: 'actions',
       header: '',
-      cell: ({ row }) => (
-        <Stack direction="row" spacing={0.5}>
-          <IconButton
-            size="small"
-            aria-label={t('detail.edit')}
-            onClick={() => setTyreDialog({ open: true, record: row.original })}
-          >
-            <EditOutlinedIcon fontSize="small" />
-          </IconButton>
-          {isAdmin && (
+      cell: ({ row }) =>
+        canManageMaintenance ? (
+          <Stack direction="row" spacing={0.5}>
             <IconButton
               size="small"
-              aria-label={t('detail.delete')}
-              onClick={() => setDeleteTarget({ kind: 'tyre', id: row.original.id })}
+              aria-label={t('detail.edit')}
+              onClick={() => setTyreDialog({ open: true, record: row.original })}
             >
-              <DeleteOutlineIcon fontSize="small" />
+              <EditOutlinedIcon fontSize="small" />
             </IconButton>
-          )}
-        </Stack>
-      ),
+            {isAdmin && (
+              <IconButton
+                size="small"
+                aria-label={t('detail.delete')}
+                onClick={() => setDeleteTarget({ kind: 'tyre', id: row.original.id })}
+              >
+                <DeleteOutlineIcon fontSize="small" />
+              </IconButton>
+            )}
+          </Stack>
+        ) : null,
     },
   ];
 
@@ -264,26 +273,27 @@ export default function VehicleDetailPage() {
     {
       id: 'actions',
       header: '',
-      cell: ({ row }) => (
-        <Stack direction="row" spacing={0.5}>
-          <IconButton
-            size="small"
-            aria-label={t('detail.edit')}
-            onClick={() => setAccidentDialog({ open: true, record: row.original })}
-          >
-            <EditOutlinedIcon fontSize="small" />
-          </IconButton>
-          {isAdmin && (
+      cell: ({ row }) =>
+        canManageMaintenance ? (
+          <Stack direction="row" spacing={0.5}>
             <IconButton
               size="small"
-              aria-label={t('detail.delete')}
-              onClick={() => setDeleteTarget({ kind: 'accident', id: row.original.id })}
+              aria-label={t('detail.edit')}
+              onClick={() => setAccidentDialog({ open: true, record: row.original })}
             >
-              <DeleteOutlineIcon fontSize="small" />
+              <EditOutlinedIcon fontSize="small" />
             </IconButton>
-          )}
-        </Stack>
-      ),
+            {isAdmin && (
+              <IconButton
+                size="small"
+                aria-label={t('detail.delete')}
+                onClick={() => setDeleteTarget({ kind: 'accident', id: row.original.id })}
+              >
+                <DeleteOutlineIcon fontSize="small" />
+              </IconButton>
+            )}
+          </Stack>
+        ) : null,
     },
   ];
 
@@ -327,9 +337,11 @@ export default function VehicleDetailPage() {
         <Box>
           <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
             <Typography variant="h6">{t('detail.serviceHistory')}</Typography>
-            <Button size="small" startIcon={<AddIcon />} onClick={() => setServiceDialog({ open: true, record: null })}>
-              {t('detail.addRecord')}
-            </Button>
+            {canManageMaintenance && (
+              <Button size="small" startIcon={<AddIcon />} onClick={() => setServiceDialog({ open: true, record: null })}>
+                {t('detail.addRecord')}
+              </Button>
+            )}
           </Stack>
           <DataTable
             columns={serviceColumns}
@@ -343,9 +355,11 @@ export default function VehicleDetailPage() {
         <Box>
           <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
             <Typography variant="h6">{t('detail.oilChanges')}</Typography>
-            <Button size="small" startIcon={<AddIcon />} onClick={() => setOilDialog({ open: true, record: null })}>
-              {t('detail.addRecord')}
-            </Button>
+            {canManageMaintenance && (
+              <Button size="small" startIcon={<AddIcon />} onClick={() => setOilDialog({ open: true, record: null })}>
+                {t('detail.addRecord')}
+              </Button>
+            )}
           </Stack>
           <DataTable
             columns={oilColumns}
@@ -359,9 +373,11 @@ export default function VehicleDetailPage() {
         <Box>
           <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
             <Typography variant="h6">{t('detail.tyreReplacements')}</Typography>
-            <Button size="small" startIcon={<AddIcon />} onClick={() => setTyreDialog({ open: true, record: null })}>
-              {t('detail.addRecord')}
-            </Button>
+            {canManageMaintenance && (
+              <Button size="small" startIcon={<AddIcon />} onClick={() => setTyreDialog({ open: true, record: null })}>
+                {t('detail.addRecord')}
+              </Button>
+            )}
           </Stack>
           <DataTable
             columns={tyreColumns}
@@ -375,9 +391,11 @@ export default function VehicleDetailPage() {
         <Box>
           <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
             <Typography variant="h6">{t('detail.accidentHistory')}</Typography>
-            <Button size="small" startIcon={<AddIcon />} onClick={() => setAccidentDialog({ open: true, record: null })}>
-              {t('detail.addRecord')}
-            </Button>
+            {canManageMaintenance && (
+              <Button size="small" startIcon={<AddIcon />} onClick={() => setAccidentDialog({ open: true, record: null })}>
+                {t('detail.addRecord')}
+              </Button>
+            )}
           </Stack>
           <DataTable
             columns={accidentColumns}
