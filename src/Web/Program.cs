@@ -1,7 +1,20 @@
 using NerjaLogisticsERP.Infrastructure.Data;
+using NerjaLogisticsERP.Web.Services;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Console always (unchanged); a file sink is added on top only when Logging:FilePath is
+// configured (set in appsettings.Production.json, left unset in dev so nothing writes to
+// disk locally). Custom provider rather than a logging package — see FileLoggerProvider's
+// own remarks for why. Registered alongside the existing OpenTelemetry logging provider (see
+// ServiceDefaults), not in place of it, so OTLP export still works unchanged if
+// OTEL_EXPORTER_OTLP_ENDPOINT is ever configured.
+var logFilePath = builder.Configuration["Logging:FilePath"];
+if (!string.IsNullOrWhiteSpace(logFilePath))
+{
+    builder.Logging.AddProvider(new FileLoggerProvider(logFilePath));
+}
 
 // Add services to the container.
 builder.AddServiceDefaults();
@@ -23,17 +36,27 @@ var app = builder.Build();
 await app.MigrateDatabaseAsync();
 await app.SeedRolesAsync();
 
+// Defaults to true (today's behavior — dev's launchSettings always has an HTTPS endpoint
+// available). Set Https:RedirectEnabled=false in appsettings.Production.json until the
+// server has a real TLS certificate in front of it — HSTS in particular tells browsers to
+// *only* ever use HTTPS for this host from then on, which would make an HTTP-only deployment
+// unreachable on the very next visit.
+var httpsRedirectEnabled = app.Configuration.GetValue("Https:RedirectEnabled", true);
+
 if (app.Environment.IsDevelopment())
 {
     await app.SeedDevelopmentAdministratorAsync();
 }
-else
+else if (httpsRedirectEnabled)
 {
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+if (httpsRedirectEnabled)
+{
+    app.UseHttpsRedirection();
+}
 
 // Applied to every response, error pages included, since it's registered before
 // UseExceptionHandler. Cheap, standard baseline hardening with no functional downside for
@@ -68,13 +91,26 @@ app.UseExceptionHandler();
 // UseAuthentication/UseAuthorization so it wraps them.
 app.UseStatusCodePages();
 
-app.UseCors(static builder =>
-    builder.AllowAnyMethod()
+// Empty (the dev default — nothing set in appsettings.json) falls back to AllowAnyOrigin,
+// same as before. appsettings.Production.json sets Cors:AllowedOrigins explicitly, so
+// production is restricted to just the real deployment origin(s) once configured — since the
+// SPA is served same-origin (UseFileServer below), this only affects *other* origins calling
+// the API, never the app's own frontend.
+var allowedOrigins = app.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
+
+app.UseCors(corsBuilder =>
+{
+    corsBuilder.AllowAnyMethod()
         .AllowAnyHeader()
-        .AllowAnyOrigin()
         // AllowAnyHeader only covers request headers — response headers need explicit
         // exposure or browser JS can't read them cross-origin, even with AllowAnyOrigin.
-        .WithExposedHeaders("X-Pagination"));
+        .WithExposedHeaders("X-Pagination");
+
+    if (allowedOrigins.Length > 0)
+        corsBuilder.WithOrigins(allowedOrigins);
+    else
+        corsBuilder.AllowAnyOrigin();
+});
 
 app.UseAuthentication();
 app.UseAuthorization();
