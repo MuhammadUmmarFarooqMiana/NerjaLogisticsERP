@@ -77,12 +77,13 @@ function VehiclesManagementView() {
   const navigate = useNavigate();
   const toast = useToast();
   const user = useAppSelector(selectCurrentUser);
-  // Accountant can see this whole management view, but Deactivate/Activate/
-  // Allocate are backend-restricted to Administrator — hide the actions the
-  // backend would 403 on rather than let Accountant click into a dead end.
-  // Create is separately allowed for Supervisor too (see canCreate below).
+  // Accountant can see this whole management view, but Deactivate/Activate are
+  // backend-restricted to Administrator only — hide the action the backend
+  // would 403 on rather than let Accountant/Supervisor click into a dead end.
+  // Create and Allocate are both backend-restricted to Administrator+Supervisor.
   const isAdmin = !!user?.roles.some((role) => role === Roles.Administrator);
   const canCreate = !!user?.roles.some((role) => role === Roles.Administrator || role === Roles.Supervisor);
+  const canAllocate = !!user?.roles.some((role) => role === Roles.Administrator || role === Roles.Supervisor);
   const [activeOnly, setActiveOnly] = useState(true);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
@@ -135,16 +136,18 @@ function VehiclesManagementView() {
       id: 'actions',
       header: '',
       cell: ({ row }) =>
-        isAdmin ? (
+        isAdmin || canAllocate ? (
           <Stack direction="row" spacing={1} onClick={(event) => event.stopPropagation()}>
-            <Button
-              size="small"
-              color={row.original.isActive ? 'error' : 'primary'}
-              onClick={() => void handleToggleActive(row.original)}
-            >
-              {row.original.isActive ? t('deactivate') : t('activate')}
-            </Button>
-            {row.original.isActive && !row.original.assignedEmployeeName && (
+            {isAdmin && (
+              <Button
+                size="small"
+                color={row.original.isActive ? 'error' : 'primary'}
+                onClick={() => void handleToggleActive(row.original)}
+              >
+                {row.original.isActive ? t('deactivate') : t('activate')}
+              </Button>
+            )}
+            {canAllocate && row.original.isActive && !row.original.assignedEmployeeName && (
               <Button size="small" onClick={() => setAllocateTarget(row.original)}>
                 {t('allocate')}
               </Button>
