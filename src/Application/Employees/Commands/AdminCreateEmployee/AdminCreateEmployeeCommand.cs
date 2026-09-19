@@ -19,6 +19,7 @@ public record AdminCreateEmployeeCommand : IRequest<Guid>
     public string IqamaNumber { get; init; } = string.Empty;
     public Guid? PlatformId { get; init; }
     public string? PlatformIdNumber { get; init; }
+    public Guid? SupervisorId { get; init; }
     public DateOnly? JoiningDate { get; init; }
     public DateOnly? IdExpiryDate { get; init; }
     public DateOnly? IqamaExpiryDate { get; init; }

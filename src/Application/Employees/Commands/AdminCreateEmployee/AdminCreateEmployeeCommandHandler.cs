@@ -24,6 +24,10 @@ public class AdminCreateEmployeeCommandHandler : IRequestHandler<AdminCreateEmpl
         if (iqamaTaken)
             throw new ConflictException("An employee with this Iqama number already exists.");
 
+        if (request.SupervisorId.HasValue &&
+            !await _context.Employees.AnyAsync(e => e.Id == request.SupervisorId, cancellationToken))
+            throw new NotFoundException(nameof(Employee), request.SupervisorId.Value.ToString());
+
         var (result, userId) = await _identityService.CreateUserAsync(
             request.Email, request.Password, request.PhoneNumber, request.HasWhatsApp);
         if (!result.Succeeded)
@@ -46,6 +50,9 @@ public class AdminCreateEmployeeCommandHandler : IRequestHandler<AdminCreateEmpl
             employee.AssignPlatform(request.PlatformId.Value);
 
         employee.Approve(request.JoiningDate);
+
+        if (request.SupervisorId.HasValue)
+            employee.AssignSupervisor(request.SupervisorId.Value);
 
         _context.Employees.Add(employee);
         await _context.SaveChangesAsync(cancellationToken);

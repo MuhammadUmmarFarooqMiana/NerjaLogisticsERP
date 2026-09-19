@@ -2398,6 +2398,7 @@ export type AdminCreateEmployeeCommand = {
   iqamaNumber?: string;
   platformId?: null | string;
   platformIdNumber?: null | string;
+  supervisorId?: null | string;
   joiningDate?: null | string;
   idExpiryDate?: null | string;
   iqamaExpiryDate?: null | string;

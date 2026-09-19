@@ -72,8 +72,11 @@ export function UserMenu() {
             <Typography variant="subtitle2" noWrap title={user?.fullName}>
               {user?.fullName}
             </Typography>
-            <Typography variant="caption" color="text.secondary" noWrap title={user?.email}>
+            <Typography variant="caption" component="div" color="text.secondary" noWrap title={user?.email}>
               {user?.email}
+            </Typography>
+            <Typography variant="caption" component="div" color="text.secondary" noWrap>
+              {user?.roles.map((role) => t(`users:roles.${role}`)).join(', ')}
             </Typography>
           </Box>
         </Box>

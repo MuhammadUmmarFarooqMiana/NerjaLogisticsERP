@@ -42,6 +42,7 @@ export function buildCreateEmployeeSchema(t: TFunction) {
     iqamaNumber: z.string().min(1, t('common:validation.required')).max(30),
     platformId: z.string().optional(),
     platformIdNumber: z.string().optional(),
+    supervisorId: z.string().optional(),
     joiningDate: z.string().optional(),
     idExpiryDate: z.string().optional(),
     iqamaExpiryDate: z.string().optional(),

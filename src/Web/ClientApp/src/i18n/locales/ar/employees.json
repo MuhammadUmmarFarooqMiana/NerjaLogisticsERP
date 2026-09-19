@@ -150,6 +150,7 @@
       "phoneNumber": "رقم الهاتف",
       "roles": "الأدوار",
       "noPlatform": "بدون منصة",
+      "noSupervisor": "بدون مشرف",
       "submit": "إنشاء"
     },
     "editDialog": {
